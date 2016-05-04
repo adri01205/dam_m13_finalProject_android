@@ -1,4 +1,4 @@
-package com.m13.dam.dam_m13_finalproject_android;
+package com.m13.dam.dam_m13_finalproject_android.controller;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +8,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.m13.dam.dam_m13_finalproject_android.R;
+import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
+
+import java.sql.Date;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        SynupConversor synupConversor = new SynupConversor(this);
+        synupConversor.saveTask(new Task(1, 1, "a", new Date(Calendar.getInstance().getTimeInMillis()), "des", "moll", "hola"));
+        System.out.println(synupConversor.getTask(1));
     }
 
     @Override
