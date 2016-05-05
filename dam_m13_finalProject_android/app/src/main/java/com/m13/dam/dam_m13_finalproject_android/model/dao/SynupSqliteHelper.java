@@ -17,7 +17,7 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           " 'when' datetime default current_timestamp "+
           "); ";
 
-
+ //DONE DAO
     static String sqlCreate2 = "CREATE TABLE TaskHistory ( "+
           " id INTEGER NOT NULL, "+
           " id_employee INTEGER NOT NULL, "+
@@ -28,7 +28,7 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           " isFinished INTEGER, "+
           " PRIMARY KEY(id) "+
           "); ";
-
+//DONE DAO
     static String sqlCreate3 = "CREATE TABLE  Task  ( "+
           " id INTEGER NOT NULL, "+
           " id_team INTEGER NOT NULL, "+

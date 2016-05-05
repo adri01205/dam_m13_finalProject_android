@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.Last;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistory;
 
 import java.sql.Date;
 import java.text.ParseException;
@@ -26,6 +28,112 @@ public class SynupConversor {
     public SynupConversor(Activity context) {
         this.context = context;
         this.helper = new SynupSqliteHelper(context, SynupConversor.BD_NAME , null, SynupConversor.BD_VERSION);
+    }
+
+
+
+//    (SQliteDatabase) db.query(
+//            "mytable" /* table */,
+//            new String[] { "name" } /* columns */,
+//            "id = ?" /* where or selection */,
+//            new String[] { "john" } /* selectionArgs i.e. value to replace ? */,
+//            null /* groupBy */,
+//            null /* having */,
+//            null /* orderBy */
+//            );
+
+    public Cursor getCursorTaskHistoryLog (int first, int last) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        return db.query(true,
+                "TaskHistoryLog",
+                new String[]{"id", "id_taskHistory", "operation", "when"},
+                "id > ? and id <= ?",
+                new String[] { String.valueOf(first), String.valueOf(last)},
+                null,
+                null,
+                null,
+                null);
+    }
+
+    public long saveTaskHistory(TaskHistory th) {
+        long index = -1;
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues dades = new ContentValues();
+
+        dades.put("id", th.getId());
+        dades.put("id_employee", th.getId_employee());
+        dades.put("id_task", th.getId_task());
+        dades.put("startDate", dataFormat.format(th.getStartDate()));
+        dades.put("finishDate", dataFormat.format(th.getFinishDate()));
+        dades.put("comment", th.getComment());
+        dades.put("isFinished", th.getIsFinished());
+
+        try {
+            index = db.insertOrThrow("TaskHistory", null, dades);
+        }
+        catch(Exception e) {
+            Log.e("ERROR_BUG", "Error on insert the user");
+        }
+        return index;
+    }
+
+    public TaskHistory getTaskHistory(int id) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor c = db.query(true,
+                "TaskHistory",
+                new String[]{"id", "id_employee", "id_task", "startDate", "finishDate", "comment", "isFinished"},
+                "id = ?",
+                new String[]{String.valueOf(id)},
+                null,
+                null,
+                null,
+                null);
+
+        if(c==null || c.getCount()==0){
+            return null;
+        }
+        c.moveToFirst();
+
+        try {
+            return new TaskHistory(c.getInt(0),c.getInt(1),c.getInt(2), new java.sql.Date(dataFormat.parse(c.getString(3)).getTime()), new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()),c.getString(5),c.getInt(6));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     *
+     * @param id
+     * @param date
+     * @param isFinished 0 -> not Finished, 1 -> Finished
+     * @return
+     */
+    public boolean updateTaskHistory(int id, Date date, int isFinished){
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        ContentValues args = new ContentValues();
+        args.put("finishDate", dataFormat.format(date));
+        args.put("isFinished", isFinished);
+        try {
+            db.update("TaskHistory", args, "id=" + id, null);
+        } catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean deleteTaskHistory(int id){
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        try {
+            db.delete("TaskHistory", "id=" + id, null);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     public long saveTask(Task t) {
@@ -50,16 +158,6 @@ public class SynupConversor {
         return index;
     }
 
-//    (SQliteDatabase) db.query(
-//            "mytable" /* table */,
-//            new String[] { "name" } /* columns */,
-//            "id = ?" /* where or selection */,
-//            new String[] { "john" } /* selectionArgs i.e. value to replace ? */,
-//            null /* groupBy */,
-//            null /* having */,
-//            null /* orderBy */
-//            );
-
     public Task getTask(int id) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
@@ -67,7 +165,7 @@ public class SynupConversor {
                 "Task",
                 new String[]{"id", "id_team", "code", "priorityDate", "description", "localization", "project"},
                 "id = ?",
-                new String[] { String.valueOf(id) },
+                new String[]{String.valueOf(id)},
                 null,
                 null,
                 null,
@@ -86,137 +184,21 @@ public class SynupConversor {
         }
     }
 
-    public Cursor getCursorTaskHistoryLog (int first, int last) {
+
+    public boolean updateLast(int id, int lastTaskHistory) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
-        return db.query(true,
-                "TaskHistoryLog",
-                new String[]{"id", "id_taskHistory", "operation", "when"},
-                "id > ? and id <= ?",
-                new String[] { String.valueOf(first), String.valueOf(last)},
-                null,
-                null,
-                null,
-                null);
-    }
+        ContentValues args = new ContentValues();
 
-//    public Task getTask(String name) {
-//        if(name.trim().equals("")){
-//            return null;
-//        }
-//        Cursor c = getCursorUsersByName(name);
-//        if(c==null || c.getCount()==0){
-//            return null;
-//        }
-//        c.moveToFirst();
-//        return new User(c.getInt(0),c.getString(1));
-//    }
-
-/*
-    public long saveUser(User user) {
-        long index = -1;
-        SQLiteDatabase db = helper.getWritableDatabase();
-        ContentValues dades = new ContentValues();
-
-        dades.put("name", user.getName());
-
-
+        args.put("employeTaskLog", lastTaskHistory );
         try {
-            index = db.insertOrThrow("user", null, dades);
+            db.update("Last", args, "id=" + id, null);
+        } catch (Exception e){
+            return false;
         }
-        catch(Exception e) {
-            Log.e("ERROR_BUG","Error on insert the user");
-        }
-        return index;
+        return true;
     }
 
-    public long saveRun(Run run) {
-        long index = -1;
-        SQLiteDatabase db = helper.getWritableDatabase();
-        ContentValues dades = new ContentValues();
-
-        dades.put("run_time", run.getRun_time());
-        dades.put("run_date", run.getRun_date());
-        dades.put("id_user", run.getId_user());
 
 
-        try {
-            index = db.insertOrThrow("run", null, dades);
-        }
-        catch(Exception e) {
-            Log.e("ERROR_BUG","Error on insert the run");
-        }
-        return index;
-    }
-
-    public User getUser(String name) {
-        if(name.trim().equals("")){
-            return null;
-        }
-        Cursor c = getCursorUsersByName(name);
-        if(c==null || c.getCount()==0){
-            return null;
-        }
-        c.moveToFirst();
-        return new User(c.getInt(0),c.getString(1));
-    }
-
-    public Cursor getCursorUsersByName(String name) {
-        SQLiteDatabase db = helper.getReadableDatabase();
-
-        return db.query(true,
-                "user",
-                new String[]{"id","name"},
-                "name = ?",
-                new String[] { name },
-                null,
-                null,
-                null,
-                null);
-    }
-
-    public Cursor getCursorRunsByUser(User user) {
-        SQLiteDatabase db = helper.getReadableDatabase();
-        return db.query(true,
-                "run",
-                new String[]{"id", "run_time", "run_date", "id_user"},
-                "id_user = ?",
-                new String[] { user.getId() + "" },
-                null,
-                null,
-                null,
-                "run_date");
-    }
-
-    public Cursor getCursorRunsByUser(String userName) {
-        SQLiteDatabase db = helper.getReadableDatabase();
-        User user = this.getUser(userName);
-        int id;
-        if(user != null) {
-             id = user.getId();
-        }else{
-            id = 0;
-        }
-
-        return db.query(true,
-                "run",
-                new String[]{"id", "run_time", "run_date", "id_user"},
-                "id_user = ?",
-                new String[] { id + "" },
-                null,
-                null,
-                null,
-                null);
-    }
-
-    public void saveRunWithUserName(String userName, String run_time, String run_date) throws NotUserException{
-        User user = this.getUser(userName);
-        if(user == null) {
-            throw new NotUserException();
-        }
-
-        Run r = new Run(run_time,run_date,user.getId());
-        this.saveRun(r);
-    }
-    */
 }
