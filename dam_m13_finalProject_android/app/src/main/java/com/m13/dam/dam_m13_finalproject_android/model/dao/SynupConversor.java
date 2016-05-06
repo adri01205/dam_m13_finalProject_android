@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.Employee;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Last;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistory;
@@ -190,13 +191,56 @@ public class SynupConversor {
 
         ContentValues args = new ContentValues();
 
-        args.put("employeTaskLog", lastTaskHistory );
+        args.put("employeTaskLog", lastTaskHistory);
         try {
             db.update("Last", args, "id=" + id, null);
         } catch (Exception e){
             return false;
         }
         return true;
+    }
+
+    public int getLastTaskHistory() {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor c = db.query(true,
+                "Last",
+                new String[]{"employeTaskLog"},
+                "id = ?",
+                new String[]{String.valueOf(0)},
+                null,
+                null,
+                null,
+                null);
+
+        if(c==null || c.getCount()==0){
+            return -1;
+        }
+        c.moveToFirst();
+        return c.getInt(0);
+
+    }
+
+    public Employee getEmployee(int id) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor c = db.query(true,
+                "Employee",
+                new String[]{"id", "nif", "name", "surname", "phone", "email", "adress"},
+                "id = ?",
+                new String[]{String.valueOf(id)},
+                null,
+                null,
+                null,
+                null);
+
+        if(c==null || c.getCount()==0){
+            return null;
+        }
+        c.moveToFirst();
+
+        return new Employee(c.getInt(0),c.getString(1),c.getString(2), c.getString(3),c.getString(4),c.getString(5),c.getString(6));
+
     }
 
 
