@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Employee;
-import com.m13.dam.dam_m13_finalproject_android.model.pojo.Last;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistory;
 
@@ -73,6 +72,26 @@ public class SynupConversor {
             Log.e("ERROR_BUG", "Error on insert the user");
         }
         return index;
+    }
+
+    public void updateTask(Task t) throws Exception{
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        ContentValues args = new ContentValues();
+
+        args.put("id_team", t.getId_team());
+        args.put("code", t.getCode());
+        args.put("priorityDate", dataFormat.format(t.getPriorityDate()));
+        args.put("description", t.getDescription());
+        args.put("localization", t.getLocalization());
+        args.put("project", t.getProject());
+        db.update("TaskHistory", args, "id=" + t.getId(), null);
+
+    }
+
+    public void deleteTask(int id) throws Exception{
+        SQLiteDatabase db = helper.getReadableDatabase();
+        db.delete("Task", "id=" + id, null);
     }
 
     public TaskHistory getTaskHistory(int id) {
@@ -150,7 +169,7 @@ public class SynupConversor {
             index = db.insertOrThrow("Task", null, dades);
         }
         catch(Exception e) {
-            Log.e("ERROR_BUG","Error on insert the user");
+            Log.e("ERROR_BUG", "Error on insert the user");
         }
         return index;
     }
@@ -279,5 +298,7 @@ public class SynupConversor {
         return new Employee(c.getInt(0),c.getString(1),c.getString(2), c.getString(3),c.getString(4),c.getString(5),c.getString(6));
 
     }
+
+
 
 }

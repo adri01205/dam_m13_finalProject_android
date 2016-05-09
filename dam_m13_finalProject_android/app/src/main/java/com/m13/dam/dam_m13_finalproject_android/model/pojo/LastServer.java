@@ -6,25 +6,34 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by adri on 09/05/2016.
  */
 public class LastServer {
-    @JsonProperty("lastTask")
-    private int lastTask;
+    @JsonProperty("emplogId")
+    private int emplogId;
+    @JsonProperty("tasklogId")
+    private int tasklogId;
+    @JsonProperty("taskhistlogId")
+    private int taskhistlogId;
 
-    @JsonProperty("lastTaskHistory")
-    private int lastTaskHistory;
-
-    public int getLastTask() {
-        return lastTask;
+    public int getEmplogId() {
+        return emplogId;
     }
 
-    public void setLastTask(int lastTask) {
-        this.lastTask = lastTask;
+    public void setEmplogId(int emplogId) {
+        this.emplogId = emplogId;
     }
 
-    public int getLastTaskHistory() {
-        return lastTaskHistory;
+    public int getTasklogId() {
+        return tasklogId;
     }
 
-    public void setLastTaskHistory(int lastTaskHistory) {
-        this.lastTaskHistory = lastTaskHistory;
+    public void setTasklogId(int tasklogId) {
+        this.tasklogId = tasklogId;
+    }
+
+    public int getTaskhistlogId() {
+        return taskhistlogId;
+    }
+
+    public void setTaskhistlogId(int taskhistlogId) {
+        this.taskhistlogId = taskhistlogId;
     }
 }
