@@ -1,10 +1,18 @@
 package com.m13.dam.dam_m13_finalproject_android.model.services;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLConnection;
+import java.util.ArrayList;
 
 /**
  * Created by Adri on 06/05/2016.
@@ -20,20 +28,16 @@ public abstract class MarshallingUnmarshalling {
      * un ArrayList con todos los objetos).
      *
      * @param clas classe del objeto padre. ej: bookStore.class()
-     * @param pathFile path del fichero, en String.
+     * @param inputStream InputStream de donde se sacan los objetos
      * @return Objeto Object del objeto del fichero. Se tendra que CASTEAR.
      */
-    public static Object jsonJacksonUnmarshalling(Class clas, String pathFile) {
+    public static Object jsonJacksonUnmarshalling(Class clas, InputStream inputStream) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        try {
-            File f = new File(pathFile);
-            mapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
-            Object e = mapper.readValue(f, clas);
-            return e;
-        } catch (Exception e) {
-            System.out.println("ERROR: " + e.getMessage());
-            return null;
-        }
+        JavaType type = mapper.getTypeFactory().
+                constructCollectionType(ArrayList.class, clas);
+        mapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
+        Object e = mapper.readValue(inputStream, type);
+        return e;
     }
 
     /**
@@ -46,17 +50,13 @@ public abstract class MarshallingUnmarshalling {
      * hacer una classe que tenga un ArrayList con todos los objetos).
      *
      * @param object objeto padre
-     * @param pathFile path del fichero, en String.
+     * @param out OutputStream donde se imprimira el resultado
      */
-    public static void jsonJacksonMarshalling(Object object, String pathFile) {
+    public static void jsonJacksonMarshalling(Object object, OutputStream out) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        try {
-            File f = new File(pathFile);
+
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
             mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
-            mapper.writeValue(f, object);
-        } catch (Exception e) {
-            System.out.println("ERROR: " + e.getMessage());
-        }
+            mapper.writeValue(out, object);
     }
 }

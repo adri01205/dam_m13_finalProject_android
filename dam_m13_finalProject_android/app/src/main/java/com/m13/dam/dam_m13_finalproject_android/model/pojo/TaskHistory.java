@@ -1,5 +1,7 @@
 package com.m13.dam.dam_m13_finalproject_android.model.pojo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.sql.Date;
 
 /**
@@ -7,12 +9,19 @@ import java.sql.Date;
  */
 public class TaskHistory {
 
+    @JsonProperty("id")
     int id;
+    @JsonProperty("id_employee")
     int id_employee;
+    @JsonProperty("id_task")
     int id_task;
+    @JsonProperty("startDate")
     Date startDate;
+    @JsonProperty("finishDate")
     Date finishDate;
+    @JsonProperty("comment")
     String comment;
+    @JsonProperty("isFinished")
     int isFinished;
 
     public TaskHistory() {

@@ -15,10 +15,6 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-
-/**
- * Created by Sergio on 28/02/2016.
- */
 public class SynupConversor {
     public static final String BD_NAME = "SYNUP_BD4";
     public static final int BD_VERSION = 3;
@@ -43,14 +39,14 @@ public class SynupConversor {
 //            null /* orderBy */
 //            );
 
-    public Cursor getCursorTaskHistoryLog (int first, int last) {
+    public Cursor getCursorTaskHistoryLog (int first) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         return db.query(true,
                 "TaskHistoryLog",
                 new String[]{"id", "id_taskHistory", "operation", "when"},
-                "id > ? and id <= ?",
-                new String[] { String.valueOf(first), String.valueOf(last)},
+                "id > ?",
+                new String[] { String.valueOf(first)},
                 null,
                 null,
                 null,
@@ -186,14 +182,14 @@ public class SynupConversor {
     }
 
 
-    public boolean updateLast(int id, int lastTaskHistory) {
+    public boolean updateLastTaskHistory(int lastTaskHistory) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         ContentValues args = new ContentValues();
 
         args.put("employeTaskLog", lastTaskHistory);
         try {
-            db.update("Last", args, "id=" + id, null);
+            db.update("Last", args, "id=0", null);
         } catch (Exception e){
             return false;
         }

@@ -1,14 +1,20 @@
 package com.m13.dam.dam_m13_finalproject_android.model.pojo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.sql.Date;
 
 /**
  * Created by adri on 04/05/2016.
  */
 public class TaskHistoryLog {
+    @JsonProperty("id")
     int id;
+    @JsonProperty("id_taskHistory")
     int id_taskHistory;
+    @JsonProperty("operation")
     String operation;
+    @JsonProperty("when")
     Date when;
 
     public TaskHistoryLog() {

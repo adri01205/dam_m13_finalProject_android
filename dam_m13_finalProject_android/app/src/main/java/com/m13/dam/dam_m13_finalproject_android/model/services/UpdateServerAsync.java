@@ -1,9 +1,17 @@
 package com.m13.dam.dam_m13_finalproject_android.model.services;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
+import android.util.Log;
+
 import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskCompleteListener;
+import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistoryLog;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,20 +20,23 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.text.ParseException;
+import java.util.ArrayList;
 
-public class UpdateServerAsync  extends AsyncTask<String, Void, Void> {
+public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
 
     private String Content;
-    private String error = null;
+    private ReturnObject ret;
     private String serverURL = "http://androidexample.com/media/webservice/JsonReturn.php";
     private ProgressDialog progressDialog;
     private Context context;
-    private AsyncTaskCompleteListener<String> listener;
+    private AsyncTaskCompleteListener<ReturnObject> listener;
 
-    public UpdateServerAsync(Context context, AsyncTaskCompleteListener<String> listener)
+    public UpdateServerAsync(Context context, AsyncTaskCompleteListener<ReturnObject> listener)
     {
         this.context = context;
         this.listener = listener;
+        ret = new ReturnObject(200,"OK");
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Connecting to server..");
         progressDialog.setIndeterminate(false);
@@ -42,9 +53,19 @@ public class UpdateServerAsync  extends AsyncTask<String, Void, Void> {
     }
 
     // Call after onPreExecute method
-    protected Void doInBackground(String... urls) {
-
+    protected Void doInBackground(Void... urls) {
         try {
+            SynupConversor conversor = new SynupConversor((Activity)context);
+            Cursor c = conversor.getCursorTaskHistoryLog(conversor.getLastTaskHistory());
+            ArrayList<TaskHistoryLog> list = new ArrayList();
+            if (c != null) {
+                while(c.moveToNext()) {
+                    list.add(new TaskHistoryLog(c.getInt(0),c.getInt(1),c.getString(2),new java.sql.Date(SynupConversor.dataFormat.parse(c.getString(3)).getTime())));
+                }
+                c.close();
+            } else {
+                throw new Exception("Empty Cursor");
+            }
 
             URL urlToRequest = new URL(serverURL);
             HttpURLConnection urlConnection =
@@ -55,25 +76,32 @@ public class UpdateServerAsync  extends AsyncTask<String, Void, Void> {
                     "application/x-www-form-urlencoded");
 
             //urlConnection.setFixedLengthStreamingMode(postParameters.getBytes().length);
-            PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
-            //out.print(postParameters);
-            out.close();
+            MarshallingUnmarshalling.jsonJacksonMarshalling(list, urlConnection.getOutputStream());
 
         } catch (MalformedURLException e) {
-            error = e.toString();
+            ret.setCode(401);
+            ret.setMessage(e.toString());
         } catch (ProtocolException e) {
-            error = e.toString();
+            ret.setCode(402);
+            ret.setMessage(e.toString());
         } catch (IOException e) {
-            error = e.toString();
+            ret.setCode(403);
+            ret.setMessage(e.toString());
+        } catch (ParseException e) {
+            ret.setCode(404);
+            ret.setMessage(e.toString());
+        } catch (Exception e) {
+            ret.setCode(405);
+            ret.setMessage(e.toString());
         }
 
         return null;
     }
 
-    protected void onPostExecute() {
+    @Override
+    protected void onPostExecute(Void v) {
         // Close progress dialog
         progressDialog.dismiss();
-        listener.onTaskComplete(error);
-
+        listener.onTaskComplete(ret);
     }
 }
