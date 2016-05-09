@@ -9,14 +9,14 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class SynupSqliteHelper extends SQLiteOpenHelper {
 
-    static String sqlCreate1 = "CREATE TABLE TaskHistoryLog ( "+
+    static String createTaskHistoryLog = "CREATE TABLE TaskHistoryLog ( "+
           " id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "+
           " id_taskHistory INTEGER NOT NULL, "+
           " operation TEXT NOT NULL, "+
           " 'when' datetime default current_timestamp "+
           "); ";
 
-    static String sqlCreate2 = "CREATE TABLE TaskHistory ( "+
+    static String createTaskHistory = "CREATE TABLE TaskHistory ( "+
           " id INTEGER NOT NULL, "+
           " id_employee INTEGER NOT NULL, "+
           " id_task INTEGER NOT NULL, "+
@@ -27,7 +27,7 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           " PRIMARY KEY(id) "+
           "); ";
 
-    static String sqlCreate3 = "CREATE TABLE  Task  ( "+
+    static String createTask = "CREATE TABLE  Task  ( "+
           " id INTEGER NOT NULL, "+
           " id_team INTEGER NOT NULL, "+
           " code TEXT NOT NULL, "+
@@ -38,14 +38,14 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           " PRIMARY KEY(id) "+
           "); ";
 
-    static String sqlCreate4 = "CREATE TABLE Last ( "+
+    static String createLast = "CREATE TABLE Last ( "+
           " id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "+
           " employeeLog INTEGER, "+
           " taskLog INTEGER, "+
           " employeTaskLog INTEGER "+
           "); ";
 
-    static String sqlCreate5 = "CREATE TABLE Employee ( "+
+    static String createEmployee = "CREATE TABLE Employee ( "+
           " id INTEGER NOT NULL, "+
           " nif TEXT NOT NULL, "+
           " name TEXT, "+
@@ -56,13 +56,22 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           " PRIMARY KEY(id) "+
           "); ";
 
-    static String sqlCreate6 = "CREATE TRIGGER trTHU "+
+    static String createTeam = "CREATE TABLE Team( " +
+            "id Integer NOT NULL," +
+            "code TEXT NOT NULL," +
+            "name TEXT" +
+            "PRIMARY KEY(id) " +
+            ");";
+
+    static String createTrTHU = "CREATE TRIGGER trTHU "+
           "  before update on TaskHistory "+
           "    for each row "+
           " begin "+
           "      INSERT INTO TaskHistoryLog(id_taskHistory, operation)  "+
           "     select new.id, 'U'; "+
           " end; ";
+    
+    
 
     public SynupSqliteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -70,12 +79,13 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(sqlCreate1);
-        db.execSQL(sqlCreate2);
-        db.execSQL(sqlCreate3);
-        db.execSQL(sqlCreate4);
-        db.execSQL(sqlCreate5);
-        db.execSQL(sqlCreate6);
+        db.execSQL(createTaskHistoryLog);
+        db.execSQL(createTaskHistory);
+        db.execSQL(createTask);
+        db.execSQL(createLast);
+        db.execSQL(createEmployee);
+        db.execSQL(createTeam);
+        db.execSQL(createTrTHU);
         db.execSQL("INSERT INTO Last VALUES (1,0,0,0);");
 
     }
@@ -90,13 +100,15 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS Task");
         db.execSQL("DROP TABLE IF EXISTS Last");
         db.execSQL("DROP TABLE IF EXISTS Employee");
+        db.execSQL("DROP TABLE IF EXISTS Team");
 
-        db.execSQL(sqlCreate1);
-        db.execSQL(sqlCreate2);
-        db.execSQL(sqlCreate3);
-        db.execSQL(sqlCreate4);
-        db.execSQL(sqlCreate5);
-        db.execSQL(sqlCreate6);
+        db.execSQL(createTaskHistoryLog);
+        db.execSQL(createTaskHistory);
+        db.execSQL(createTask);
+        db.execSQL(createLast);
+        db.execSQL(createEmployee);
+        db.execSQL(createTeam);
+        db.execSQL(createTrTHU);
         db.execSQL("INSERT INTO Last VALUES (1,0,0,0);");
     }
 }
