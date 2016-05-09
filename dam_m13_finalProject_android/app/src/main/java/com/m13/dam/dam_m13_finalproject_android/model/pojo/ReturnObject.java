@@ -28,6 +28,10 @@ public class ReturnObject {
         this.message = message;
     }
 
+    public boolean succes(){
+        return this.getCode()/100 == 2;
+    }
+
     @Override
     public String toString() {
         return "ReturnObject{" +

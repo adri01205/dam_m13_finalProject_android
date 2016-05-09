@@ -56,27 +56,34 @@ public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... urls) {
         try {
             SynupConversor conversor = new SynupConversor((Activity)context);
-            Cursor c = conversor.getCursorTaskHistoryLog(conversor.getLastTaskHistory());
-            ArrayList<TaskHistoryLog> list = new ArrayList();
-            if (c != null) {
-                while(c.moveToNext()) {
-                    list.add(new TaskHistoryLog(c.getInt(0),c.getInt(1),c.getString(2),new java.sql.Date(SynupConversor.dataFormat.parse(c.getString(3)).getTime())));
+
+            int serverLast = conversor.getLastServerTaskHistoryLog();
+            if(conversor.getLastLocalTaskHistoryLog() > serverLast) {
+
+                Cursor c = conversor.getCursorTaskHistoryLog(serverLast);
+                ArrayList<TaskHistoryLog> list = new ArrayList();
+                if (c != null) {
+                    while (c.moveToNext()) {
+                        list.add(new TaskHistoryLog(c.getInt(0), c.getInt(1), c.getString(2), new java.sql.Date(SynupConversor.dataFormat.parse(c.getString(3)).getTime())));
+                    }
+                    c.close();
+                } else {
+                    throw new Exception("Empty Cursor");
                 }
-                c.close();
+
+                URL urlToRequest = new URL(serverURL);
+                HttpURLConnection urlConnection =
+                        (HttpURLConnection) urlToRequest.openConnection();
+                urlConnection.setDoOutput(true);
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setRequestProperty("Content-Type",
+                        "application/x-www-form-urlencoded");
+
+                //urlConnection.setFixedLengthStreamingMode(postParameters.getBytes().length);
+                MarshallingUnmarshalling.jsonJacksonMarshalling(list, urlConnection.getOutputStream());
             } else {
-                throw new Exception("Empty Cursor");
+                ret.setCode(201);
             }
-
-            URL urlToRequest = new URL(serverURL);
-            HttpURLConnection urlConnection =
-                    (HttpURLConnection) urlToRequest.openConnection();
-            urlConnection.setDoOutput(true);
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Content-Type",
-                    "application/x-www-form-urlencoded");
-
-            //urlConnection.setFixedLengthStreamingMode(postParameters.getBytes().length);
-            MarshallingUnmarshalling.jsonJacksonMarshalling(list, urlConnection.getOutputStream());
 
         } catch (MalformedURLException e) {
             ret.setCode(401);

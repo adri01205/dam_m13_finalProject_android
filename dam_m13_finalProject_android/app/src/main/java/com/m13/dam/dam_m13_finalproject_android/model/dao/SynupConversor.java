@@ -196,7 +196,7 @@ public class SynupConversor {
         return true;
     }
 
-    public int getLastTaskHistory() {
+    public int getLastServerTaskHistoryLog() {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         Cursor c = db.query(true,
@@ -215,6 +215,47 @@ public class SynupConversor {
         c.moveToFirst();
         return c.getInt(0);
 
+    }
+
+    public int getLastLocalTaskHistoryLog() {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor c = db.query(true,
+                "TaskHistoryLog",
+                new String[]{"max(id)"},
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        if(c==null || c.getCount()==0){
+            return -1;
+        }
+        c.moveToFirst();
+        return c.getInt(0);
+
+    }
+
+    public int getLastLocalTask() {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor c = db.query(true,
+                "Last",
+                new String[]{"employeeLog"},
+                "id = ?",
+                new String[]{String.valueOf(0)},
+                null,
+                null,
+                null,
+                null);
+
+        if(c==null || c.getCount()==0){
+            return -1;
+        }
+        c.moveToFirst();
+        return c.getInt(0);
     }
 
     public Employee getEmployee(int id) {
@@ -238,7 +279,5 @@ public class SynupConversor {
         return new Employee(c.getInt(0),c.getString(1),c.getString(2), c.getString(3),c.getString(4),c.getString(5),c.getString(6));
 
     }
-
-
 
 }
