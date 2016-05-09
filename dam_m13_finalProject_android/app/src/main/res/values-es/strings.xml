@@ -3,5 +3,6 @@
     <string name="action_settings">Configuración</string>
     <string name="error">Error</string>
     <string name="ok">ok</string>
+    <string name="code">codigo:</string>
 
 </resources>

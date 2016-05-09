@@ -31,14 +31,22 @@ import java.util.ArrayList;
 
 public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
 
+    private String host = "172.16.10.9" ;
+    private String port = "1567";
+
     private String Content;
     private ReturnObject ret;
-    private String serverURLLastTasks = "http://androidexample.com/media/webservice/JsonReturn.php";
-    private String serverURLTasks = "http://androidexample.com/media/webservice/JsonReturn.php";
-    private String serverURLTasksHistory = "http://androidexample.com/media/webservice/JsonReturn.php";
+    private String serverURLLastTasks = "http://"+host+":"+port+"/api/Last/1";
+    private String serverURLTasksI = "http://androidexample.com/media/webservice/JsonReturn.php";
+    private String serverURLTasksU = "http://androidexample.com/media/webservice/JsonReturn.php";
+    private String serverURLTasksD = "http://androidexample.com/media/webservice/JsonReturn.php";
+    private String serverURLTasksHistoryI = "http://androidexample.com/media/webservice/JsonReturn.php";
+    private String serverURLTasksHistoryU = "http://androidexample.com/media/webservice/JsonReturn.php";
+    private String serverURLTasksHistoryD = "http://androidexample.com/media/webservice/JsonReturn.php";
     private ProgressDialog progressDialog;
     private Context context;
     private AsyncTaskCompleteListener<ReturnObject> listener;
+    private SynupConversor conversor;
 
     public UpdateLocalAsync(Context context, AsyncTaskCompleteListener<ReturnObject> listener)
     {
@@ -49,7 +57,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         progressDialog.setMessage("Connecting to server..");
         progressDialog.setIndeterminate(false);
         progressDialog.setCancelable(true);
-
+        conversor = new SynupConversor((Activity) context);
     }
 
     protected void onPreExecute() {
@@ -63,7 +71,6 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... urls) {
         HttpURLConnection conn = null;
         boolean smtingDone = false;
-        SynupConversor conversor = new SynupConversor((Activity) context);
         try {
             conn = (HttpURLConnection) new URL(serverURLLastTasks).openConnection();
             conn.setDoOutput(true);
@@ -71,38 +78,18 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
             conn.disconnect();
 
 
-            if (lastServer.get(0).getLastTask() > conversor.getLastLocalTask()) {
-                // Defined URL  where to send data
-                URL url = new URL(serverURLTasks);
-
-                // Send POST data request
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setDoOutput(true);
-
-                ArrayList<Task> tasks = (ArrayList<Task>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Task.class, conn.getInputStream());
-
-
-                for (Task t : tasks) {
-                    conversor.saveTask(t);
-                }
-
+            if (lastServer.get(0).getTasklogId() > conversor.getLastLocalTask()) {
+                updateTask();
                 smtingDone = true;
-                conn.disconnect();
             }
 
-             if(lastServer.get(0).getLastTaskHistory() > conversor.getLastLocalTask()) {
-                // Defined URL  where to send data
-                URL url = new URL(serverURLTasksHistory);
+             if(lastServer.get(0).getTaskhistlogId() > conversor.getLastLocalTask()) {
+                 updateTaskHistory();
+                 smtingDone = true;
+            }
 
-                // Send POST data request
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setDoOutput(true);
-
-                ArrayList<TaskHistory> tasks2 = (ArrayList<TaskHistory>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(TaskHistory.class, conn.getInputStream());
-
-                for (TaskHistory t : tasks2) {
-                    conversor.saveTaskHistory(t);
-                }
+            if(!smtingDone){
+                ret.setCode(201);
             }
 
         } catch (MalformedURLException e) {
@@ -132,5 +119,126 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         // Close progress dialog
         progressDialog.dismiss();
         listener.onTaskComplete(ret);
+    }
+
+    private void updateTask() throws Exception {
+        updateITask();
+        updateUTask();
+        updateDTask();
+
+    }
+
+    private void updateITask() throws IOException {
+        // Defined URL  where to send data
+        URL url = new URL(serverURLTasksI);
+
+        // Send POST data request
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoOutput(true);
+
+        ArrayList<Task> tasks = (ArrayList<Task>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Task.class, conn.getInputStream());
+
+
+        for (Task t : tasks) {
+            conversor.saveTask(t);
+        }
+
+        conn.disconnect();
+    }
+
+    private void updateUTask() throws Exception {
+        // Defined URL  where to send data
+
+        URL url = new URL(serverURLTasksU);
+
+        // Send POST data request
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoOutput(true);
+
+        ArrayList<Task> tasks = (ArrayList<Task>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Task.class, conn.getInputStream());
+
+
+        for (Task t : tasks) {
+            conversor.updateTask(t);
+        }
+
+        conn.disconnect();
+    }
+
+    private void updateDTask() throws Exception {
+        // Defined URL  where to send data
+        URL url = new URL(serverURLTasksD);
+
+        // Send POST data request
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoOutput(true);
+
+        ArrayList<Task> tasks = (ArrayList<Task>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Task.class, conn.getInputStream());
+
+
+        for (Task t : tasks) {
+            conversor.deleteTask(t.getId());
+        }
+
+        conn.disconnect();
+    }
+
+    private void updateTaskHistory() throws Exception {
+        updateITaskHistory();
+        updateUTaskHistory();
+        updateDTaskHistory();
+
+    }
+
+    private void updateITaskHistory() throws IOException {
+        // Defined URL  where to send data
+        URL url = new URL(serverURLTasksHistoryI);
+
+        // Send POST data request
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoOutput(true);
+
+        ArrayList<TaskHistory> tasks = (ArrayList<TaskHistory>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(TaskHistory.class, conn.getInputStream());
+
+        for (TaskHistory t : tasks) {
+            conversor.saveTaskHistory(t);
+        }
+    }
+
+    private void updateUTaskHistory() throws Exception {
+        // Defined URL  where to send data
+
+        URL url = new URL(serverURLTasksHistoryU);
+
+        // Send POST data request
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoOutput(true);
+
+        ArrayList<TaskHistory> tasks = (ArrayList<TaskHistory>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(TaskHistory.class, conn.getInputStream());
+
+
+        for (TaskHistory t : tasks) {
+            conversor.updateTaskHistory(t.getId(),t.getFinishDate(),t.getIsFinished());
+        }
+
+        conn.disconnect();
+    }
+
+    private void updateDTaskHistory() throws Exception {
+        // Defined URL  where to send data
+        URL url = new URL(serverURLTasksHistoryD);
+
+        // Send POST data request
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoOutput(true);
+
+        ArrayList<TaskHistory> tasks = (ArrayList<TaskHistory>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(TaskHistory.class, conn.getInputStream());
+
+
+        for (TaskHistory t : tasks) {
+            conversor.deleteTaskHistory(t.getId());
+        }
+
+        conn.disconnect();
     }
 }
