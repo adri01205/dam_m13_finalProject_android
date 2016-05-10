@@ -50,5 +50,17 @@ public abstract class Dialogs {
         });
 
         return builder.create();
+    }    public static AlertDialog getErrorDialog(Activity context, String error) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setTitle(R.string.error)
+                .setMessage(error);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+            }
+        });
+
+        return builder.create();
     }
 }

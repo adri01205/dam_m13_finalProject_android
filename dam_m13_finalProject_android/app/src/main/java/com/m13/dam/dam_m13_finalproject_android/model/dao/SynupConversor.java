@@ -15,8 +15,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD4";
-    public static final int BD_VERSION = 3;
+    public static final String BD_NAME = "SYNUP_BD5";
+    public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     Activity context;
@@ -282,7 +282,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "Employee",
-                new String[]{"id", "nif", "name", "surname", "phone", "email", "adress"},
+                new String[]{"id", "nif", "name", "surname", "phone", "email", "adress","username","password"},
                 "id = ?",
                 new String[]{String.valueOf(id)},
                 null,
@@ -295,10 +295,30 @@ public class SynupConversor {
         }
         c.moveToFirst();
 
-        return new Employee(c.getInt(0),c.getString(1),c.getString(2), c.getString(3),c.getString(4),c.getString(5),c.getString(6));
+        return new Employee(c.getInt(0),c.getString(1),c.getString(2), c.getString(3),c.getString(4),c.getString(5),c.getString(6),c.getString(7),c.getString(8));
 
     }
 
 
+    public Employee getEmployee(String userName, String password) {
+        SQLiteDatabase db = helper.getReadableDatabase();
 
+        Cursor c = db.query(true,
+                "Employee",
+                new String[]{"id", "nif", "name", "surname", "phone", "email", "adress","username","password"},
+                "username = ? and password = ? ",
+                new String[]{userName, password},
+                null,
+                null,
+                null,
+                null);
+
+        if(c==null || c.getCount()==0){
+            return null;
+        }
+        c.moveToFirst();
+
+        return new Employee(c.getInt(0),c.getString(1),c.getString(2), c.getString(3),c.getString(4),c.getString(5),c.getString(6),c.getString(7),c.getString(8));
+
+    }
 }

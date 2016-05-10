@@ -6,6 +6,7 @@ package com.m13.dam.dam_m13_finalproject_android.model.pojo;
 public class ReturnObject {
     int code;
     String message;
+    Object associatedObject;
 
     public ReturnObject(int code, String message) {
         this.code = code;
@@ -30,6 +31,14 @@ public class ReturnObject {
 
     public boolean succes(){
         return this.getCode()/100 == 2;
+    }
+
+    public Object getAssociatedObject() {
+        return associatedObject;
+    }
+
+    public void setAssociatedObject(Object associatedObject) {
+        this.associatedObject = associatedObject;
     }
 
     @Override

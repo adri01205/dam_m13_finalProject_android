@@ -53,13 +53,15 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           " phone TEXT, "+
           " email TEXT, "+
           " adress TEXT, "+
+          " username TEXT, "+
+          " password TEXT, "+
           " PRIMARY KEY(id) "+
           "); ";
 
     static String createTeam = "CREATE TABLE Team( " +
-            "id Integer NOT NULL," +
-            "code TEXT NOT NULL," +
-            "name TEXT" +
+            "id Integer NOT NULL, " +
+            "code TEXT NOT NULL, " +
+            "name TEXT, " +
             "PRIMARY KEY(id) " +
             ");";
 
