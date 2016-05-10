@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
-        android:layout_weight="1" />
+        android:layout_weight="1.5" />
 
     <EditText
         android:id="@+id/activity_login_et_username"
@@ -30,7 +30,7 @@
         android:textSize="20sp"
         android:selectAllOnFocus="false"
         android:hint="@string/PLACEHOLDER_USERNAME"
-        android:layout_weight="1" />
+        android:layout_weight="0.35" />
 
 
     <TextView
@@ -50,7 +50,7 @@
         android:textSize="20sp"
         android:selectAllOnFocus="false"
         android:hint="@string/PLACEHOLDER_PASSWORD"
-        android:layout_weight="1" />
+        android:layout_weight="0.35" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,19 +71,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView3"
-        android:layout_weight="1" />
+        android:layout_weight="0.5" />
 
     <Button
         android:id="@+id/activity_login_bt_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_Accept"
-        android:layout_weight="0.5" />
+        android:text="@string/btn_Accept" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView4"
-        android:layout_weight="1" />
+        android:layout_weight="0.1" />
 
 </LinearLayout>

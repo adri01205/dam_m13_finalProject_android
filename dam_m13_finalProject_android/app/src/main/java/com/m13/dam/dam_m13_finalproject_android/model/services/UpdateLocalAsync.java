@@ -31,12 +31,9 @@ import java.util.ArrayList;
 
 public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
 
-    private String host = "172.16.10.9" ;
-    private String port = "1567";
-
     private String Content;
     private ReturnObject ret;
-    private String serverURLLastTasks = "http://"+host+":"+port+"/api/Last/1";
+    private String serverURLLastTasks = "http://"+TestConnection.getDomain()+"/api/Last/1";
     private String serverURLTasksI = "http://androidexample.com/media/webservice/JsonReturn.php";
     private String serverURLTasksU = "http://androidexample.com/media/webservice/JsonReturn.php";
     private String serverURLTasksD = "http://androidexample.com/media/webservice/JsonReturn.php";

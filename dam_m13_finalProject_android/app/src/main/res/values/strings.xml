@@ -10,4 +10,11 @@
     <string name="ERROR_USER_NOT_EXISTS">_User does not exists, insert again please</string>
     <string name="PLACEHOLDER_USERNAME">_username</string>
     <string name="PLACEHOLDER_PASSWORD">_password</string>
+    <string name="title_activity_menu">MAIN MENU</string>
+    <string name="LOG_OUT">_log out</string>
+    <string name="EXIT">_exit</string>
+    <string name="not_data_updated">_not_data_updated</string>
+    <string name="ERROR_NO_CONNECTION_LOGIN">_To login with a new user you must have internet connection, try again</string>
+    <string name="VIEW_ACCTIVE_TASK">_view acctive task</string>
+    <string name="VIEW_TASKS">_view your team tasks</string>
 </resources>

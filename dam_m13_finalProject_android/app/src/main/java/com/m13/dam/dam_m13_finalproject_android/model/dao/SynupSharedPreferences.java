@@ -4,20 +4,15 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 
 
-public class SynupSharedPreferences {
+public abstract class SynupSharedPreferences {
     public static String PREFS_NAME = "FitxerPreferencies";
-    Activity context;
-
-    public SynupSharedPreferences(Activity context) {
-        this.context = context;
-    }
 
     //USER LOGED IS THE LOGED IN THE APP
-    public String getUserLoged() {
+    public static String getUserLoged(Activity context) {
         SharedPreferences config = context.getSharedPreferences(PREFS_NAME, 0);
         return config.getString("user_loged", "");
     }
-    public void updateUserLoged(String userName) {
+    public static void updateUserLoged(Activity context, String userName) {
         SharedPreferences config = context.getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = config.edit();
         editor.putString("user_loged", userName);
@@ -26,15 +21,27 @@ public class SynupSharedPreferences {
     }
 
     //USER NAME SAVED IN THE LOGIN LAYOUT
-    public String getUserNameSaved() {
+    public static String getUserNameSaved(Activity context) {
         SharedPreferences config = context.getSharedPreferences(PREFS_NAME, 0);
         return config.getString("user_saved", "");
     }
 
-    public void updateUserNameSaved(String userName) {
+    public static void updateUserNameSaved(Activity context, String userName) {
         SharedPreferences config = context.getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = config.edit();
         editor.putString("user_saved", userName);
+        editor.commit();
+    }
+
+    public static String getUpdatedData(Activity context) {
+        SharedPreferences config = context.getSharedPreferences(PREFS_NAME, 0);
+        return config.getString("updated_data", "");
+    }
+
+    public static void setUpdatedData(Activity context, String data) {
+        SharedPreferences config = context.getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = config.edit();
+        editor.putString("updated_data", data);
         editor.commit();
     }
 

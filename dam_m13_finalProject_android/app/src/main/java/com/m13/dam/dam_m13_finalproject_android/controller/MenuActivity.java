@@ -12,7 +12,7 @@ import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskC
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
 import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateLocalAsync;
 
-public class MenuActivity extends AppCompatActivity implements AsyncTaskCompleteListener<ReturnObject> {
+public class MenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,23 +21,12 @@ public class MenuActivity extends AppCompatActivity implements AsyncTaskComplete
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        new UpdateLocalAsync(this,this).execute();
-    }
-
-    @Override
-    public void onTaskComplete(ReturnObject result) {
-        if(!result.succes()){
-            Dialogs.getErrorDialog(this, result).show();
-        } else {
-            //new UpdateServerAsync(this,this).execute();
-        }
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -49,7 +38,10 @@ public class MenuActivity extends AppCompatActivity implements AsyncTaskComplete
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_exit) {
+            return true;
+        }
+        if (id == R.id.menu_log_out) {
             return true;
         }
 
