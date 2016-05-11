@@ -19,7 +19,9 @@ public class Task {
     /*
     @JsonProperty("id")
     int id;
+    int id_team;
     */
+
     @JsonProperty("id_team")
     String id_team;
     @JsonProperty("code")
