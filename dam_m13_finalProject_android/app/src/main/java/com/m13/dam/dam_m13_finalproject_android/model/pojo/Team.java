@@ -5,7 +5,6 @@ package com.m13.dam.dam_m13_finalproject_android.model.pojo;
  */
 public class Team
 {
-
     private String code;
     private String name;
 
