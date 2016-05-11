@@ -1,14 +1,18 @@
 package com.m13.dam.dam_m13_finalproject_android.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.m13.dam.dam_m13_finalproject_android.R;
 import com.m13.dam.dam_m13_finalproject_android.controller.dialogs.Dialogs;
 import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskCompleteListener;
+import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupSharedPreferences;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
 import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateLocalAsync;
 
@@ -20,6 +24,29 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if(!SynupSharedPreferences.getUpdatedData(this).equals("1")){
+            findViewById(R.id.activity_menu_ll_not_updated).setVisibility(View.VISIBLE);
+        }
+
+        findViewById(R.id.activity_menu_bt_my_task).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        findViewById(R.id.activity_menu_bt_tasks).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        findViewById(R.id.activity_menu_bt_log_out).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 

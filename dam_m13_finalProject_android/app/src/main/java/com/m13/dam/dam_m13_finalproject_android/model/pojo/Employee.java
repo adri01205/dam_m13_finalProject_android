@@ -23,19 +23,6 @@ public class Employee {
     public Employee() {
     }
 
-    /*  Modified by Jesus on 10/05/2016
-    public Employee(int id, String nif, String name, String surname, String phone, String email, String adress, String username, String password) {
-        this.id = id
-        this.nif = nif;
-        this.name = name;
-        this.surname = surname;
-        this.phone = phone;
-        this.email = email;
-        this.adress = adress;
-        this.username = username;
-        this.password = password;
-    }
-    */
 
     public Employee(String nif, String name, String surname, String phone, String email, String adress, String username, String password) {
         this.nif = nif;
@@ -47,16 +34,6 @@ public class Employee {
         this.username = username;
         this.password = password;
     }
-
-    /* Modified by Jesus on 10/05/2016
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-    */
 
     public String getNif() {
         return nif;

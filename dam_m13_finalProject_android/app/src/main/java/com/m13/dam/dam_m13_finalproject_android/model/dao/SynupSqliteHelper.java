@@ -4,9 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by Sergio on 28/02/2016.
- */
 public class SynupSqliteHelper extends SQLiteOpenHelper {
 
     static String createTaskHistoryLog = "CREATE TABLE TaskHistoryLog ( "+
@@ -18,8 +15,8 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
 
     static String createTaskHistory = "CREATE TABLE TaskHistory ( "+
           " id INTEGER NOT NULL, "+
-          " id_employee INTEGER NOT NULL, "+
-          " id_task INTEGER NOT NULL, "+
+          " id_employee TEXT NOT NULL, "+
+          " id_task TEXT NOT NULL, "+
           " startDate datetime, "+
           " finishDate datetime, "+
           " comment TEXT, "+
@@ -28,25 +25,24 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           "); ";
 
     static String createTask = "CREATE TABLE  Task  ( "+
-          " id INTEGER NOT NULL, "+
-          " id_team INTEGER NOT NULL, "+
+          " id_team TEXT NOT NULL, "+
           " code TEXT NOT NULL, "+
           " priorityDate DATE NOT NULL, "+
           " description TEXT, "+
           " localization TEXT, "+
           " project TEXT, "+
-          " PRIMARY KEY(id) "+
+          " PRIMARY KEY(code) "+
           "); ";
 
     static String createLast = "CREATE TABLE Last ( "+
           " id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "+
           " employeeLog INTEGER, "+
           " taskLog INTEGER, "+
-          " employeTaskLog INTEGER "+
+          " employeTaskLog INTEGER, "+
+          " teamLog INTEGER "+
           "); ";
 
     static String createEmployee = "CREATE TABLE Employee ( "+
-          " id INTEGER NOT NULL, "+
           " nif TEXT NOT NULL, "+
           " name TEXT, "+
           " surname TEXT, "+
@@ -55,7 +51,7 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           " adress TEXT, "+
           " username TEXT, "+
           " password TEXT, "+
-          " PRIMARY KEY(id) "+
+          " PRIMARY KEY(nif) "+
           "); ";
 
     static String createTeam = "CREATE TABLE Team( " +

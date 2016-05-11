@@ -62,7 +62,7 @@ public class TaskHistory {
     }
     */
 
-    public TaskHistory(int id, String id_employee, String id_task, int isFinished, Date startDate, Date finishDate, String comment) {
+    public TaskHistory(int id, String id_employee, String id_task, Date startDate, Date finishDate, String comment, int isFinished) {
         this.id = id;
         this.id_employee = id_employee;
         this.id_task = id_task;

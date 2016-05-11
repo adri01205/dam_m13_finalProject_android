@@ -15,7 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD5";
+    public static final String BD_NAME = "SYNUP_BD6";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -85,7 +85,7 @@ public class SynupConversor {
         args.put("description", t.getDescription());
         args.put("localization", t.getLocalization());
         args.put("project", t.getProject());
-        db.update("TaskHistory", args, "id=" + t.getId(), null);
+        db.update("Task", args, "code=" + t.getCode(), null);
 
     }
 
@@ -113,7 +113,7 @@ public class SynupConversor {
         c.moveToFirst();
 
         try {
-            return new TaskHistory(c.getInt(0),c.getInt(1),c.getInt(2), new java.sql.Date(dataFormat.parse(c.getString(3)).getTime()), new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()),c.getString(5),c.getInt(6));
+            return new TaskHistory(c.getInt(0),c.getString(1),c.getString(2), new java.sql.Date(dataFormat.parse(c.getString(3)).getTime()), new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()),c.getString(5),c.getInt(6));
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
@@ -157,7 +157,6 @@ public class SynupConversor {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues dades = new ContentValues();
 
-        dades.put("id", t.getId());
         dades.put("id_team", t.getId_team());
         dades.put("code", t.getCode());
         dades.put("priorityDate", dataFormat.format(t.getPriorityDate()));
@@ -179,7 +178,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "Task",
-                new String[]{"id", "id_team", "code", "priorityDate", "description", "localization", "project"},
+                new String[]{"id_team", "code", "priorityDate", "description", "localization", "project"},
                 "id = ?",
                 new String[]{String.valueOf(id)},
                 null,
@@ -193,7 +192,7 @@ public class SynupConversor {
         c.moveToFirst();
 
         try {
-            return new Task(c.getInt(0),c.getInt(1),c.getString(2), new java.sql.Date(dataFormat.parse(c.getString(3)).getTime()),c.getString(4),c.getString(5),c.getString(6));
+            return new Task(c.getString(0),c.getString(1), new java.sql.Date(dataFormat.parse(c.getString(2)).getTime()),c.getString(3),c.getString(4),c.getString(5));
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
@@ -282,7 +281,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "Employee",
-                new String[]{"id", "nif", "name", "surname", "phone", "email", "adress","username","password"},
+                new String[]{"nif", "name", "surname", "phone", "email", "adress","username","password"},
                 "id = ?",
                 new String[]{String.valueOf(id)},
                 null,
@@ -295,7 +294,7 @@ public class SynupConversor {
         }
         c.moveToFirst();
 
-        return new Employee(c.getInt(0),c.getString(1),c.getString(2), c.getString(3),c.getString(4),c.getString(5),c.getString(6),c.getString(7),c.getString(8));
+        return new Employee(c.getString(0),c.getString(1), c.getString(2),c.getString(3),c.getString(4),c.getString(5),c.getString(6),c.getString(7));
 
     }
 
@@ -305,7 +304,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "Employee",
-                new String[]{"id", "nif", "name", "surname", "phone", "email", "adress","username","password"},
+                new String[]{"nif", "name", "surname", "phone", "email", "adress","username","password"},
                 "username = ? and password = ? ",
                 new String[]{userName, password},
                 null,
@@ -318,7 +317,7 @@ public class SynupConversor {
         }
         c.moveToFirst();
 
-        return new Employee(c.getInt(0),c.getString(1),c.getString(2), c.getString(3),c.getString(4),c.getString(5),c.getString(6),c.getString(7),c.getString(8));
+        return new Employee(c.getString(0),c.getString(1), c.getString(2),c.getString(3),c.getString(4),c.getString(5),c.getString(6),c.getString(7));
 
     }
 }
