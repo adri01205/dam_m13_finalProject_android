@@ -3,8 +3,14 @@ package com.m13.dam.dam_m13_finalproject_android.model.pojo;
 /**
  * Created by adri on 04/05/2016.
  */
+/**
+ * Modified by jesus on 10/05/2016
+ *
+ * Added 'password' Field
+ *
+ * Removed 'id' Field -> Now 'nif' is old 'id'
+ */
 public class Employee {
-    int id;
     String nif;
     String name;
     String surname;
@@ -17,8 +23,9 @@ public class Employee {
     public Employee() {
     }
 
+    /*  Modified by Jesus on 10/05/2016
     public Employee(int id, String nif, String name, String surname, String phone, String email, String adress, String username, String password) {
-        this.id = id;
+        this.id = id
         this.nif = nif;
         this.name = name;
         this.surname = surname;
@@ -28,6 +35,7 @@ public class Employee {
         this.username = username;
         this.password = password;
     }
+    */
 
     public Employee(String nif, String name, String surname, String phone, String email, String adress, String username, String password) {
         this.nif = nif;
@@ -40,6 +48,7 @@ public class Employee {
         this.password = password;
     }
 
+    /* Modified by Jesus on 10/05/2016
     public int getId() {
         return id;
     }
@@ -47,6 +56,7 @@ public class Employee {
     public void setId(int id) {
         this.id = id;
     }
+    */
 
     public String getNif() {
         return nif;
@@ -115,7 +125,9 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "id=" + id +
+             /*   Modified by Jesus on 10/05/2016
+             "id=" + id +
+             */
                 ", nif='" + nif + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
