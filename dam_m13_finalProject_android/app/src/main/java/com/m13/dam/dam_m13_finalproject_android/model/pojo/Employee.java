@@ -3,6 +3,9 @@ package com.m13.dam.dam_m13_finalproject_android.model.pojo;
 /**
  * Created by adri on 04/05/2016.
  */
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Modified by jesus on 10/05/2016
  *
@@ -11,13 +14,22 @@ package com.m13.dam.dam_m13_finalproject_android.model.pojo;
  * Removed 'id' Field -> Now 'nif' is old 'id'
  */
 public class Employee {
+
+    @JsonProperty("nif")
     String nif;
+    @JsonProperty("name")
     String name;
+    @JsonProperty("surname")
     String surname;
+    @JsonProperty("phone")
     String phone;
+    @JsonProperty("email")
     String email;
+    @JsonProperty("adress")
     String adress;
+    @JsonProperty("username")
     String username;
+    @JsonProperty("password")
     String password;
 
     public Employee() {

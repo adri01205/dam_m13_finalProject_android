@@ -15,7 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD6";
+    public static final String BD_NAME = "SYNUP_BD7";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -89,9 +89,9 @@ public class SynupConversor {
 
     }
 
-    public void deleteTask(int id) throws Exception{
+    public void deleteTask(String code) throws Exception{
         SQLiteDatabase db = helper.getReadableDatabase();
-        db.delete("Task", "id=" + id, null);
+        db.delete("Task", "code=" + code, null);
     }
 
     public TaskHistory getTaskHistory(int id) {

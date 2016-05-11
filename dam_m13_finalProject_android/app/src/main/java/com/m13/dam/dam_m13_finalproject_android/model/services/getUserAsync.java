@@ -8,25 +8,22 @@ import android.os.AsyncTask;
 import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskCompleteListener;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Employee;
-import com.m13.dam.dam_m13_finalproject_android.model.pojo.LastServer;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
-import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
-import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistory;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 public class getUserAsync extends AsyncTask<String, Void, Void> {
 
-    private String host = "172.16.10.9" ;
-    private String port = "1567";
-
     private String Content;
     private ReturnObject ret;
-    private String serverURL = "http://"+host+":"+port+"/api/Last/1";
+    private String serverURL =  "http://"+ Connection.getDomain()+ "Login/";
     private ProgressDialog progressDialog;
     private Context context;
     private AsyncTaskCompleteListener<ReturnObject> listener;
@@ -60,7 +57,10 @@ public class getUserAsync extends AsyncTask<String, Void, Void> {
 
             // Send POST data request
             conn = (HttpURLConnection) url.openConnection();
-            conn.setDoOutput(true);
+            conn.setRequestProperty("Accept-Charset", "UTF-8");
+            //conn.setRequestMethod("GET");
+            //conn.setDoOutput(true);
+            int status = conn.getResponseCode();
 
             ArrayList<Employee> employees = (ArrayList<Employee>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Employee.class, conn.getInputStream());
 
@@ -72,6 +72,9 @@ public class getUserAsync extends AsyncTask<String, Void, Void> {
 
         } catch (MalformedURLException e) {
             ret.setCode(406);
+            ret.setMessage(e.toString());
+        } catch (UnknownHostException e) {
+            ret.setCode(301);
             ret.setMessage(e.toString());
         } catch (IOException e) {
             ret.setCode(407);

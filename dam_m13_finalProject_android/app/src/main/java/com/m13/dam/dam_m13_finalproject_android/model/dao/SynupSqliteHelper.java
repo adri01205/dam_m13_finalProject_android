@@ -84,7 +84,7 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
         db.execSQL(createEmployee);
         db.execSQL(createTeam);
         db.execSQL(createTrTHU);
-        db.execSQL("INSERT INTO Last VALUES (1,0,0,0);");
+        db.execSQL("INSERT INTO Last VALUES (1,0,0,0,0);");
 
     }
 

@@ -2,10 +2,12 @@ package com.m13.dam.dam_m13_finalproject_android.model.services;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.Employee;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +15,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Adri on 06/05/2016.
@@ -31,13 +35,8 @@ public abstract class MarshallingUnmarshalling {
      * @param inputStream InputStream de donde se sacan los objetos
      * @return Objeto Object del objeto del fichero. Se tendra que CASTEAR.
      */
-    public static Object jsonJacksonUnmarshalling(Class clas, InputStream inputStream) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        JavaType type = mapper.getTypeFactory().
-                constructCollectionType(ArrayList.class, clas);
-        mapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
-        Object e = mapper.readValue(inputStream, type);
-        return e;
+    public static Object jsonJacksonUnmarshalling(Class oClass, InputStream inputStream) throws IOException {
+        return new ObjectMapper().readValue(inputStream, new TypeReference<Collection<Employee>>() { });
     }
 
     /**
@@ -54,9 +53,9 @@ public abstract class MarshallingUnmarshalling {
      */
     public static void jsonJacksonMarshalling(Object object, OutputStream out) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
+            //mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
             mapper.writeValue(out, object);
+
     }
 }

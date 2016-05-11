@@ -14,7 +14,6 @@ import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupSharedPreferences;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Employee;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
-import com.m13.dam.dam_m13_finalproject_android.model.services.TestConnection;
 import com.m13.dam.dam_m13_finalproject_android.model.services.getUserAsync;
 
 import java.security.MessageDigest;
@@ -36,11 +35,11 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskComplet
             }
         });
 
-        SynupSharedPreferences.updateUserLoged(this,"1");
-        if (!SynupSharedPreferences.getUserLoged(this).isEmpty()){
-            Intent intent = new Intent(this, MenuActivity.class);
-            this.startActivity(intent);
-        }
+//        SynupSharedPreferences.updateUserLoged(this,"1");
+//        if (!SynupSharedPreferences.getUserLoged(this).isEmpty()){
+//            Intent intent = new Intent(this, MenuActivity.class);
+//            this.startActivity(intent);
+//        }
 
         ((EditText) findViewById(R.id.activity_login_et_username)).setText(SynupSharedPreferences.getUserNameSaved(this));
 
@@ -52,25 +51,20 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskComplet
 
         if(!(userName.isEmpty() || password.isEmpty())) {
 
-            password = md5(password);
+           // password = md5(password);
             SynupConversor sc = new SynupConversor(this);
 
 
             Employee e = sc.getEmployee(userName, password);
 
             if (e != null) {
-                SynupSharedPreferences.updateUserLoged(this,String.valueOf(e.getId()));
+                SynupSharedPreferences.updateUserLoged(this,String.valueOf(e.getNif()));
                 SynupSharedPreferences.updateUserNameSaved(this,((CheckBox) findViewById(R.id.activity_login_cb_remember)).isChecked() ? userName : "");
 
                 Intent intent = new Intent(this, MenuActivity.class);
                 this.startActivity(intent);
             } else {
-                if(TestConnection.testConnection()) {
-                    new getUserAsync(this, this).execute(userName, password);
-                } else {
-                    Dialogs.getErrorDialog(this, getResources().getString(R.string.ERROR_NO_CONNECTION_LOGIN)).show();
-                }
-
+                new getUserAsync(this, this).execute(userName, password);
             }
         } else {
             Dialogs.getErrorDialog(this, getResources().getString(R.string.ERROR_FILL_ALL_FIELDS)).show();
@@ -82,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskComplet
         if(result.succes()){
             Employee e = (Employee) result.getAssociatedObject();
             if(e != null){
-                SynupSharedPreferences.updateUserLoged(this, String.valueOf(e.getId()));
+                SynupSharedPreferences.updateUserLoged(this, String.valueOf(e.getNif()));
                 SynupSharedPreferences.updateUserNameSaved(this, ((CheckBox) findViewById(R.id.activity_login_cb_remember)).isChecked() ? ((EditText) findViewById(R.id.activity_login_et_username)).getText().toString() :"");
 
                 Intent intent = new Intent(this, MenuActivity.class);
@@ -90,7 +84,9 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskComplet
             } else {
                 Dialogs.getErrorDialog(this, getResources().getString(R.string.ERROR_USER_NOT_EXISTS)).show();
             }
-        } else {
+        } else if (result.getCode()==301){
+            Dialogs.getErrorDialog(this, getResources().getString(R.string.ERROR_NO_CONNECTION_LOGIN)).show();
+        }else       {
             Dialogs.getErrorDialog(this, result).show();
         }
 

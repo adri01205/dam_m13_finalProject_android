@@ -4,26 +4,15 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskCompleteListener;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
-import com.m13.dam.dam_m13_finalproject_android.model.pojo.Employee;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.LastServer;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistory;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.GenericArrayType;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -33,7 +22,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
 
     private String Content;
     private ReturnObject ret;
-    private String serverURLLastTasks = "http://"+TestConnection.getDomain()+"/api/Last/1";
+    private String serverURLLastTasks = "http://"+ Connection.getDomain()+"/api/Last/1";
     private String serverURLTasksI = "http://androidexample.com/media/webservice/JsonReturn.php";
     private String serverURLTasksU = "http://androidexample.com/media/webservice/JsonReturn.php";
     private String serverURLTasksD = "http://androidexample.com/media/webservice/JsonReturn.php";
@@ -174,7 +163,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
 
 
         for (Task t : tasks) {
-            conversor.deleteTask(t.getId());
+            conversor.deleteTask(t.getCode());
         }
 
         conn.disconnect();
