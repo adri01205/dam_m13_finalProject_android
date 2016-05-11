@@ -6,15 +6,29 @@ import java.sql.Date;
 
 /**
  * Created by adri on 04/05/2016.
+ *
  */
+
+/**
+ * Modified by jesus on 10/05/2016
+ *
+ *  Updated 'id_employee' Type
+ *  Updated 'id_task' Type
+ */
+
+
 public class TaskHistory {
 
+    /*
+    int id_employee;
+    int id_task;
+    */
     @JsonProperty("id")
     int id;
     @JsonProperty("id_employee")
-    int id_employee;
+    String id_employee;
     @JsonProperty("id_task")
-    int id_task;
+    String id_task;
     @JsonProperty("startDate")
     Date startDate;
     @JsonProperty("finishDate")
@@ -27,6 +41,7 @@ public class TaskHistory {
     public TaskHistory() {
     }
 
+    /* Modified by jesus on 10/05/2016
     public TaskHistory(int id, int id_employee, int id_task, Date startDate, Date finishDate, String comment, int isFinished) {
         this.id = id;
         this.id_employee = id_employee;
@@ -45,6 +60,17 @@ public class TaskHistory {
         this.comment = comment;
         this.isFinished = isFinished;
     }
+    */
+
+    public TaskHistory(int id, String id_employee, String id_task, int isFinished, Date startDate, Date finishDate, String comment) {
+        this.id = id;
+        this.id_employee = id_employee;
+        this.id_task = id_task;
+        this.isFinished = isFinished;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+        this.comment = comment;
+    }
 
     public int getId() {
         return id;
@@ -54,6 +80,7 @@ public class TaskHistory {
         this.id = id;
     }
 
+    /* Modified by jesus on 10/05/2016
     public int getId_employee() {
         return id_employee;
     }
@@ -67,6 +94,24 @@ public class TaskHistory {
     }
 
     public void setId_task(int id_task) {
+        this.id_task = id_task;
+    }
+
+    */
+
+    public String getId_employee() {
+        return id_employee;
+    }
+
+    public void setId_employee(String id_employee) {
+        this.id_employee = id_employee;
+    }
+
+    public String getId_task() {
+        return id_task;
+    }
+
+    public void setId_task(String id_task) {
         this.id_task = id_task;
     }
 
