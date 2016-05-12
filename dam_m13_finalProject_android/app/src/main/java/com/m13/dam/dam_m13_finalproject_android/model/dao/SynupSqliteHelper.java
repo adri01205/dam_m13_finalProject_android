@@ -38,7 +38,7 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           " id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "+
           " employeeLog INTEGER, "+
           " taskLog INTEGER, "+
-          " employeTaskLog INTEGER, "+
+          " taskHistoryLog INTEGER, "+
           " teamLog INTEGER "+
           "); ";
 
@@ -55,7 +55,6 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           "); ";
 
     static String createTeam = "CREATE TABLE Team( " +
-            "id Integer NOT NULL, " +
             "code TEXT NOT NULL, " +
             "name TEXT, " +
             "PRIMARY KEY(id) " +
