@@ -57,7 +57,7 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
     static String createTeam = "CREATE TABLE Team( " +
             "code TEXT NOT NULL, " +
             "name TEXT, " +
-            "PRIMARY KEY(id) " +
+            "PRIMARY KEY(code) " +
             ");";
 
     static String createTrTHU = "CREATE TRIGGER trTHU "+

@@ -40,6 +40,8 @@ import java.text.SimpleDateFormat;
  * Modified field 'id' in 'Employee' table. now 'nif' is 'id' like in centralized DB
  * Modified some warning string in catch block
  */
+
+/* ORM Lite */
 public class SynupConversor {
     public static final String BD_NAME = "SYNUP_BD7";
     public static final int BD_VERSION = 1;
@@ -120,10 +122,10 @@ public class SynupConversor {
         c.moveToFirst();
 
         try {
-            return new TaskHistory(c.getInt(0),c.getString(1),c.getString(2),
-                    new java.sql.Date(dataFormat.parse(c.getString(3)).getTime()),
-                    new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()),
-                    c.getString(5),c.getInt(6));
+            return new TaskHistory(c.getInt(0),c.getString(1).trim(),c.getString(2).trim(),
+                    new java.sql.Date(dataFormat.parse(c.getString(3).trim()).getTime()),
+                    new java.sql.Date(dataFormat.parse(c.getString(4).trim()).getTime()),
+                    c.getString(5).trim(),c.getInt(6));
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -212,8 +214,8 @@ public class SynupConversor {
         c.moveToFirst();
 
         try {
-            return new Task(c.getString(0),c.getString(1), new java.sql.Date(dataFormat.parse(c.getString(2)).getTime()),
-                    c.getString(3),c.getString(4),c.getString(5));
+            return new Task(c.getString(0).trim(),c.getString(1).trim(), new java.sql.Date(dataFormat.parse(c.getString(2).trim()).getTime()),
+                    c.getString(3).trim(),c.getString(4).trim(),c.getString(5).trim());
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
@@ -284,8 +286,8 @@ public class SynupConversor {
         }
         c.moveToFirst();
 
-        return new Employee(c.getString(0),c.getString(1),
-                c.getString(2),c.getString(3),c.getString(4),c.getString(5),c.getString(6),c.getString(7));
+        return new Employee(c.getString(0).trim(),c.getString(1).trim(),
+                c.getString(2).trim(),c.getString(3).trim(),c.getString(4).trim(),c.getString(5).trim(),c.getString(6).trim(),c.getString(7).trim());
     }
 
     //GET BY USERNAME AND LOGIN
@@ -307,8 +309,8 @@ public class SynupConversor {
         }
         c.moveToFirst();
 
-        return new Employee(c.getString(0),c.getString(1), c.getString(2),c.getString(3),
-                c.getString(4),c.getString(5),c.getString(6),c.getString(7));
+        return new Employee(c.getString(0).trim(),c.getString(1).trim(), c.getString(2).trim(),c.getString(3).trim(),
+                c.getString(4).trim(),c.getString(5).trim(),c.getString(6).trim(),c.getString(7).trim());
     }
 
     //SAVE -> INSERT
@@ -379,7 +381,7 @@ public class SynupConversor {
         }
         c.moveToFirst();
 
-        return new Team(c.getString(0),c.getString(1));
+        return new Team(c.getString(0).trim(),c.getString(1).trim());
     }
 
     //SAVE -> INSERT
@@ -427,7 +429,7 @@ public class SynupConversor {
                 "Last",
                 new String[]{"taskLog"},
                 "id = ?",
-                new String[]{String.valueOf(0)},
+                new String[]{String.valueOf(1)},
                 null,
                 null,
                 null,
@@ -447,7 +449,7 @@ public class SynupConversor {
                 "Last",
                 new String[]{"employeeLog"},
                 "id = ?",
-                new String[]{String.valueOf(0)},
+                new String[]{String.valueOf(1)},
                 null,
                 null,
                 null,
@@ -467,7 +469,7 @@ public class SynupConversor {
                 "Last",
                 new String[]{"teamLog"},
                 "id = ?",
-                new String[]{String.valueOf(0)},
+                new String[]{String.valueOf(1)},
                 null,
                 null,
                 null,
@@ -487,7 +489,7 @@ public class SynupConversor {
                 "Last",
                 new String[]{"taskHistoryLog"},
                 "id = ?",
-                new String[]{String.valueOf(0)},
+                new String[]{String.valueOf(1)},
                 null,
                 null,
                 null,
@@ -508,7 +510,7 @@ public class SynupConversor {
 
         args.put("taskHistoryLog", lastTaskHistory);
         try {
-            db.update("Last", args, "id=0", null);
+            db.update("Last", args, "id=1", null);
         } catch (Exception e){
             return false;
         }
@@ -522,7 +524,7 @@ public class SynupConversor {
 
         args.put("taskLog", lastTask);
         try {
-            db.update("Last", args, "id=0", null);
+            db.update("Last", args, "id=1", null);
         } catch (Exception e){
             return false;
         }
@@ -536,7 +538,7 @@ public class SynupConversor {
 
         args.put("teamLog", lastTeam);
         try {
-            db.update("Last", args, "id=0", null);
+            db.update("Last", args, "id=1", null);
         } catch (Exception e){
             return false;
         }
@@ -550,7 +552,7 @@ public class SynupConversor {
 
         args.put("employeeLog", lastEmployee);
         try {
-            db.update("Last", args, "id=0", null);
+            db.update("Last", args, "id=1", null);
         } catch (Exception e){
             return false;
         }

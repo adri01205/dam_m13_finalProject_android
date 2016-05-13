@@ -12,7 +12,7 @@ public class LastServer {
     private int tasklogId;
     @JsonProperty("taskhistlogId")
     private int taskhistlogId;
-    @JsonProperty("teamId")
+    @JsonProperty("teamlogId")
     private int teamlogId;
 
     public int getEmplogId() {

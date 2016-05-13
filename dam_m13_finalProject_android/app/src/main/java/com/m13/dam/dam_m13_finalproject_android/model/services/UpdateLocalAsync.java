@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 
 import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskCompleteListener;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
+import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupSharedPreferences;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Employee;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.LastServer;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
@@ -25,34 +26,36 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
     private String Content;
     private ReturnObject ret;
 
-    private String serverURLLastServer = "http://"+ Connection.getDomain()+"Last/1";
-    private String serverURLTasksI = "http://androidexample.com/media/webservice/JsonReturn.php";
-    private String serverURLTasksU = "http://androidexample.com/media/webservice/JsonReturn.php";
-    private String serverURLTasksD = "http://androidexample.com/media/webservice/JsonReturn.php";
-    private String serverURLTeamI = "http://androidexample.com/media/webservice/JsonReturn.php";
-    private String serverURLTeamU = "http://androidexample.com/media/webservice/JsonReturn.php";
-    private String serverURLTeamD = "http://androidexample.com/media/webservice/JsonReturn.php";
-    private String serverURLEmployeeI = "http://androidexample.com/media/webservice/JsonReturn.php";
-    private String serverURLEmployeeU = "http://androidexample.com/media/webservice/JsonReturn.php";
-    private String serverURLEmployeeD = "http://androidexample.com/media/webservice/JsonReturn.php";
-    private String serverURLTasksHistoryI = "http://androidexample.com/media/webservice/JsonReturn.php";
-    private String serverURLTasksHistoryU = "http://androidexample.com/media/webservice/JsonReturn.php";
-    private String serverURLTasksHistoryD = "http://androidexample.com/media/webservice/JsonReturn.php";
+    private String employeeId;
+    private String serverURLLastServer = "http://"+ Connection.getDomain()+"Last/";
+    private String serverURLTasksI = "http://"+ Connection.getDomain()+"TaskInserted/";
+    private String serverURLTasksU = "http://"+ Connection.getDomain()+"TaskUpdated/";
+    private String serverURLTasksD = "http://"+ Connection.getDomain()+"TaskDeleted/";
+    private String serverURLTeamI = "http://"+ Connection.getDomain()+"TeamInserted/";
+    private String serverURLTeamU = "http://"+ Connection.getDomain()+"TeamUpdated/";
+    private String serverURLTeamD = "http://"+ Connection.getDomain()+"TeamDeleted/";
+    private String serverURLEmployeeI = "http://"+ Connection.getDomain()+"EmployeeInserted/";
+    private String serverURLEmployeeU = "http://"+ Connection.getDomain()+"EmployeeUpdated/";
+    private String serverURLEmployeeD = "http://"+ Connection.getDomain()+"EmployeeDeleted/";
+    private String serverURLTasksHistoryI = "http://"+ Connection.getDomain()+"TaskHistoryInserted/";
+    private String serverURLTasksHistoryU = "http://"+ Connection.getDomain()+"TaskHistoryUpdated/";
+    private String serverURLTasksHistoryD = "http://"+ Connection.getDomain()+"TaskHistoryDeleted/";
     private ProgressDialog progressDialog;
-    private Context context;
+    private Activity context;
     private AsyncTaskCompleteListener<ReturnObject> listener;
     private SynupConversor conversor;
 
-    public UpdateLocalAsync(Context context, AsyncTaskCompleteListener<ReturnObject> listener)
+    public UpdateLocalAsync(Activity context, AsyncTaskCompleteListener<ReturnObject> listener)
     {
         this.context = context;
         this.listener = listener;
+        this.employeeId = SynupSharedPreferences.getUserLoged(context);
         ret = new ReturnObject(200,"OK");
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Connecting to server..");
         progressDialog.setIndeterminate(false);
         progressDialog.setCancelable(true);
-        conversor = new SynupConversor((Activity) context);
+        conversor = new SynupConversor(context);
     }
 
     protected void onPreExecute() {
@@ -66,29 +69,40 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... urls) {
         HttpURLConnection conn = null;
         boolean smtingDone = false;
+        int status = 500;
         try {
             conn = (HttpURLConnection) new URL(serverURLLastServer).openConnection();
-            conn.setDoOutput(true);
+            conn.setRequestProperty("Accept-Charset", "UTF-8");
+
+            status = conn.getResponseCode();
+
             ArrayList<LastServer> lastServer = (ArrayList<LastServer>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(LastServer.class, conn.getInputStream());
             conn.disconnect();
-
-            if (lastServer.get(0).getTasklogId() > conversor.getLastLocalTask()) {
-                updateTask(lastServer.get(0).getTasklogId());
+            int first = conversor.getLastLocalTask();
+            int last = lastServer.get(0).getTasklogId();
+            if (last > first) {
+                updateTask(first, last);
                 smtingDone = true;
             }
 
-            if(lastServer.get(0).getTaskhistlogId() > conversor.getLastLocalTaskHistoryLog()) {
-                updateTaskHistory(lastServer.get(0).getTaskhistlogId());
+            first = conversor.getLastLocalTaskHistoryLog();
+            last = lastServer.get(0).getTaskhistlogId();
+            if (last > first) {
+                updateTaskHistory(first, last);
                  smtingDone = true;
             }
 
-            if (lastServer.get(0).getTeamlogId() > conversor.getLastLocalTeam()) {
-                updateTaskHistory(lastServer.get(0).getTeamlogId());
+            first = conversor.getLastLocalTeam();
+            last = lastServer.get(0).getTeamlogId();
+            if (last > first) {
+                updateTeam(first, last);
                 smtingDone = true;
             }
 
-            if(lastServer.get(0).getEmplogId() > conversor.getLastLocalEmployee()) {
-                updateEmployee(lastServer.get(0).getEmplogId());
+            first = conversor.getLastLocalEmployee();
+            last = lastServer.get(0).getEmplogId();
+            if (last > first) {
+                updateEmployee(first, last);
                 smtingDone = true;
             }
 
@@ -101,7 +115,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
             ret.setMessage(e.toString());
         } catch (IOException e) {
             ret.setCode(407);
-            ret.setMessage(e.toString());
+            ret.setMessage("connection status: " + status + "\n" + e.toString());
         } catch (Exception e) {
             ret.setCode(301);
             ret.setMessage(e.toString());
@@ -125,22 +139,22 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         listener.onTaskComplete(ret);
     }
 
-    private void updateTask(int last) throws Exception {
-        updateITask(last);
-        updateUTask(last);
-        updateDTask(last);
+    private void updateTask(int first, int last) throws Exception {
+        updateITask(first, last);
+        updateUTask(first, last);
+        updateDTask(first, last);
 
         conversor.updateLastTask(last);
 
     }
 
-    private void updateITask(int last) throws IOException {
+    private void updateITask(int first, int last) throws IOException {
         // Defined URL  where to send data
-        URL url = new URL(serverURLTasksI);
+        URL url = new URL(serverURLTasksI + employeeId + "/" + first + "/" + last);
 
         // Send POST data request
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
 
         ArrayList<Task> tasks = (ArrayList<Task>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Task.class, conn.getInputStream());
 
@@ -152,14 +166,14 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         conn.disconnect();
     }
 
-    private void updateUTask(int last) throws Exception {
+    private void updateUTask(int first, int last) throws Exception {
         // Defined URL  where to send data
 
-        URL url = new URL(serverURLTasksU);
+        URL url = new URL(serverURLTasksU + employeeId + "/" + first + "/" + last);
 
         // Send POST data request
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
 
         ArrayList<Task> tasks = (ArrayList<Task>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Task.class, conn.getInputStream());
 
@@ -171,13 +185,13 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         conn.disconnect();
     }
 
-    private void updateDTask(int last) throws Exception {
+    private void updateDTask(int first, int last) throws Exception {
         // Defined URL  where to send data
-        URL url = new URL(serverURLTasksD);
+        URL url = new URL(serverURLTasksD + employeeId + "/" + first + "/" + last);
 
         // Send POST data request
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
 
         ArrayList<Task> tasks = (ArrayList<Task>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Task.class, conn.getInputStream());
 
@@ -189,22 +203,22 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         conn.disconnect();
     }
 
-    private void updateTaskHistory(int last) throws Exception {
-        updateITaskHistory(last);
-        updateUTaskHistory(last);
-        updateDTaskHistory(last);
+    private void updateTaskHistory(int first, int last) throws Exception {
+        updateITaskHistory(first, last);
+        updateUTaskHistory(first, last);
+        updateDTaskHistory(first, last);
 
         conversor.updateLastTaskHistory(last);
 
     }
 
-    private void updateITaskHistory(int last) throws IOException {
+    private void updateITaskHistory(int first, int last) throws IOException {
         // Defined URL  where to send data
-        URL url = new URL(serverURLTasksHistoryI);
+        URL url = new URL(serverURLTasksHistoryI + employeeId + "/" + first + "/" + last);
 
         // Send POST data request
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
 
         ArrayList<TaskHistory> tasks = (ArrayList<TaskHistory>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(TaskHistory.class, conn.getInputStream());
 
@@ -213,14 +227,14 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         }
     }
 
-    private void updateUTaskHistory(int last) throws Exception {
+    private void updateUTaskHistory(int first, int last) throws Exception {
         // Defined URL  where to send data
 
-        URL url = new URL(serverURLTasksHistoryU);
+        URL url = new URL(serverURLTasksHistoryU + employeeId + "/" + first + "/" + last);
 
         // Send POST data request
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
 
         ArrayList<TaskHistory> tasks = (ArrayList<TaskHistory>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(TaskHistory.class, conn.getInputStream());
 
@@ -232,13 +246,13 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         conn.disconnect();
     }
 
-    private void updateDTaskHistory(int last) throws Exception {
+    private void updateDTaskHistory(int first, int last) throws Exception {
         // Defined URL  where to send data
-        URL url = new URL(serverURLTasksHistoryD);
+        URL url = new URL(serverURLTasksHistoryD + employeeId + "/" + first + "/" + last);
 
         // Send POST data request
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
 
         ArrayList<TaskHistory> tasks = (ArrayList<TaskHistory>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(TaskHistory.class, conn.getInputStream());
 
@@ -250,21 +264,21 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         conn.disconnect();
     }
 
-    private void updateTeam(int last) throws Exception {
-        updateITeam(last);
-        updateUTeam(last);
-        updateDTeam(last);
+    private void updateTeam(int first, int last) throws Exception {
+        updateITeam(first, last);
+        updateUTeam(first, last);
+        updateDTeam(first, last);
 
         conversor.updateLastTeam(last);
     }
 
-    private void updateITeam(int last) throws IOException {
+    private void updateITeam(int first, int last) throws IOException {
         // Defined URL  where to send data
-        URL url = new URL(serverURLTeamI);
+        URL url = new URL(serverURLTeamI + employeeId + "/" + first + "/" + last);
 
         // Send POST data request
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
 
         ArrayList<Team> tasks = (ArrayList<Team>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Team.class, conn.getInputStream());
 
@@ -273,14 +287,14 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         }
     }
 
-    private void updateUTeam(int last) throws Exception {
+    private void updateUTeam(int first, int last) throws Exception {
         // Defined URL  where to send data
 
-        URL url = new URL(serverURLTeamU);
+        URL url = new URL(serverURLTeamU + employeeId + "/" + first + "/" + last);
 
         // Send POST data request
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
 
         ArrayList<Team> tasks = (ArrayList<Team>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Team.class, conn.getInputStream());
 
@@ -292,13 +306,14 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         conn.disconnect();
     }
 
-    private void updateDTeam(int last) throws Exception {
+    private void updateDTeam(int first, int last) throws Exception {
         // Defined URL  where to send data
-        URL url = new URL(serverURLTeamD);
+        URL url = new URL(serverURLTeamD + employeeId + "/" + first + "/" + last);
 
         // Send POST data request
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
+        int s = conn.getResponseCode();
 
         ArrayList<Team> tasks = (ArrayList<Team>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Team.class, conn.getInputStream());
 
@@ -309,21 +324,21 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
 
         conn.disconnect();
     }
-    private void updateEmployee(int last) throws Exception {
-        updateIEmployee(last);
-        updateUEmployee(last);
-        updateDEmployee(last);
+    private void updateEmployee(int first, int last) throws Exception {
+        updateIEmployee(first, last);
+        updateUEmployee(first, last);
+        updateDEmployee(first, last);
 
         conversor.updateLastEmployee(last);
     }
 
-    private void updateIEmployee(int last) throws IOException {
+    private void updateIEmployee(int first, int last) throws IOException {
         // Defined URL  where to send data
-        URL url = new URL(serverURLEmployeeI);
+        URL url = new URL(serverURLEmployeeI + employeeId + "/" + first + "/" + last);
 
         // Send POST data request
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
 
         ArrayList<Employee> tasks = (ArrayList<Employee>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Employee.class, conn.getInputStream());
 
@@ -332,14 +347,14 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         }
     }
 
-    private void updateUEmployee(int last) throws Exception {
+    private void updateUEmployee(int first, int last) throws Exception {
         // Defined URL  where to send data
 
-        URL url = new URL(serverURLEmployeeU);
+        URL url = new URL(serverURLEmployeeU + employeeId + "/" + first + "/" + last);
 
         // Send POST data request
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
 
         ArrayList<Employee> tasks = (ArrayList<Employee>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Employee.class, conn.getInputStream());
 
@@ -351,13 +366,13 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         conn.disconnect();
     }
 
-    private void updateDEmployee(int last) throws Exception {
+    private void updateDEmployee(int first, int last) throws Exception {
         // Defined URL  where to send data
-        URL url = new URL(serverURLEmployeeD);
+        URL url = new URL(serverURLEmployeeD + employeeId + "/" + first + "/" + last);
 
         // Send POST data request
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
 
         ArrayList<Employee> tasks = (ArrayList<Employee>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Employee.class, conn.getInputStream());
 

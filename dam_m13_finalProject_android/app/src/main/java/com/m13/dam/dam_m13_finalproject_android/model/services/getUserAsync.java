@@ -51,7 +51,7 @@ public class getUserAsync extends AsyncTask<String, Void, Void> {
     // Call after onPreExecute method
     protected Void doInBackground(String... params) {
         HttpURLConnection conn = null;
-        int status = 200;
+        int status = 500;
         try {
             // Defined URL  where to send data
             URL url = new URL(serverURL+params[0]+"/"+params[1]);
