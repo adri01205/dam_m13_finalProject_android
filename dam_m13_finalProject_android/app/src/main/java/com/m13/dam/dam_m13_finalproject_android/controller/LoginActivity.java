@@ -35,11 +35,10 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskComplet
             }
         });
 
-//        SynupSharedPreferences.updateUserLoged(this,"1");
-//        if (!SynupSharedPreferences.getUserLoged(this).isEmpty()){
-//            Intent intent = new Intent(this, MenuActivity.class);
-//            this.startActivity(intent);
-//        }
+        if (!SynupSharedPreferences.getUserLoged(this).isEmpty()){
+            Intent intent = new Intent(this, MenuActivity.class);
+            this.startActivity(intent);
+        }
 
         ((EditText) findViewById(R.id.activity_login_et_username)).setText(SynupSharedPreferences.getUserNameSaved(this));
 
@@ -58,8 +57,8 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskComplet
             Employee e = sc.getEmployee(userName, password);
 
             if (e != null) {
-                SynupSharedPreferences.updateUserLoged(this,String.valueOf(e.getNif()));
-                SynupSharedPreferences.updateUserNameSaved(this,((CheckBox) findViewById(R.id.activity_login_cb_remember)).isChecked() ? userName : "");
+                SynupSharedPreferences.setUserLoged(this,String.valueOf(e.getNif()));
+                SynupSharedPreferences.setUserNameSaved(this,((CheckBox) findViewById(R.id.activity_login_cb_remember)).isChecked() ? userName : "");
 
                 Intent intent = new Intent(this, MenuActivity.class);
                 this.startActivity(intent);
@@ -76,8 +75,8 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskComplet
         if(result.succes()){
             Employee e = (Employee) result.getAssociatedObject();
             if(e != null){
-                SynupSharedPreferences.updateUserLoged(this, String.valueOf(e.getNif()));
-                SynupSharedPreferences.updateUserNameSaved(this, ((CheckBox) findViewById(R.id.activity_login_cb_remember)).isChecked() ? ((EditText) findViewById(R.id.activity_login_et_username)).getText().toString() :"");
+                SynupSharedPreferences.setUserLoged(this, String.valueOf(e.getNif()));
+                SynupSharedPreferences.setUserNameSaved(this, ((CheckBox) findViewById(R.id.activity_login_cb_remember)).isChecked() ? ((EditText) findViewById(R.id.activity_login_et_username)).getText().toString() :"");
 
                 Intent intent = new Intent(this, MenuActivity.class);
                 this.startActivity(intent);

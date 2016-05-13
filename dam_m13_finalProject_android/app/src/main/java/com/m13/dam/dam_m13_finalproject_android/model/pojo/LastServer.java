@@ -12,6 +12,8 @@ public class LastServer {
     private int tasklogId;
     @JsonProperty("taskhistlogId")
     private int taskhistlogId;
+    @JsonProperty("teamId")
+    private int teamlogId;
 
     public int getEmplogId() {
         return emplogId;
@@ -35,5 +37,13 @@ public class LastServer {
 
     public void setTaskhistlogId(int taskhistlogId) {
         this.taskhistlogId = taskhistlogId;
+    }
+
+    public int getTeamlogId() {
+        return teamlogId;
+    }
+
+    public void setTeamlogId(int teamlogId) {
+        this.teamlogId = teamlogId;
     }
 }

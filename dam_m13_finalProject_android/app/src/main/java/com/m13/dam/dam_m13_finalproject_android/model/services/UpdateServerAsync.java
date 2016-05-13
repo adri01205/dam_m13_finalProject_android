@@ -27,7 +27,7 @@ public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
 
     private String Content;
     private ReturnObject ret;
-    private String serverURL = "http://androidexample.com/media/webservice/JsonReturn.php";
+    private String serverURL =  "http://"+ Connection.getDomain()+ "Login/";
     private ProgressDialog progressDialog;
     private Context context;
     private AsyncTaskCompleteListener<ReturnObject> listener;

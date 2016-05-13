@@ -6,15 +6,17 @@
     <string name="code">codigo:</string>
     <string name="btn_Accept">INICIAR SESION</string>
     <string name="rememberUser"> Recordar usuario</string>
-    <string name="ERROR_FILL_ALL_FIELDS">_Please fill all fields</string>
-    <string name="ERROR_USER_NOT_EXISTS">_User does not exists, insert again please</string>
-    <string name="PLACEHOLDER_USERNAME">_username</string>
-    <string name="PLACEHOLDER_PASSWORD">_password</string>
+    <string name="ERROR_FILL_ALL_FIELDS">Por favor introduzca todos los campos</string>
+    <string name="ERROR_USER_NOT_EXISTS">El usuari no existe, insertelo otra vez por favor</string>
+    <string name="PLACEHOLDER_USERNAME">nombre de usuario</string>
+    <string name="PLACEHOLDER_PASSWORD">contraseña</string>
     <string name="title_activity_menu">MENU PRINCIPAL</string>
-    <string name="LOG_OUT">_log out</string>
-    <string name="EXIT">_exit</string>
-    <string name="not_data_updated">_not_data_updated</string>
-    <string name="ERROR_NO_CONNECTION_LOGIN">_To login with a new user you must have internet connection, try again</string>
-    <string name="VIEW_ACCTIVE_TASK">_view acctive task</string>
-    <string name="VIEW_TASKS">_view your team tasks</string>
+    <string name="LOG_OUT">log out</string>
+    <string name="EXIT">exit</string>
+    <string name="not_data_updated">Los datos mostrados de la aplicación puede que no esten acctualizados, por favor connectese a internet</string>
+    <string name="ERROR_NO_CONNECTION_LOGIN">Para inserir con un nuevo usuari necesita connexion a internet, por favor intentelo de nuevo</string>
+    <string name="VIEW_ACCTIVE_TASK">Ver tasca acctiva</string>
+    <string name="VIEW_TASKS">Ver las tascas de tu equipo</string>
+    <string name="title_activity_detail">Detalles de la tasca</string>
+
 </resources>

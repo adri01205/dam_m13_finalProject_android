@@ -12,7 +12,7 @@ public abstract class SynupSharedPreferences {
         SharedPreferences config = context.getSharedPreferences(PREFS_NAME, 0);
         return config.getString("user_loged", "");
     }
-    public static void updateUserLoged(Activity context, String userName) {
+    public static void setUserLoged(Activity context, String userName) {
         SharedPreferences config = context.getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = config.edit();
         editor.putString("user_loged", userName);
@@ -26,7 +26,7 @@ public abstract class SynupSharedPreferences {
         return config.getString("user_saved", "");
     }
 
-    public static void updateUserNameSaved(Activity context, String userName) {
+    public static void setUserNameSaved(Activity context, String userName) {
         SharedPreferences config = context.getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = config.edit();
         editor.putString("user_saved", userName);

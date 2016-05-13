@@ -51,6 +51,7 @@ public class getUserAsync extends AsyncTask<String, Void, Void> {
     // Call after onPreExecute method
     protected Void doInBackground(String... params) {
         HttpURLConnection conn = null;
+        int status = 200;
         try {
             // Defined URL  where to send data
             URL url = new URL(serverURL+params[0]+"/"+params[1]);
@@ -60,11 +61,11 @@ public class getUserAsync extends AsyncTask<String, Void, Void> {
             conn.setRequestProperty("Accept-Charset", "UTF-8");
             //conn.setRequestMethod("GET");
             //conn.setDoOutput(true);
-            int status = conn.getResponseCode();
+            status = conn.getResponseCode();
 
             ArrayList<Employee> employees = (ArrayList<Employee>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Employee.class, conn.getInputStream());
 
-            if(employees != null){
+            if(employees != null && employees.size() > 0){
                 ret.setAssociatedObject(employees.get(0));
             }
 
@@ -78,7 +79,7 @@ public class getUserAsync extends AsyncTask<String, Void, Void> {
             ret.setMessage(e.toString());
         } catch (IOException e) {
             ret.setCode(407);
-            ret.setMessage(e.toString());
+            ret.setMessage("connection status: " + status + "\n" + e.toString());
         } catch (Exception e) {
             ret.setCode(301);
             ret.setMessage(e.toString());

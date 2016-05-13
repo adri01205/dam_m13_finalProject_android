@@ -1,11 +1,15 @@
 package com.m13.dam.dam_m13_finalproject_android.model.pojo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Created by jesus on 09/05/2016.
  */
 public class Team
 {
+    @JsonProperty("code")
     private String code;
+    @JsonProperty("name")
     private String name;
 
     public Team(){ }

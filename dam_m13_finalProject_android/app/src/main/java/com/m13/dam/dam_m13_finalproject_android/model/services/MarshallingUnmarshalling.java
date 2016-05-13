@@ -35,9 +35,16 @@ public abstract class MarshallingUnmarshalling {
      * @param inputStream InputStream de donde se sacan los objetos
      * @return Objeto Object del objeto del fichero. Se tendra que CASTEAR.
      */
-    public static Object jsonJacksonUnmarshalling(Class oClass, InputStream inputStream) throws IOException {
-        return new ObjectMapper().readValue(inputStream, new TypeReference<Collection<Employee>>() { });
+    public static Object jsonJacksonUnmarshalling(Class clas, InputStream inputStream) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JavaType type = mapper.getTypeFactory().
+                constructCollectionType(Collection.class, clas);
+//        return mapper.readValue(inputStream, new TypeReference<Collection<Employee>>() { });
+        return mapper.readValue(inputStream, type);
     }
+
+
+
 
     /**
      * marshalling (objectes a fitxer) de ficheros json utilizando Jackson. Las
