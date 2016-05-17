@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Employee;
@@ -222,6 +223,24 @@ public class SynupConversor {
         }
     }
 
+    //GET BY TEAM
+    public Cursor getTaskByTeam(String code)
+    {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor c = db.query(true,
+                "Task",
+                new String[]{"id_team", "code", "priorityDate", "description", "localization", "project"},
+                "code = ?",
+                new String[]{String.valueOf(code)},
+                null,
+                null,
+                null,
+                null);
+
+        return c;
+    }
+
     //SAVE -> INSERT
     public long saveTask(Task t) {
         long index = -1;
@@ -383,6 +402,19 @@ public class SynupConversor {
 
         return new Team(c.getString(0).trim(),c.getString(1).trim());
     }
+
+    //GET BY USER
+    public Cursor getTeamsByUser(String nif)
+    {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " +
+                                " Team te INNER JOIN Task ta ON te.code = ta.id_team" +
+                                " INNER JOIN TaskHistory th ON ta.code = th.id_task" +
+                                " WHERE th.id_employee = ?", new String[]{nif});
+
+        return c;
+    }
+
 
     //SAVE -> INSERT
     public long saveTeam(Team t) {

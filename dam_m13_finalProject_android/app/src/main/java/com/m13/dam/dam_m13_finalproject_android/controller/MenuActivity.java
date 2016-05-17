@@ -25,6 +25,7 @@ public class MenuActivity extends SynupMenuActivity implements AsyncTaskComplete
         setContentView(R.layout.activity_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         final Activity context = this;
 
 
@@ -41,12 +42,15 @@ public class MenuActivity extends SynupMenuActivity implements AsyncTaskComplete
 
             }
         });
+
         findViewById(R.id.activity_menu_bt_tasks).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, TaskListActivity.class);
+                startActivity(intent);
             }
         });
+
         findViewById(R.id.activity_menu_bt_log_out).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
