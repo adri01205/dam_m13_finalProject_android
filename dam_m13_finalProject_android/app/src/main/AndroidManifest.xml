@@ -14,7 +14,7 @@
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCP2YNH5WipVY5xVVVo3P-wKgJoM5eCAh8" />
 
-        <activity android:name=".controller.LoginActivity">
+        <activity android:name=".controller.TaskListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,6 +29,6 @@
             android:name=".controller.DetailActivity"
             android:label="@string/title_activity_detail"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".controller.TaskListActivity"></activity>
+        <activity android:name=".controller.LoginActivity"></activity>
     </application>
 </manifest>

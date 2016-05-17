@@ -35,23 +35,24 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           " PRIMARY KEY(code) "+
           "); ";
 
-    static String createLast = "CREATE TABLE Last ( "+
-          " id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "+
-          " employeeLog INTEGER, "+
-          " taskLog INTEGER, "+
-          " taskHistoryLog INTEGER, "+
-          " teamLog INTEGER "+
+    static String createLast = "CREATE TABLE Last ( " +
+          " id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+          " employeeLog INTEGER, " +
+          " taskLog INTEGER, " +
+          " taskHistoryLog INTEGER, " +
+          " teamLog INTEGER " +
+          " teamHistoryLog INTEGER " +
           "); ";
 
-    static String createEmployee = "CREATE TABLE Employee ( "+
-          " nif TEXT NOT NULL, "+
-          " name TEXT, "+
-          " surname TEXT, "+
-          " phone TEXT, "+
-          " email TEXT, "+
-          " adress TEXT, "+
-          " username TEXT, "+
-          " password TEXT, "+
+    static String createEmployee = "CREATE TABLE Employee ( " +
+          " nif TEXT NOT NULL, " +
+          " name TEXT, " +
+          " surname TEXT, " +
+          " phone TEXT, " +
+          " email TEXT, " +
+          " adress TEXT, " +
+          " username TEXT, " +
+          " password TEXT, " +
           " PRIMARY KEY(nif) "+
           "); ";
 
@@ -59,6 +60,13 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
             "code TEXT NOT NULL, " +
             "name TEXT, " +
             "PRIMARY KEY(code) " +
+            ");";
+
+    static String createTeamHistory = "CREATE TABLE TeamHistory( " +
+            "id INTEGER NOT NULL, " +
+            "nif TEXT NOT NULL, " +
+            "code TEXT NOT NULL," +
+            "PRIMARY KEY(id) " +
             ");";
 
     static String createTrTHU = "CREATE TRIGGER trTHU "+
@@ -69,7 +77,6 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           "     select new.id, 'U'; "+
           " end; ";
     
-    
 
     public SynupSqliteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -77,14 +84,7 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(createTaskHistoryLog);
-        db.execSQL(createTaskHistory);
-        db.execSQL(createTask);
-        db.execSQL(createLast);
-        db.execSQL(createEmployee);
-        db.execSQL(createTeam);
-        db.execSQL(createTrTHU);
-        db.execSQL("INSERT INTO Last VALUES (1,0,0,0,0);");
+        CreateTable(db);
 
     }
 
@@ -99,14 +99,22 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS Last");
         db.execSQL("DROP TABLE IF EXISTS Employee");
         db.execSQL("DROP TABLE IF EXISTS Team");
+        db.execSQL("DROP TABLE IF EXISTS TeamHistory");
 
+        CreateTable(db);
+
+
+    }
+
+    public void CreateTable(SQLiteDatabase db){
         db.execSQL(createTaskHistoryLog);
         db.execSQL(createTaskHistory);
         db.execSQL(createTask);
         db.execSQL(createLast);
         db.execSQL(createEmployee);
         db.execSQL(createTeam);
+        db.execSQL(createTeamHistory);
         db.execSQL(createTrTHU);
-        db.execSQL("INSERT INTO Last VALUES (1,0,0,0);");
+        db.execSQL("INSERT INTO Last VALUES (1,0,0,0,0,0);");
     }
 }
