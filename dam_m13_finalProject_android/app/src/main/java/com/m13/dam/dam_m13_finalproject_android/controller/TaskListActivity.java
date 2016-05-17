@@ -1,10 +1,15 @@
 package com.m13.dam.dam_m13_finalproject_android.controller;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 
 import com.m13.dam.dam_m13_finalproject_android.R;
@@ -39,8 +44,10 @@ public class TaskListActivity extends SynupMenuActivity
         chargeData();
 
         ExpandableListView elv = (ExpandableListView)findViewById(R.id.lstLlistaExpandible);
-        TeamTaskAdapter adaptador = new TeamTaskAdapter(this, teams, tasksMap);
+        TeamTaskAdapter expandableAdapter = new TeamTaskAdapter(this, teams, tasksMap);
 
+        elv.setAdapter(expandableAdapter);
+        registerForContextMenu(elv);
 
     }
 
@@ -78,6 +85,30 @@ public class TaskListActivity extends SynupMenuActivity
 
     @Override
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+        return false;
+    }
+
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.tasklistcontextmenu, menu);
+
+    }
+
+    /**
+     * Respon a l'event d'haver escollit una opció del menú contextual
+     */
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+
+        switch (item.getItemId()) {
+            case R.id.selectTaskContextMenu:
+                //TODO: FUNCIÓN SELECCIONAR TASCA
+                return true;
+            default:
+                break;
+        }
         return false;
     }
 }
