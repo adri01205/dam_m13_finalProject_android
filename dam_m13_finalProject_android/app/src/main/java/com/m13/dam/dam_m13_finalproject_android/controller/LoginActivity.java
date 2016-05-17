@@ -75,8 +75,8 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskComplet
         if(result.succes()){
             Employee e = (Employee) result.getAssociatedObject();
             if(e != null){
-                SynupSharedPreferences.setUserLoged(this, String.valueOf(e.getNif()));
-                SynupSharedPreferences.setUserNameSaved(this, ((CheckBox) findViewById(R.id.activity_login_cb_remember)).isChecked() ? ((EditText) findViewById(R.id.activity_login_et_username)).getText().toString() :"");
+                SynupSharedPreferences.setUserLoged(this, String.valueOf(e.getNif().trim()));
+                SynupSharedPreferences.setUserNameSaved(this, ((CheckBox) findViewById(R.id.activity_login_cb_remember)).isChecked() ? ((EditText) findViewById(R.id.activity_login_et_username)).getText().toString().trim() :"");
 
                 Intent intent = new Intent(this, MenuActivity.class);
                 this.startActivity(intent);

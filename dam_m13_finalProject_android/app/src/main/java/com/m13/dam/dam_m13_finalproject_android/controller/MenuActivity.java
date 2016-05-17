@@ -27,6 +27,8 @@ public class MenuActivity extends SynupMenuActivity implements AsyncTaskComplete
         setSupportActionBar(toolbar);
         final Activity context = this;
 
+
+        SynupSharedPreferences.setUpdatedData(this,"0");
         if (!SynupSharedPreferences.getUpdatedData(this).equals("1")) {
             new UpdateLocalAsync(this, this).execute();
         }
