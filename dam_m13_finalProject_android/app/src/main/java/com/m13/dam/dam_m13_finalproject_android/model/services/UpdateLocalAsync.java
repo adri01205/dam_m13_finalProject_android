@@ -334,7 +334,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
 
     private void updateIEmployee(int first, int last) throws IOException {
         // Defined URL  where to send data
-        URL url = new URL(serverURLEmployeeI + employeeId + "/" + first + "/" + last);
+        URL url = new URL(serverURLEmployeeI + first + "/" + last);
 
         // Send POST data request
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -350,7 +350,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
     private void updateUEmployee(int first, int last) throws Exception {
         // Defined URL  where to send data
 
-        URL url = new URL(serverURLEmployeeU + employeeId + "/" + first + "/" + last);
+        URL url = new URL(serverURLEmployeeU + first + "/" + last);
 
         // Send POST data request
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -368,7 +368,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
 
     private void updateDEmployee(int first, int last) throws Exception {
         // Defined URL  where to send data
-        URL url = new URL(serverURLEmployeeD + employeeId + "/" + first + "/" + last);
+        URL url = new URL(serverURLEmployeeD + first + "/" + last);
 
         // Send POST data request
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();

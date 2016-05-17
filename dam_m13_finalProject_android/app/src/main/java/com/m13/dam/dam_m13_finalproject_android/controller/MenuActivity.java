@@ -36,6 +36,8 @@ public class MenuActivity extends SynupMenuActivity implements AsyncTaskComplete
         findViewById(R.id.activity_menu_bt_my_task).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(context, DetailActivity.class);
+                context.startActivity(intent);
 
             }
         });
@@ -61,7 +63,8 @@ public class MenuActivity extends SynupMenuActivity implements AsyncTaskComplete
         if (result.succes()) {
             SynupSharedPreferences.setUpdatedData(this,"1");
         } else {
-            findViewById(R.id.activity_menu_ll_not_updated).setVisibility(View.VISIBLE);
+            Dialogs.getErrorDialog(this,result);
+//            findViewById(R.id.activity_menu_ll_not_updated).setVisibility(View.VISIBLE);
 
         }
     }
