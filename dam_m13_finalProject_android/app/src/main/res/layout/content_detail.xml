@@ -12,12 +12,13 @@
     tools:context="com.m13.dam.dam_m13_finalproject_android.controller.DetailActivity"
     tools:showIn="@layout/activity_detail"
     android:orientation="vertical"
+    android:weightSum="10"
     android:gravity="center">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.8">
+        android:layout_weight="1">
 
         <GridLayout
             android:layout_width="match_parent"
@@ -26,205 +27,249 @@
             android:rowCount="20">
 
             <TextView
-                android:text="Code:"
-                android:id="@+id/textView8"
-                android:textAlignment="textEnd"
+                android:text="@string/NAME"
+                android:id="@+id/textView9"
+                android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_columnWeight="0.5"
-                android:layout_rowWeight="1" />
+                android:layout_height="wrap_content"
+                android:layout_rowWeight="1"
+                android:layout_gravity="right"
+                android:layout_marginBottom="10dp"
+                android:layout_columnWeight="1" />
 
             <TextView
+                android:id="@+id/activity_detail_tv_name"
+                android:paddingLeft="10dp"
+                android:layout_column="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="test"
+                android:layout_columnWeight="1" />
+
+            <TextView
+                android:text="@string/CODE"
+                android:id="@+id/textView8"
+                android:textAlignment="gravity"
+                android:paddingRight="10dp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:layout_column="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_rowWeight="1"
+                android:layout_gravity="right"
+                android:layout_marginBottom="10dp"
+                android:layout_columnWeight="1" />
+
+            <TextView
+                android:text="test"
                 android:id="@+id/activity_detail_tv_code"
                 android:paddingLeft="10dp"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="2" />
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1" />
 
             <TextView
-                android:text="Project:"
+                android:text="@string/PROJECT"
                 android:id="@+id/textView10"
-                android:textAlignment="textEnd"
+                android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
-                android:layout_columnWeight="0.5"
-                android:layout_rowWeight="1" />
+                android:layout_rowWeight="1"
+                android:layout_gravity="right"
+                android:layout_marginBottom="10dp"
+                android:layout_columnWeight="1" />
 
             <TextView
-                android:id="@+id/textView12"
+                android:text="test"
+                android:id="@+id/activity_detail_tv_project"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="2" />
+                android:layout_columnWeight="1" />
 
             <TextView
-                android:text="Attendant:"
+                android:text="@string/ATTENDANT"
                 android:id="@+id/textView14"
-                android:textAlignment="textEnd"
+                android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
-                android:layout_columnWeight="0.5"
-                android:layout_rowWeight="1" />
+                android:layout_rowWeight="1"
+                android:layout_gravity="right"
+                android:layout_marginBottom="10dp"
+                android:layout_columnWeight="1" />
 
             <TextView
-                android:id="@+id/textView16"
+                android:text="test"
+                android:id="@+id/activity_detail_tv_employee"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="2" />
+                android:layout_columnWeight="1" />
 
             <TextView
-                android:text="Team:"
+                android:text="@string/TEAM"
                 android:id="@+id/textView18"
-                android:textAlignment="textEnd"
+                android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
-                android:layout_columnWeight="0.5"
-                android:layout_rowWeight="1" />
+                android:layout_rowWeight="1"
+                android:layout_gravity="right"
+                android:layout_marginBottom="10dp"
+                android:layout_columnWeight="1" />
 
             <TextView
-                android:id="@+id/textView20"
+                android:text="test"
+                android:id="@+id/activity_detail_tv_team"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="2" />
+                android:layout_columnWeight="1" />
 
             <TextView
-                android:text="Priority Date:"
+                android:text="@string/PRIORITY_DATE"
                 android:id="@+id/textView24"
-                android:textAlignment="textEnd"
+                android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
-                android:layout_columnWeight="0.5"
-                android:layout_rowWeight="1" />
+                android:layout_rowWeight="1"
+                android:layout_gravity="right"
+                android:layout_marginBottom="10dp"
+                android:layout_columnWeight="1" />
 
             <TextView
-                android:id="@+id/textView26"
+                android:text="test"
+                android:id="@+id/activity_detail_tv_priority_date"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="2" />
+                android:layout_columnWeight="1" />
 
             <TextView
-                android:text="Start Date:"
+                android:text="@string/START_DATE"
                 android:id="@+id/textView27"
-                android:textAlignment="textEnd"
+                android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
-                android:layout_columnWeight="0.5"
-                android:layout_rowWeight="1" />
+                android:layout_rowWeight="1"
+                android:layout_gravity="right"
+                android:layout_marginBottom="10dp"
+                android:layout_columnWeight="1" />
 
             <TextView
-                android:id="@+id/textView28"
+                android:text="test"
+                android:id="@+id/activity_detail_tv_start_date"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="2" />
+                android:layout_columnWeight="1" />
 
             <TextView
-                android:text="Finish Date:"
+                android:text="@string/FINISH_DATE"
                 android:id="@+id/textView29"
-                android:textAlignment="textEnd"
+                android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
-                android:layout_columnWeight="0.5"
-                android:layout_rowWeight="1" />
+                android:layout_rowWeight="1"
+                android:layout_gravity="right"
+                android:layout_marginBottom="10dp"
+                android:layout_columnWeight="1" />
 
             <TextView
-                android:id="@+id/textView30"
+                android:text="test"
+                android:id="@+id/activity_detail_tv_finish_date"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="2" />
+                android:layout_columnWeight="1" />
 
             <TextView
-                android:text="Status:"
+                android:text="@string/STATUS"
                 android:id="@+id/textView31"
-                android:textAlignment="textEnd"
+                android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
-                android:layout_columnWeight="0.5"
-                android:layout_rowWeight="1" />
+                android:layout_rowWeight="1"
+                android:layout_gravity="right"
+                android:layout_marginBottom="10dp"
+                android:layout_columnWeight="1" />
 
             <TextView
-                android:id="@+id/textView32"
+                android:text="test"
+                android:id="@+id/activity_detail_tv_status"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="2" />
+                android:layout_columnWeight="1" />
 
             <TextView
-                android:text="Is Finished:"
+                android:text="@string/IS_FINISHED"
                 android:id="@+id/textView33"
-                android:textAlignment="textEnd"
+                android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
-                android:layout_columnWeight="0.5"
-                android:layout_rowWeight="1" />
-
-            <TextView
-                android:id="@+id/textView34"
-                android:paddingLeft="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_column="1"
                 android:layout_rowWeight="1"
-                android:layout_columnWeight="2" />
+                android:layout_gravity="right"
+                android:layout_marginBottom="10dp"
+                android:layout_columnWeight="1" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_detail_cb_finished"
+                android:layout_rowWeight="0.5"
+                android:layout_column="1"
+                android:layout_columnWeight="1"
+                android:checked="false"
+                android:gravity="top"
+                android:clickable="false" />
 
             <TextView
-                android:text="Description:"
+                android:text="@string/DESCRIPTION"
                 android:id="@+id/textView35"
                 android:textAlignment="gravity"
                 android:paddingRight="10dp"
@@ -234,10 +279,12 @@
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
                 android:layout_columnWeight="0.5"
-                android:layout_rowWeight="1" />
+                android:layout_rowWeight="1"
+                android:layout_columnSpan="2" />
 
             <TextView
-                android:id="@+id/textView36"
+                android:text="test"
+                android:id="@+id/activity_detail_tv_description"
                 android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
@@ -246,10 +293,11 @@
                 android:layout_span="2"
                 android:layout_columnSpan="2"
                 android:layout_columnWeight="0.5"
-                android:layout_rowWeight="1" />
+                android:layout_rowWeight="1"
+                android:layout_marginBottom="10dp" />
 
             <TextView
-                android:text="Location:"
+                android:text="@string/LOCATION"
                 android:id="@+id/textView37"
                 android:textAlignment="gravity"
                 android:paddingRight="10dp"
@@ -259,7 +307,9 @@
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
                 android:layout_columnWeight="0.5"
-                android:layout_rowWeight="1" />
+                android:layout_rowWeight="1"
+                android:layout_marginBottom="10dp"
+                android:layout_columnSpan="2" />
 
             <!--<fragment-->
                 <!--class="com.google.android.gms.maps.SupportMapFragment"-->
@@ -276,11 +326,27 @@
         </GridLayout>
     </ScrollView>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_weight="0.2" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="9"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/activity_detail_bt_finish"
+            android:layout_gravity="center_vertical" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/activity_detail_bt_abandone"
+            android:visibility="gone" />
+    </LinearLayout>
 
 </LinearLayout>

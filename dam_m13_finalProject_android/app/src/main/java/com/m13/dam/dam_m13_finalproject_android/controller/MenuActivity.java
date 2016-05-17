@@ -13,8 +13,10 @@ import android.widget.Button;
 import com.m13.dam.dam_m13_finalproject_android.R;
 import com.m13.dam.dam_m13_finalproject_android.controller.dialogs.Dialogs;
 import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskCompleteListener;
+import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupSharedPreferences;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
 import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateLocalAsync;
 
 public class MenuActivity extends SynupMenuActivity implements AsyncTaskCompleteListener<ReturnObject> {
@@ -37,8 +39,14 @@ public class MenuActivity extends SynupMenuActivity implements AsyncTaskComplete
         findViewById(R.id.activity_menu_bt_my_task).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, DetailActivity.class);
-                context.startActivity(intent);
+                SynupConversor synupConversor = new SynupConversor(context);
+//                Task t = synupConversor.getTaskAcctived(SynupSharedPreferences.getUserLoged(context));
+//                if(t!= null) {
+                    Intent intent = new Intent(context, DetailActivity.class);
+//                    intent.putExtra("idTask", t.getCode());
+                    intent.putExtra("idTask", "blabla1");
+                    context.startActivity(intent);
+//                }
 
             }
         });

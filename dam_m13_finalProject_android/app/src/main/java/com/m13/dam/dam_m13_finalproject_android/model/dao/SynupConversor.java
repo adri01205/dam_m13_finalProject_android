@@ -45,7 +45,7 @@ import java.text.SimpleDateFormat;
 
 /* ORM Lite */
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD10";
+    public static final String BD_NAME = "SYNUP_BD11";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -135,6 +135,36 @@ public class SynupConversor {
         }
     }
 
+    public TaskHistory getTaskHistoryByEmployee(String code) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor c = db.query(true,
+                "TaskHistory",
+                new String[]{"id", "id_employee", "id_task", "startDate", "finishDate", "comment", "isFinished"},
+                "id_employee = ?",
+                new String[]{code},
+                null,
+                null,
+                "id DESC",
+                null);
+
+        if(c==null || c.getCount()==0){
+            return null;
+        }
+        c.moveToLast();
+
+        try {
+            return new TaskHistory(c.getInt(0),c.getString(1).trim(),c.getString(2).trim(),
+                    new java.sql.Date(dataFormat.parse(c.getString(3).trim()).getTime()),
+                    new java.sql.Date(dataFormat.parse(c.getString(4).trim()).getTime()),
+                    c.getString(5).trim(),c.getInt(6));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     //SAVE -> INSERT
     public long saveTaskHistory(TaskHistory th) {
         long index = -1;
@@ -193,6 +223,29 @@ public class SynupConversor {
             return false;
         }
         return true;
+    }
+
+    public Task getTaskAcctived(String code) {
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        String sql = "SELECT t.id_team, t.code, t.priorityDate, t.description, t.localization, t.project, t.name " +
+                "FROM Task t INNER JOIN TaskHistory th ON th.id_employee=t.code " +
+                "WHERE th.finishDate is null and t.code = ?";
+        Cursor c = db.rawQuery(sql, new String[]{code});
+
+        if(c==null || c.getCount()==0){
+            return null;
+        }
+        c.moveToFirst();
+
+        try {
+            return new Task(c.getString(0).trim(),c.getString(1).trim(), new java.sql.Date(dataFormat.parse(c.getString(2).trim()).getTime()),
+                    c.getString(3).trim(),c.getString(4).trim(),c.getString(5).trim(),c.getString(6));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     // TASK LOCAL DB FUNCTIONS

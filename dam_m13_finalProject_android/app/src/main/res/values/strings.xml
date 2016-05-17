@@ -18,4 +18,22 @@
     <string name="VIEW_ACCTIVE_TASK">view acctive task</string>
     <string name="VIEW_TASKS">view your team tasks</string>
     <string name="title_activity_detail">Task Detail</string>
+    <string name="NEW">_new</string>
+    <string name="IN_PROGRESS">_in progress</string>
+    <string name="ABANDONED">_Abandoned</string>
+    <string name="FINISHED">_Finished</string>
+    <string name="NOT_ASSIGNED">_Not Assigned</string>
+    <string name="NOT_STARTED">_Not started</string>
+    <string name="NAME">Name:</string>
+    <string name="CODE">_Code:</string>
+    <string name="PROJECT">_Project:</string>
+    <string name="ATTENDANT">_Attendant:</string>
+    <string name="TEAM">_Team:</string>
+    <string name="PRIORITY_DATE">_Priority Date:</string>
+    <string name="START_DATE">_Start Date:</string>
+    <string name="FINISH_DATE">_Finish Date:</string>
+    <string name="STATUS">_Status:</string>
+    <string name="IS_FINISHED">_Is Finished:</string>
+    <string name="DESCRIPTION">_Description:</string>
+    <string name="LOCATION">_Location:</string>
 </resources>
