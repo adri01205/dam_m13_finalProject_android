@@ -31,6 +31,7 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           " description TEXT, "+
           " localization TEXT, "+
           " project TEXT, "+
+          " name TEXT, "+
           " PRIMARY KEY(code) "+
           "); ";
 

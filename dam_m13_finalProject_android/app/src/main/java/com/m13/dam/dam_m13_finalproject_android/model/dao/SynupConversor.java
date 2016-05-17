@@ -44,7 +44,7 @@ import java.text.SimpleDateFormat;
 
 /* ORM Lite */
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD8";
+    public static final String BD_NAME = "SYNUP_BD10";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -201,7 +201,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "Task",
-                new String[]{"id_team", "code", "priorityDate", "description", "localization", "project"},
+                new String[]{"id_team", "code", "priorityDate", "description", "localization", "project", "name"},
                 "code = ?",
                 new String[]{String.valueOf(code)},
                 null,
@@ -216,7 +216,7 @@ public class SynupConversor {
 
         try {
             return new Task(c.getString(0).trim(),c.getString(1).trim(), new java.sql.Date(dataFormat.parse(c.getString(2).trim()).getTime()),
-                    c.getString(3).trim(),c.getString(4).trim(),c.getString(5).trim());
+                    c.getString(3).trim(),c.getString(4).trim(),c.getString(5).trim(),c.getString(6));
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
@@ -230,7 +230,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "Task",
-                new String[]{"id_team", "code", "priorityDate", "description", "localization", "project"},
+                new String[]{"id_team", "code", "priorityDate", "description", "localization", "project","name"},
                 "code = ?",
                 new String[]{String.valueOf(code)},
                 null,
@@ -253,6 +253,7 @@ public class SynupConversor {
         dades.put("description", t.getDescription());
         dades.put("localization", t.getLocalization());
         dades.put("project", t.getProject());
+        dades.put("name", t.getName());
 
         try {
             index = db.insertOrThrow("Task", null, dades);
@@ -275,6 +276,7 @@ public class SynupConversor {
         args.put("description", t.getDescription());
         args.put("localization", t.getLocalization());
         args.put("project", t.getProject());
+        args.put("name", t.getName());
         db.update("Task", args, "code=" + t.getCode(), null);
 
     }

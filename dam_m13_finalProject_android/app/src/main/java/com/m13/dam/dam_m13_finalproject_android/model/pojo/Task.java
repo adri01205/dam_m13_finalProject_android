@@ -29,19 +29,24 @@ public class Task {
     String localization;
     @JsonProperty("project")
     String project;
+    @JsonProperty("name")
+    String name;
+
 
     public Task() {
     }
 
     // Modified by jesus on 10/05/2016
 
-    public Task(String id_team, String code, Date priorityDate, String description, String localization, String project) {
+
+    public Task(String id_team, String code, Date priorityDate, String description, String localization, String project, String name) {
         this.id_team = id_team;
         this.code = code;
         this.priorityDate = priorityDate;
         this.description = description;
         this.localization = localization;
         this.project = project;
+        this.name = name;
     }
 
     public String getId_team() {
@@ -92,6 +97,14 @@ public class Task {
         this.project = project;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "Task{" +
@@ -101,6 +114,7 @@ public class Task {
                 ", description='" + description + '\'' +
                 ", localization='" + localization + '\'' +
                 ", project='" + project + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

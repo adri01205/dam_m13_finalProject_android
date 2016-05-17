@@ -1,5 +1,6 @@
 package com.m13.dam.dam_m13_finalproject_android.controller;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ import java.util.HashMap;
  * Created by jesus on 10/05/2016.
  */
 
-public class TaskListActivity extends SynupMenuActivity
+public class TaskListActivity extends Activity
         implements ExpandableListView.OnGroupClickListener, ExpandableListView.OnChildClickListener {
 
 
@@ -38,8 +39,8 @@ public class TaskListActivity extends SynupMenuActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.tasks_adapter);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         chargeData();
 
