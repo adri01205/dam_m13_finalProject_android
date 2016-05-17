@@ -573,7 +573,7 @@ public class SynupConversor {
         return c.getInt(3);
     }
 
-    public int getLastServerTeamHistoryLog() {
+    public int getLastServerTeamHistory() {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         Cursor c = db.query(true,

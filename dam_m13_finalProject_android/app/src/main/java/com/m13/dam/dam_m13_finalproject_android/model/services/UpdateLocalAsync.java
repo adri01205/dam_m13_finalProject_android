@@ -40,6 +40,10 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
     private String serverURLTasksHistoryI = "http://"+ Connection.getDomain()+"TaskHistoryInserted/";
     private String serverURLTasksHistoryU = "http://"+ Connection.getDomain()+"TaskHistoryUpdated/";
     private String serverURLTasksHistoryD = "http://"+ Connection.getDomain()+"TaskHistoryDeleted/";
+    private String serverURLTeamHistoryI = "http://"+ Connection.getDomain()+"TeamHistoryInserted/";
+    private String serverURLTeamHistoryU = "http://"+ Connection.getDomain()+"TeamHistoryUpdated/";
+    private String serverURLTeamHistoryD = "http://"+ Connection.getDomain()+"TeamHistoryDeleted/";
+
     private ProgressDialog progressDialog;
     private Activity context;
     private AsyncTaskCompleteListener<ReturnObject> listener;
@@ -105,6 +109,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
                 updateEmployee(first, last);
                 smtingDone = true;
             }
+
 
             if(!smtingDone){
                 ret.setCode(201);
