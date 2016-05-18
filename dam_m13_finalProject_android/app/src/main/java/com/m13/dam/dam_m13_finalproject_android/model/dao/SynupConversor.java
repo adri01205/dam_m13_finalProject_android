@@ -45,7 +45,7 @@ import java.text.SimpleDateFormat;
 
 /* ORM Lite */
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD16";
+    public static final String BD_NAME = "SYNUP_BD17";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -331,14 +331,14 @@ public class SynupConversor {
         args.put("localization", t.getLocalization());
         args.put("project", t.getProject());
         args.put("name", t.getName());
-        db.update("Task", args, "code=" + t.getCode(), null);
+        db.update("Task", args, "code='" + t.getCode()+"'", null);
 
     }
 
     //DELETE TASK
     public void deleteTask(String code) throws Exception{
         SQLiteDatabase db = helper.getReadableDatabase();
-        db.delete("Task", "code=" + code, null);
+        db.delete("Task", "code='" + code+"'", null);
     }
 
     //EMPLOYEE LOCAL DB FUNCTIONS
@@ -427,13 +427,13 @@ public class SynupConversor {
         args.put("username", e.getUsername());
         args.put("phone", e.getPhone());
 
-        db.update("Employee", args, "nif=" + e.getNif(), null);
+        db.update("Employee", args, "nif='" + e.getNif()+"'", null);
     }
 
     //DELETE
     public void deleteEmployee(String nif) throws Exception{
         SQLiteDatabase db = helper.getReadableDatabase();
-        db.delete("Employee", "nif=" + nif, null);
+        db.delete("Employee", "nif='" + nif+"'", null);
     }
 
     //TEAM LOCAL DB FUNCTIONS
@@ -496,13 +496,13 @@ public class SynupConversor {
 
         args.put("code", t.getCode());
         args.put("name", t.getName());
-        db.update("Team", args, "code=" + t.getCode(), null);
+        db.update("Team", args, "code='" + t.getCode()+"'", null);
     }
 
     //DELETE
     public void deleteTeam(String code) throws Exception{
         SQLiteDatabase db = helper.getReadableDatabase();
-        db.delete("Team", "code=" + code, null);
+        db.delete("Team", "code='" + code+"'", null);
     }
 
     //TEAMHISTORY LOCAL DB FUNCTIONS
