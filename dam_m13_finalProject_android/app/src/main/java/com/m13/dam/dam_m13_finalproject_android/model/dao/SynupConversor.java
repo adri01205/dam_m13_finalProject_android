@@ -464,9 +464,8 @@ public class SynupConversor {
     {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " +
-                " Team te INNER JOIN Task ta ON te.code = ta.id_team" +
-                " INNER JOIN TaskHistory th ON ta.code = th.id_task" +
-                " WHERE th.id_employee = ?", new String[]{nif});
+                " Team te INNER JOIN TeamHistory teh ON te.code = teh.code" +
+                " WHERE teh.id_employee = ?", new String[]{nif});
 
         return c;
     }
@@ -626,7 +625,7 @@ public class SynupConversor {
         return c.getInt(0);
     }
 
-    public int getLastServerTeamHistory() {
+    public int getLastLocalTeamHistory() {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         Cursor c = db.query(true,

@@ -14,6 +14,7 @@ import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistory;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Team;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.TeamHistory;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -107,6 +108,13 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
             last = lastServer.get(0).getEmplogId();
             if (last > first) {
                 updateEmployee(first, last);
+                smtingDone = true;
+            }
+
+            first = conversor.getLastLocalTeamHistory();
+            last = lastServer.get(0).getTeamhistlogId();
+            if (last > first) {
+                updateTeamHistory(first, last);
                 smtingDone = true;
             }
 
@@ -384,6 +392,67 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
 
         for (Employee t : tasks) {
             conversor.deleteEmployee(t.getNif());
+        }
+
+        conn.disconnect();
+    }
+
+    private void updateTeamHistory(int first, int last) throws Exception {
+        updateITeamHistory(first, last);
+        updateUTeamHistory(first, last);
+        updateDTeamHistory(first, last);
+
+        conversor.updateLastTeamHistory(last);
+    }
+
+    private void updateITeamHistory(int first, int last) throws IOException {
+        // Defined URL  where to send data
+        URL url = new URL(serverURLTeamHistoryI + employeeId + "/" + first + "/" + last);
+
+        // Send POST data request
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
+
+        ArrayList<TeamHistory> teamHistories = (ArrayList<TeamHistory>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(TeamHistory.class, conn.getInputStream());
+
+        for (TeamHistory t : teamHistories) {
+            conversor.saveTeamHistory(t);
+        }
+    }
+
+    private void updateUTeamHistory(int first, int last) throws Exception {
+        // Defined URL  where to send data
+
+        URL url = new URL(serverURLTeamHistoryU + employeeId + "/" + first + "/" + last);
+
+        // Send POST data request
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
+
+        ArrayList<TeamHistory> teamHistories = (ArrayList<TeamHistory>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(TeamHistory.class, conn.getInputStream());
+
+
+        for (TeamHistory t : teamHistories) {
+            conversor.updateTeamHistory(t);
+        }
+
+        conn.disconnect();
+    }
+
+    private void updateDTeamHistory(int first, int last) throws Exception {
+        // Defined URL  where to send data
+        URL url = new URL(serverURLTeamHistoryD + employeeId + "/" + first + "/" + last);
+
+        // Send POST data request
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
+        int s = conn.getResponseCode();
+
+        ArrayList<TeamHistory> teamHistories = (ArrayList<TeamHistory>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(TeamHistory.class, conn.getInputStream());
+
+
+        for (TeamHistory t : teamHistories) {
+            conversor.deleteTeamHistory(t.getId());
         }
 
         conn.disconnect();
