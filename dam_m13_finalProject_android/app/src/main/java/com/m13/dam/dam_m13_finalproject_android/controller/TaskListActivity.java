@@ -1,11 +1,10 @@
 package com.m13.dam.dam_m13_finalproject_android.controller;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +20,7 @@ import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Team;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -38,6 +38,8 @@ public class TaskListActivity extends Activity
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
+        final Activity context = this;
+
         setContentView(R.layout.tasks_adapter);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
@@ -48,9 +50,36 @@ public class TaskListActivity extends Activity
         TeamTaskAdapter expandableAdapter = new TeamTaskAdapter(this, teams, tasksMap);
 
         elv.setAdapter(expandableAdapter);
-        registerForContextMenu(elv);
+        //registerForContextMenu(elv);
+
+        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("idTask", tasksMap.get(teams.get(groupPosition)).get(childPosition).getCode());
+                startActivity(intent);
+
+                return false;
+            }
+        });
+
+        elv.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int groupPosition) {
+            }
+        });
+
+        elv.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+
+            }
+        });
+
 
     }
+
+
 
     public void chargeData()
     {
@@ -61,16 +90,22 @@ public class TaskListActivity extends Activity
 
         if (cTeams.moveToFirst()){
             do{
-                Team team = (Team) cTeams;
+                Team team = new Team(cTeams.getString(0), cTeams.getString(1));
                 teams.add(team);
                 ArrayList<Task> teamTasks = new ArrayList<>();
 
-                Cursor tasks = syn.getTaskByTeam(team.getCode());
+                Cursor cTasks = syn.getTaskByTeam(team.getCode());
 
-                if (tasks.moveToFirst()){
+                if (cTasks.moveToFirst()){
                     do{
-                        teamTasks.add((Task) tasks);
-                    }while(tasks.moveToFirst());
+                        teamTasks.add(new Task(cTasks.getString(0),
+                                cTasks.getString(1),
+                                new Date(cTasks.getLong(2)),
+                                cTasks.getString(3),
+                                cTasks.getString(4),
+                                cTasks.getString(5),
+                                cTasks.getString(6)));
+                    }while(cTasks.moveToNext());
                 }
 
                 tasksMap.put(team, teamTasks);

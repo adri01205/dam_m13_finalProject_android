@@ -285,7 +285,7 @@ public class SynupConversor {
         Cursor c = db.query(true,
                 "Task",
                 new String[]{"id_team", "code", "priorityDate", "description", "localization", "project", "name"},
-                "code = ?",
+                "id_team = ?",
                 new String[]{String.valueOf(code)},
                 null,
                 null,
@@ -463,9 +463,12 @@ public class SynupConversor {
     public Cursor getTeamsByUser(String nif)
     {
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT te.* FROM " +
-                " Team te INNER JOIN TeamHistory teh ON te.code = teh.code" +
-                " WHERE teh.id_employee = ?", new String[]{nif});
+
+        String sql = "SELECT te.code, te.name " +
+                "FROM Team te INNER JOIN TeamHistory teh ON te.code = teh.code" +
+                " WHERE teh.nif = ?";
+
+        Cursor c = db.rawQuery(sql, new String[]{nif});
 
         return c;
     }
