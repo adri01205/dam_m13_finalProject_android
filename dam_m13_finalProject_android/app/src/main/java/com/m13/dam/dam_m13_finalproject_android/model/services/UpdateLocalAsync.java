@@ -58,7 +58,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Connecting to server..");
         progressDialog.setIndeterminate(false);
-        progressDialog.setCancelable(true);
+        progressDialog.setCancelable(false);
         conversor = new SynupConversor(context);
     }
 

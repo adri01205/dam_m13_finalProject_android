@@ -36,4 +36,11 @@
     <string name="IS_FINISHED">_Is Finished:</string>
     <string name="DESCRIPTION">_Description:</string>
     <string name="LOCATION">_Location:</string>
+    <string name="TASK_NOT_EXISTS">_Task don\'t exists</string>
+    <string name="MAIN_MENU">_main menu</string>
+    <string name="FINISH">_finish</string>
+    <string name="ABANDONE">_abandone</string>
+    <string name="TAKE">_take</string>
+    <string name="TASK_TOOK">_task took</string>
+    <string name="ERROR_NO_CONNECTION_TAKE_TASK">_You need internet connection to take a task</string>
 </resources>

@@ -23,13 +23,17 @@ public class SynupMenuActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
+        Intent intent;
         switch (id){
+            case R.id.menu_main_menu:
+                intent = new Intent(this, MenuActivity.class);
+                this.startActivity(intent);
             case R.id.menu_exit:
                 System.exit(0);
                 break;
             case R.id.menu_log_out:
                 SynupSharedPreferences.setUserLoged(this, "");
-                Intent intent = new Intent(this, LoginActivity.class);
+                intent = new Intent(this, LoginActivity.class);
                 this.startActivity(intent);
                 break;
         }

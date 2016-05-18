@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.hobbit.myapplication.MainActivity">
     <item
+        android:id="@+id/menu_main_menu"
+        android:title="@string/MAIN_MENU"/>
+    <item
         android:id="@+id/menu_log_out"
         android:title="@string/LOG_OUT"/>
     <item

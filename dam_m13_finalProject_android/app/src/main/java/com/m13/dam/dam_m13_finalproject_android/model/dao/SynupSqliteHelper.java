@@ -40,7 +40,7 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           " employeeLog INTEGER, " +
           " taskLog INTEGER, " +
           " taskHistoryLog INTEGER, " +
-          " teamLog INTEGER " +
+          " teamLog INTEGER, " +
           " teamHistoryLog INTEGER " +
           "); ";
 

@@ -35,7 +35,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_rowWeight="1"
                 android:layout_gravity="right"
                 android:layout_marginBottom="10dp"
@@ -46,7 +46,7 @@
                 android:paddingLeft="10dp"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="test"
                 android:layout_columnWeight="1" />
 
@@ -59,7 +59,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_rowWeight="1"
                 android:layout_gravity="right"
                 android:layout_marginBottom="10dp"
@@ -71,7 +71,7 @@
                 android:paddingLeft="10dp"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_columnWeight="1" />
 
             <TextView
@@ -80,7 +80,7 @@
                 android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
@@ -94,7 +94,7 @@
                 android:id="@+id/activity_detail_tv_project"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_column="1"
                 android:layout_columnWeight="1" />
 
@@ -104,7 +104,7 @@
                 android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
@@ -118,7 +118,7 @@
                 android:id="@+id/activity_detail_tv_employee"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_column="1"
                 android:layout_columnWeight="1" />
 
@@ -128,7 +128,7 @@
                 android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
@@ -142,7 +142,7 @@
                 android:id="@+id/activity_detail_tv_team"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_column="1"
                 android:layout_columnWeight="1" />
 
@@ -152,7 +152,7 @@
                 android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
@@ -166,7 +166,7 @@
                 android:id="@+id/activity_detail_tv_priority_date"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_column="1"
                 android:layout_columnWeight="1" />
 
@@ -176,7 +176,7 @@
                 android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
@@ -190,7 +190,7 @@
                 android:id="@+id/activity_detail_tv_start_date"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_column="1"
                 android:layout_columnWeight="1" />
 
@@ -200,7 +200,7 @@
                 android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
@@ -214,7 +214,7 @@
                 android:id="@+id/activity_detail_tv_finish_date"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_column="1"
                 android:layout_columnWeight="1" />
 
@@ -224,7 +224,7 @@
                 android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
@@ -238,7 +238,7 @@
                 android:id="@+id/activity_detail_tv_status"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_column="1"
                 android:layout_columnWeight="1" />
 
@@ -248,7 +248,7 @@
                 android:textAlignment="gravity"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
@@ -259,26 +259,25 @@
 
             <CheckBox
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/activity_detail_cb_finished"
                 android:layout_rowWeight="0.5"
                 android:layout_column="1"
-                android:layout_columnWeight="1"
                 android:checked="false"
                 android:gravity="top"
-                android:clickable="false" />
+                android:clickable="false"
+                android:layout_columnWeight="1" />
 
             <TextView
                 android:text="@string/DESCRIPTION"
                 android:id="@+id/textView35"
                 android:textAlignment="gravity"
                 android:paddingRight="10dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
-                android:layout_columnWeight="0.5"
                 android:layout_rowWeight="1"
                 android:layout_columnSpan="2" />
 
@@ -287,12 +286,11 @@
                 android:id="@+id/activity_detail_tv_description"
                 android:textAlignment="gravity"
                 android:paddingRight="10dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_column="0"
                 android:layout_span="2"
                 android:layout_columnSpan="2"
-                android:layout_columnWeight="0.5"
                 android:layout_rowWeight="1"
                 android:layout_marginBottom="10dp" />
 
@@ -301,12 +299,11 @@
                 android:id="@+id/textView37"
                 android:textAlignment="gravity"
                 android:paddingRight="10dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_column="0"
-                android:layout_columnWeight="0.5"
                 android:layout_rowWeight="1"
                 android:layout_marginBottom="10dp"
                 android:layout_columnSpan="2" />

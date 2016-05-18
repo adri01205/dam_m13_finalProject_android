@@ -45,7 +45,7 @@ import java.text.SimpleDateFormat;
 
 /* ORM Lite */
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD11";
+    public static final String BD_NAME = "SYNUP_BD16";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -563,7 +563,7 @@ public class SynupConversor {
             return -1;
         }
         c.moveToFirst();
-        return c.getInt(2);
+        return c.getInt(0);
     }
 
     public int getLastLocalEmployee() {
@@ -583,7 +583,7 @@ public class SynupConversor {
             return -1;
         }
         c.moveToFirst();
-        return c.getInt(1);
+        return c.getInt(0);
     }
 
     public int getLastLocalTeam() {
@@ -603,7 +603,7 @@ public class SynupConversor {
             return -1;
         }
         c.moveToFirst();
-        return c.getInt(4);
+        return c.getInt(0);
     }
 
     public int getLastServerTaskHistoryLog() {
@@ -623,7 +623,7 @@ public class SynupConversor {
             return -1;
         }
         c.moveToFirst();
-        return c.getInt(3);
+        return c.getInt(0);
     }
 
     public int getLastServerTeamHistory() {
@@ -643,7 +643,7 @@ public class SynupConversor {
             return -1;
         }
         c.moveToFirst();
-        return c.getInt(5);
+        return c.getInt(0);
     }
 
     //UPDATE

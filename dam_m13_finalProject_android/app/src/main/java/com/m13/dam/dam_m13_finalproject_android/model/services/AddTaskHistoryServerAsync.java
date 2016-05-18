@@ -3,23 +3,27 @@ package com.m13.dam.dam_m13_finalproject_android.model.services;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
+import android.view.View;
 
 import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskCompleteListener;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Employee;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistory;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistoryLog;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
-public class getUserAsync extends AsyncTask<String, Void, Void> {
+public class AddTaskHistoryServerAsync extends AsyncTask<String, Void, Void> {
 
     private String Content;
     private ReturnObject ret;
@@ -27,9 +31,8 @@ public class getUserAsync extends AsyncTask<String, Void, Void> {
     private ProgressDialog progressDialog;
     private Context context;
     private AsyncTaskCompleteListener<ReturnObject> listener;
-    private SynupConversor conversor;
 
-    public getUserAsync(Context context, AsyncTaskCompleteListener<ReturnObject> listener)
+    public AddTaskHistoryServerAsync(Context context, AsyncTaskCompleteListener<ReturnObject> listener)
     {
         this.context = context;
         this.listener = listener;
@@ -38,35 +41,28 @@ public class getUserAsync extends AsyncTask<String, Void, Void> {
         progressDialog.setMessage("Connecting to server..");
         progressDialog.setIndeterminate(false);
         progressDialog.setCancelable(false);
-        conversor = new SynupConversor((Activity) context);
+
     }
 
     protected void onPreExecute() {
-        // NOTE: You can call UI Element here.
-
         progressDialog.setMessage("Please wait..");
         progressDialog.show();
     }
 
-    // Call after onPreExecute method
     protected Void doInBackground(String... params) {
         HttpURLConnection conn = null;
         int status = 500;
         try {
-            // Defined URL  where to send data
             URL url = new URL(serverURL+params[0]+"/"+params[1]);
-
-            // Send POST data request
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Accept-Charset", "UTF-8");
-            //conn.setRequestMethod("GET");
-            //conn.setDoOutput(true);
+
             status = conn.getResponseCode();
 
-            ArrayList<Employee> employees = (ArrayList<Employee>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(Employee.class, conn.getInputStream());
+            ArrayList<TaskHistory> taskHistories = (ArrayList<TaskHistory>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(TaskHistory.class, conn.getInputStream());
 
-            if(employees != null && employees.size() > 0){
-                ret.setAssociatedObject(employees.get(0));
+            if(taskHistories != null && taskHistories.size() > 0){
+                ret.setAssociatedObject(taskHistories.get(0));
             }
 
             conn.disconnect();

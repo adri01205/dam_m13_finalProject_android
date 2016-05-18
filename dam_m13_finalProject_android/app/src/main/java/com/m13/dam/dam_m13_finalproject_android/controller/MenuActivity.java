@@ -30,6 +30,8 @@ public class MenuActivity extends SynupMenuActivity implements AsyncTaskComplete
 
         final Activity context = this;
 
+        String errors = getIntent().getStringExtra("ERROR");
+
 
         SynupSharedPreferences.setUpdatedData(this,"0");
         if (!SynupSharedPreferences.getUpdatedData(this).equals("1")) {
@@ -44,7 +46,7 @@ public class MenuActivity extends SynupMenuActivity implements AsyncTaskComplete
 //                if(t!= null) {
                     Intent intent = new Intent(context, DetailActivity.class);
 //                    intent.putExtra("idTask", t.getCode());
-                    intent.putExtra("idTask", "blabla1");
+                    intent.putExtra("idTask", "task1");
                     context.startActivity(intent);
 //                }
 
@@ -75,8 +77,8 @@ public class MenuActivity extends SynupMenuActivity implements AsyncTaskComplete
         if (result.succes()) {
             SynupSharedPreferences.setUpdatedData(this,"1");
         } else {
-            Dialogs.getErrorDialog(this,result);
-//            findViewById(R.id.activity_menu_ll_not_updated).setVisibility(View.VISIBLE);
+            Dialogs.getErrorDialog(this,result).show();
+            findViewById(R.id.activity_menu_ll_not_updated).setVisibility(View.VISIBLE);
 
         }
     }
