@@ -20,7 +20,6 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           " startDate datetime, "+
           " finishDate datetime, "+
           " comment TEXT, "+
-          " isFinished INTEGER, "+
           " PRIMARY KEY(id) "+
           "); ";
 
@@ -32,6 +31,8 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           " localization TEXT, "+
           " project TEXT, "+
           " name TEXT, "+
+            " state INTEGER, "+
+            " priority INTEGER, "+
           " PRIMARY KEY(code) "+
           "); ";
 

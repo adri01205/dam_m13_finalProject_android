@@ -35,8 +35,6 @@ public class TaskHistory {
     Date finishDate;
     @JsonProperty("comment")
     String comment;
-    @JsonProperty("isFinished")
-    int isFinished;
 
     public TaskHistory() {
     }
@@ -62,11 +60,10 @@ public class TaskHistory {
     }
     */
 
-    public TaskHistory(int id, String id_employee, String id_task, Date startDate, Date finishDate, String comment, int isFinished) {
+    public TaskHistory(int id, String id_employee, String id_task, Date startDate, Date finishDate, String comment) {
         this.id = id;
         this.id_employee = id_employee;
         this.id_task = id_task;
-        this.isFinished = isFinished;
         this.startDate = startDate;
         this.finishDate = finishDate;
         this.comment = comment;
@@ -139,14 +136,6 @@ public class TaskHistory {
         this.comment = comment;
     }
 
-    public int getIsFinished() {
-        return isFinished;
-    }
-
-    public void setIsFinished(int isFinished) {
-        this.isFinished = isFinished;
-    }
-
     @Override
     public String toString() {
         return "TaskHistory{" +
@@ -156,7 +145,6 @@ public class TaskHistory {
                 ", startDate=" + startDate +
                 ", finishDate=" + finishDate +
                 ", comment='" + comment + '\'' +
-                ", isFinished=" + isFinished +
                 '}';
     }
 }

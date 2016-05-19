@@ -31,6 +31,10 @@ public class Task {
     String project;
     @JsonProperty("name")
     String name;
+    @JsonProperty("priority")
+    int priority;
+    @JsonProperty("state")
+    int state;
 
 
     public Task() {
@@ -103,6 +107,22 @@ public class Task {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 
     @Override

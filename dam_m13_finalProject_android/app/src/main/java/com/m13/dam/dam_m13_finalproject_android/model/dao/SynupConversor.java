@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Employee;
@@ -45,7 +44,7 @@ import java.text.SimpleDateFormat;
 
 /* ORM Lite */
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD17";
+    public static final String BD_NAME = "SYNUP_BD18";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -110,7 +109,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "TaskHistory",
-                new String[]{"id", "id_employee", "id_task", "startDate", "finishDate", "comment", "isFinished"},
+                new String[]{"id", "id_employee", "id_task", "startDate", "finishDate", "comment"},
                 "id = ?",
                 new String[]{String.valueOf(id)},
                 null,
@@ -127,7 +126,7 @@ public class SynupConversor {
             return new TaskHistory(c.getInt(0),c.getString(1).trim(),c.getString(2).trim(),
                     new java.sql.Date(dataFormat.parse(c.getString(3).trim()).getTime()),
                     new java.sql.Date(dataFormat.parse(c.getString(4).trim()).getTime()),
-                    c.getString(5).trim(),c.getInt(6));
+                    c.getString(5).trim());
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -140,7 +139,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "TaskHistory",
-                new String[]{"id", "id_employee", "id_task", "startDate", "finishDate", "comment", "isFinished"},
+                new String[]{"id", "id_employee", "id_task", "startDate", "finishDate", "comment"},
                 "id_employee = ?",
                 new String[]{code},
                 null,
@@ -157,7 +156,7 @@ public class SynupConversor {
             return new TaskHistory(c.getInt(0),c.getString(1).trim(),c.getString(2).trim(),
                     new java.sql.Date(dataFormat.parse(c.getString(3).trim()).getTime()),
                     new java.sql.Date(dataFormat.parse(c.getString(4).trim()).getTime()),
-                    c.getString(5).trim(),c.getInt(6));
+                    c.getString(5).trim());
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -177,7 +176,6 @@ public class SynupConversor {
         dades.put("startDate", dataFormat.format(th.getStartDate()));
         dades.put("finishDate", dataFormat.format(th.getFinishDate()));
         dades.put("comment", th.getComment());
-        dades.put("isFinished", th.getIsFinished());
 
         try {
             index = db.insertOrThrow("TaskHistory", null, dades);
@@ -192,15 +190,13 @@ public class SynupConversor {
      * UPDATE
      * @param id
      * @param date
-     * @param isFinished 0 -> not Finished, 1 -> Finished
      * @return
      */
-    public boolean updateTaskHistory(int id, Date date, int isFinished){
+    public boolean updateTaskHistory(int id, Date date){
         SQLiteDatabase db = helper.getReadableDatabase();
 
         ContentValues args = new ContentValues();
         args.put("finishDate", dataFormat.format(date));
-        args.put("isFinished", isFinished);
         try {
             db.update("TaskHistory", args, "id=" + id, null);
         } catch (Exception e){
@@ -308,6 +304,8 @@ public class SynupConversor {
         dades.put("localization", t.getLocalization());
         dades.put("project", t.getProject());
         dades.put("name", t.getName());
+        dades.put("priority", t.getPriority());
+        dades.put("state", t.getState());
 
         try {
             index = db.insertOrThrow("Task", null, dades);
@@ -331,6 +329,8 @@ public class SynupConversor {
         args.put("localization", t.getLocalization());
         args.put("project", t.getProject());
         args.put("name", t.getName());
+        args.put("priority", t.getPriority());
+        args.put("state", t.getState());
         db.update("Task", args, "code='" + t.getCode()+"'", null);
 
     }

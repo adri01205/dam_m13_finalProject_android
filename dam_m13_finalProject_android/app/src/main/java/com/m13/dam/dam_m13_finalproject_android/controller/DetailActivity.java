@@ -74,49 +74,49 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
         Button buttonFinish = ((Button) findViewById(R.id.activity_detail_bt_finish));
         Button buttonAbandone = ((Button) findViewById(R.id.activity_detail_bt_abandone));
 
-        status = "";
-        if(taskHistory == null){
-            status = getResources().getString(R.string.NEW);
-            buttonFinish.setText(getResources().getString(R.string.TAKE));
-            buttonFinish.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    take();
-                }
-            });
-
-        } else if(taskHistory.getFinishDate() == null){
-            status = getResources().getString(R.string.IN_PROGRESS);
-            buttonFinish.setText(getResources().getString(R.string.FINISH));
-            buttonFinish.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finishTask();
-                }
-            });
-
-            buttonAbandone.setVisibility(View.VISIBLE);
-            buttonAbandone.setText(getResources().getString(R.string.ABANDONE));
-            buttonAbandone.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    abandone();
-                }
-            });
-
-        } else if (taskHistory.getIsFinished() == 1){
-            status = getResources().getString(R.string.ABANDONED);
-            buttonFinish.setText(getResources().getString(R.string.TAKE));
-            buttonFinish.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    take();
-                }
-            });
-        } else {
-            status = getResources().getString(R.string.FINISHED);
-            buttonFinish.setVisibility(View.GONE);
-        }
+//        status = "";
+//        if(taskHistory == null){
+//            status = getResources().getString(R.string.NEW);
+//            buttonFinish.setText(getResources().getString(R.string.TAKE));
+//            buttonFinish.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    take();
+//                }
+//            });
+//
+//        } else if(taskHistory.getFinishDate() == null){
+//            status = getResources().getString(R.string.IN_PROGRESS);
+//            buttonFinish.setText(getResources().getString(R.string.FINISH));
+//            buttonFinish.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    finishTask();
+//                }
+//            });
+//
+//            buttonAbandone.setVisibility(View.VISIBLE);
+//            buttonAbandone.setText(getResources().getString(R.string.ABANDONE));
+//            buttonAbandone.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    abandone();
+//                }
+//            });
+//
+//        } else if (taskHistory.getIsFinished() == 1){
+//            status = getResources().getString(R.string.ABANDONED);
+//            buttonFinish.setText(getResources().getString(R.string.TAKE));
+//            buttonFinish.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    take();
+//                }
+//            });
+//        } else {
+//            status = getResources().getString(R.string.FINISHED);
+//            buttonFinish.setVisibility(View.GONE);
+//        }
     }
 
     private void setTexts(){
@@ -136,13 +136,11 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
 
     private void abandone() {
         taskHistory.setFinishDate(new java.sql.Date(new java.util.Date().getTime()));
-        taskHistory.setIsFinished(0);
         goMainMenu();
     }
 
     private void finishTask() {
         taskHistory.setFinishDate(new java.sql.Date(new java.util.Date().getTime()));
-        taskHistory.setIsFinished(1);
         goMainMenu();
     }
 
