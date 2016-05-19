@@ -41,29 +41,33 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         taskCode = this.getIntent().getStringExtra("idTask");
 
-        setTaskObject();
-        setStatus();
-        setTexts();
+       if(setTaskObject()) {
+           setStatus();
+           setTexts();
+       }
     }
 
-    private void setTaskObject(){
+    private boolean setTaskObject(){
         sc = new SynupConversor(this);
         task = sc.getTask(taskCode);
         if(task == null){
             Intent i = new Intent(this, MenuActivity.class);
             i.putExtra("ERROR", getResources().getString(R.string.TASK_NOT_EXISTS));
-            startActivity(i);
+            //startActivity(i);
+            return false;
 
         }
         taskHistory = sc.getTaskHistoryByEmployee(taskCode);
         team = sc.getTeam(task.getId_team());
         employee = null;
-        if(taskHistory != null) {
+        if (taskHistory != null) {
             employee = sc.getEmployee(taskHistory.getId_employee());
         }
+        return true;
     }
 
     private void setStatus(){

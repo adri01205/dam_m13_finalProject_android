@@ -14,15 +14,26 @@
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCP2YNH5WipVY5xVVVo3P-wKgJoM5eCAh8" />
 
-        <activity android:name=".controller.TaskListActivity"></activity>
-        <activity
-            android:name=".controller.MenuActivity"
+        <activity android:name=".controller.TaskListActivity"
+            android:label="@string/title_activity_list"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"></meta-data>
+
+        </activity>
+        <activity android:name=".controller.MenuActivity"
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".controller.DetailActivity"
+        <activity android:name=".controller.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".controller.MenuActivity">
+            <meta-data
+                android:name  ="android.support.PARENT_ACTIVITY"
+                android:value=".controller.MenuActivity"></meta-data>
+
+        </activity>
         <activity android:name=".controller.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

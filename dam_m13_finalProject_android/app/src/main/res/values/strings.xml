@@ -43,4 +43,6 @@
     <string name="TAKE">_take</string>
     <string name="TASK_TOOK">_task took</string>
     <string name="ERROR_NO_CONNECTION_TAKE_TASK">_You need internet connection to take a task</string>
+    <string name="SEARCH">_search</string>
+    <string name="title_activity_list">_Task list</string>
 </resources>

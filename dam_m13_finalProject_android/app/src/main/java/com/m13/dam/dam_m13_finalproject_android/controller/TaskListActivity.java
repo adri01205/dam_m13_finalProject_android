@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,7 +29,7 @@ import java.util.HashMap;
  * Created by jesus on 10/05/2016.
  */
 
-public class TaskListActivity extends Activity
+public class TaskListActivity extends SynupMenuActivity
         implements ExpandableListView.OnGroupClickListener, ExpandableListView.OnChildClickListener {
 
 
@@ -41,8 +43,8 @@ public class TaskListActivity extends Activity
         final Activity context = this;
 
         setContentView(R.layout.tasks_adapter);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         chargeData();
 

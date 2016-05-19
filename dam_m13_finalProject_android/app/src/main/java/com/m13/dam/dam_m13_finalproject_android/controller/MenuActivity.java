@@ -1,8 +1,10 @@
 package com.m13.dam.dam_m13_finalproject_android.controller;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -19,7 +21,7 @@ import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
 import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateLocalAsync;
 
-public class MenuActivity extends SynupMenuActivity implements AsyncTaskCompleteListener<ReturnObject> {
+public class MenuActivity extends AppCompatActivity implements AsyncTaskCompleteListener<ReturnObject> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
