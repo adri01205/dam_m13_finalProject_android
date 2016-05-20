@@ -19,7 +19,7 @@ import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupSharedPreferences
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
 import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateLocalAsync;
 
-public class MenuActivity extends SynupMenuActivity implements
+public class MenuActivity extends SynupMainMenuActivity implements
         AsyncTaskCompleteListener<ReturnObject> {
 
     Activity context;

@@ -16,7 +16,7 @@ import com.m13.dam.dam_m13_finalproject_android.R;
 /**
  * Created by adri on 13/05/2016.
  */
-public class SynupMenuActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
+public class SynupMenuActivity extends SynupMainMenuActivity implements  NavigationView.OnNavigationItemSelectedListener {
 
 
     @Override
@@ -40,29 +40,4 @@ public class SynupMenuActivity extends AppCompatActivity implements  NavigationV
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        switch (id){
-            default:
-                break;
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
 }

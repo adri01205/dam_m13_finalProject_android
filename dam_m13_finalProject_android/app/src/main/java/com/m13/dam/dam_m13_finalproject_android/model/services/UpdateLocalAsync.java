@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.m13.dam.dam_m13_finalproject_android.R;
 import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskCompleteListener;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupSharedPreferences;
@@ -71,7 +72,12 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
     }
 
     // Call after onPreExecute method
-    protected Void doInBackground(Void... urls) {
+        protected Void doInBackground(Void... urls) {
+            if(!Connection.isConnected()){
+                ret.setCode(301);
+                ret.setMessage(context.getResources().getString(R.string.ERROR_NO_CONNECTION));
+                return null;
+            }
         HttpURLConnection conn = null;
         boolean smtingDone = false;
         int status = 500;

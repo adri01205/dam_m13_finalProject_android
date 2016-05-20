@@ -13,10 +13,4 @@
         android:title="@string/MAIN_MENU"
         android:icon="@drawable/ic_home_white_24dp"
         app:showAsAction="always"/>
-    <item
-        android:id="@+id/menu_log_out"
-        android:title="@string/LOG_OUT"/>
-    <item
-        android:id="@+id/menu_exit"
-        android:title="@string/EXIT"/>
 </menu>

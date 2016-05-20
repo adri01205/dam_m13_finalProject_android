@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.view.View;
 
+import com.m13.dam.dam_m13_finalproject_android.R;
 import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskCompleteListener;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Employee;
@@ -50,6 +51,11 @@ public class AddTaskHistoryServerAsync extends AsyncTask<String, Void, Void> {
     }
 
     protected Void doInBackground(String... params) {
+        if(!Connection.isConnected()){
+            ret.setCode(301);
+            ret.setMessage(context.getResources().getString(R.string.ERROR_NO_CONNECTION));
+            return null;
+        }
         HttpURLConnection conn = null;
         int status = 500;
         try {

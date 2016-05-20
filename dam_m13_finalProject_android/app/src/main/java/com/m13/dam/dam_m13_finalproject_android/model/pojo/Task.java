@@ -1,5 +1,6 @@
 package com.m13.dam.dam_m13_finalproject_android.model.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
@@ -16,6 +17,12 @@ import java.util.Date;
  */
 
 public class Task {
+
+    public static final int UNSELECTED = 0;
+    public static final int ONGOING = 1;
+    public static final int ABANDONED = 2;
+    public static final int FINISHED = 3;
+    public static final int CANCELED = 4;
 
     @JsonProperty("id_team")
     String id_team;
@@ -35,7 +42,6 @@ public class Task {
     int priority;
     @JsonProperty("state")
     int state;
-
 
     public Task() {
     }

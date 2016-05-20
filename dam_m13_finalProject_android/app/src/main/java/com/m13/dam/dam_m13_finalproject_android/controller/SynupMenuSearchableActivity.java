@@ -14,7 +14,7 @@ import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupSharedPreferences
 /**
  * Created by adri on 13/05/2016.
  */
-public abstract class SynupMenuSearchableActivity extends AppCompatActivity {
+public abstract class SynupMenuSearchableActivity extends SynupMenuActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -36,28 +36,6 @@ public abstract class SynupMenuSearchableActivity extends AppCompatActivity {
         });
 
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-        Intent intent;
-        switch (id){
-            case R.id.menu_main_menu:
-                intent = new Intent(this, MenuActivity.class);
-                this.startActivity(intent);
-            case R.id.menu_exit:
-                System.exit(0);
-                break;
-            case R.id.menu_log_out:
-                SynupSharedPreferences.setUserLoged(this, "");
-                intent = new Intent(this, LoginActivity.class);
-                this.startActivity(intent);
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     abstract void searchSubmit(String query);
