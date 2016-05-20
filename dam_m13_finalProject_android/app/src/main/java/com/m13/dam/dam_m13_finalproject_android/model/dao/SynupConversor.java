@@ -44,7 +44,7 @@ import java.text.SimpleDateFormat;
 
 /* ORM Lite */
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD18";
+    public static final String BD_NAME = "SYNUP_BD19";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -109,7 +109,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "TaskHistory",
-                new String[]{"id", "id_employee", "id_task", "startDate", "finishDate", "comment"},
+                new String[]{"id", "id_employee", "id_task", "startDate", "finishDate", "comment", "isFinished"},
                 "id = ?",
                 new String[]{String.valueOf(id)},
                 null,
@@ -126,7 +126,7 @@ public class SynupConversor {
             return new TaskHistory(c.getInt(0),c.getString(1).trim(),c.getString(2).trim(),
                     new java.sql.Date(dataFormat.parse(c.getString(3).trim()).getTime()),
                     new java.sql.Date(dataFormat.parse(c.getString(4).trim()).getTime()),
-                    c.getString(5).trim());
+                    c.getString(5).trim(), c.getInt(6));
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -139,7 +139,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "TaskHistory",
-                new String[]{"id", "id_employee", "id_task", "startDate", "finishDate", "comment"},
+                new String[]{"id", "id_employee", "id_task", "startDate", "finishDate", "comment", "isFinished"},
                 "id_employee = ?",
                 new String[]{code},
                 null,
@@ -156,7 +156,7 @@ public class SynupConversor {
             return new TaskHistory(c.getInt(0),c.getString(1).trim(),c.getString(2).trim(),
                     new java.sql.Date(dataFormat.parse(c.getString(3).trim()).getTime()),
                     new java.sql.Date(dataFormat.parse(c.getString(4).trim()).getTime()),
-                    c.getString(5).trim());
+                    c.getString(5).trim(), c.getInt(6));
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -176,6 +176,7 @@ public class SynupConversor {
         dades.put("startDate", dataFormat.format(th.getStartDate()));
         dades.put("finishDate", dataFormat.format(th.getFinishDate()));
         dades.put("comment", th.getComment());
+        dades.put("isFinished", th.getIsFinished());
 
         try {
             index = db.insertOrThrow("TaskHistory", null, dades);

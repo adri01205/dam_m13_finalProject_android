@@ -20,6 +20,7 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           " startDate datetime, "+
           " finishDate datetime, "+
           " comment TEXT, "+
+          " isFinished INTEGER, "+
           " PRIMARY KEY(id) "+
           "); ";
 
