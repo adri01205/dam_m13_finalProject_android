@@ -1,20 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group>
         <item
             android:id="@+id/navigation_main_menu"
             android:title="@string/MAIN_MENU"
             android:checked="true"
             android:icon="@drawable/ic_home_white_24dp"/>
-    </group>
-    <group android:checkableBehavior="single">
         <item
-            android:id="@+id/navigation_log_out"
-            android:title="@string/LOG_OUT"
+            android:id="@+id/navigation_sincronize"
+            android:title="@string/SINCRONIZE"
+            android:checked="true"
             android:icon="@drawable/ic_home_white_24dp"/>
         <item
-            android:id="@+id/navigation_exit"
-            android:title="@string/EXIT"
+            android:id="@+id/navigation_myTask"
+            android:title="@string/SINCRONIZE"
+            android:checked="true"
             android:icon="@drawable/ic_home_white_24dp"/>
+        <item
+            android:id="@+id/navigation_all_tasks"
+            android:title="@string/SINCRONIZE"
+            android:checked="true"
+            android:icon="@drawable/ic_home_white_24dp"/>
+
+        <item android:title="Manage">
+            <menu>
+                <item
+                    android:id="@+id/navigation_log_out"
+                    android:title="@string/LOG_OUT"
+                    android:icon="@drawable/ic_home_white_24dp"/>
+                <item
+                    android:id="@+id/navigation_exit"
+                    android:title="@string/EXIT"
+                    android:icon="@drawable/ic_home_white_24dp"/>
+            </menu>
+        </item>
+
     </group>
 </menu>

@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskComplet
             }
         });
 
+//        SynupSharedPreferences.setUserLoged(this,"1");
         if (!SynupSharedPreferences.getUserLoged(this).isEmpty()){
             Intent intent = new Intent(this, MenuActivity.class);
             this.startActivity(intent);

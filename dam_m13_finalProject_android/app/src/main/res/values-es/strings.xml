@@ -53,4 +53,5 @@
     <string name="title_activity_list">_Task list</string>
     <string name="OPEN">_open</string>
     <string name="CLOSE">_close</string>
+    <string name="SINCRONIZE">_Sincronize</string>
 </resources>
