@@ -1,4 +1,10 @@
 <resources>
+    <string-array name="navigationBarArray">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+    </string-array>
     <string name="app_name">Synup</string>
     <string name="action_settings">Configuración</string>
     <string name="error">Error</string>
@@ -45,4 +51,6 @@
     <string name="ERROR_NO_CONNECTION_TAKE_TASK">_You need internet connection to take a task</string>
     <string name="SEARCH">_search</string>
     <string name="title_activity_list">_Task list</string>
+    <string name="OPEN">_open</string>
+    <string name="CLOSE">_close</string>
 </resources>

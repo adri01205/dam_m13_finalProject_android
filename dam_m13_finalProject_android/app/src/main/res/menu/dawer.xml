@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_main_menu"
+            android:title="@string/MAIN_MENU"
+            android:checked="true"
+            android:icon="@drawable/ic_home_white_24dp"/>
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_log_out"
+            android:title="@string/LOG_OUT"
+            android:icon="@drawable/ic_home_white_24dp"/>
+        <item
+            android:id="@+id/navigation_exit"
+            android:title="@string/EXIT"
+            android:icon="@drawable/ic_home_white_24dp"/>
+    </group>
+</menu>

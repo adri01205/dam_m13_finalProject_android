@@ -4,13 +4,20 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.m13.dam.dam_m13_finalproject_android.R;
 import com.m13.dam.dam_m13_finalproject_android.controller.dialogs.Dialogs;
@@ -23,6 +30,9 @@ import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateLocalAsync;
 
 public class MenuActivity extends AppCompatActivity implements AsyncTaskCompleteListener<ReturnObject> {
 
+
+    Activity context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,26 +40,34 @@ public class MenuActivity extends AppCompatActivity implements AsyncTaskComplete
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final Activity context = this;
+        context = this;
+
 
         String errors = getIntent().getStringExtra("ERROR");
+        if(errors != null){
+            Dialogs.getErrorDialog(this, errors);
+        }
 
-
-        SynupSharedPreferences.setUpdatedData(this,"0");
+        SynupSharedPreferences.setUpdatedData(this, "0");
         if (!SynupSharedPreferences.getUpdatedData(this).equals("1")) {
             new UpdateLocalAsync(this, this).execute();
         }
 
+        setButtons();
+
+    }
+
+    private void setButtons(){
         findViewById(R.id.activity_menu_bt_my_task).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SynupConversor synupConversor = new SynupConversor(context);
 //                Task t = synupConversor.getTaskAcctived(SynupSharedPreferences.getUserLoged(context));
 //                if(t!= null) {
-                    Intent intent = new Intent(context, DetailActivity.class);
+                Intent intent = new Intent(context, DetailActivity.class);
 //                    intent.putExtra("idTask", t.getCode());
-                    intent.putExtra("idTask", "task1");
-                    context.startActivity(intent);
+                intent.putExtra("idTask", "task1");
+                context.startActivity(intent);
 //                }
 
             }
@@ -71,19 +89,16 @@ public class MenuActivity extends AppCompatActivity implements AsyncTaskComplete
                 context.startActivity(intent);
             }
         });
-
     }
 
     @Override
     public void onTaskComplete(ReturnObject result) {
         if (result.succes()) {
-            SynupSharedPreferences.setUpdatedData(this,"1");
+            SynupSharedPreferences.setUpdatedData(this, "1");
         } else {
-            Dialogs.getErrorDialog(this,result).show();
+            Dialogs.getErrorDialog(this, result).show();
             findViewById(R.id.activity_menu_ll_not_updated).setVisibility(View.VISIBLE);
 
         }
     }
-
 }
-

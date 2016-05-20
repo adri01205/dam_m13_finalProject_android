@@ -14,11 +14,27 @@ import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupSharedPreferences
 /**
  * Created by adri on 13/05/2016.
  */
-public class SynupMenuActivity extends AppCompatActivity {
+public abstract class SynupMenuSearchableActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_searchable, menu);
+        MenuItem searchItem = menu.findItem(R.id.menu_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchSubmit(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
         return true;
     }
 
@@ -43,4 +59,6 @@ public class SynupMenuActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    abstract void searchSubmit(String query);
 }
