@@ -6,7 +6,7 @@ import java.net.InetAddress;
  * Created by adri on 10/05/2016.
  */
 public abstract class Connection {
-    public static String host = "172.16.10.58" ;
+    public static String host = "172.16.10.57" ;
     public static String port = "1567";
 
     public static String getDomain(){
