@@ -27,7 +27,7 @@ public class AddTaskHistoryServerAsync extends AsyncTask<String, Void, Void> {
 
     private String Content;
     private ReturnObject ret;
-    private String serverURL =  "http://"+ Connection.getDomain()+ "Login/";
+    private String serverURL =  "http://"+ Connection.getDomain()+ "TaskHistoryInsert/";
     private ProgressDialog progressDialog;
     private Context context;
     private AsyncTaskCompleteListener<ReturnObject> listener;

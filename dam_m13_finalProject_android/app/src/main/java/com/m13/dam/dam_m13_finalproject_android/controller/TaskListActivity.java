@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.m13.dam.dam_m13_finalproject_android.R;
 import com.m13.dam.dam_m13_finalproject_android.controller.adapters.TeamTaskAdapter;
@@ -29,7 +30,7 @@ import java.util.HashMap;
  * Created by jesus on 10/05/2016.
  */
 
-public class TaskListActivity extends SynupMenuActivity
+public class TaskListActivity extends SynupMenuSearchableActivity
         implements ExpandableListView.OnGroupClickListener, ExpandableListView.OnChildClickListener {
 
 
@@ -45,6 +46,7 @@ public class TaskListActivity extends SynupMenuActivity
         setContentView(R.layout.tasks_adapter);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         chargeData();
 
@@ -148,5 +150,10 @@ public class TaskListActivity extends SynupMenuActivity
                 break;
         }
         return false;
+    }
+
+    @Override
+    void searchSubmit(String query) {
+        Toast.makeText(TaskListActivity.this, query, Toast.LENGTH_SHORT).show();
     }
 }

@@ -41,7 +41,7 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         taskCode = this.getIntent().getStringExtra("idTask");
 
@@ -145,7 +145,7 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
     }
 
     public void take(){
-        new AddTaskHistoryServerAsync(this,this).execute(taskCode, SynupSharedPreferences.getUserLoged(this));
+        new AddTaskHistoryServerAsync(this,this).execute(SynupSharedPreferences.getUserLoged(this), taskCode);
     }
 
     @Override
