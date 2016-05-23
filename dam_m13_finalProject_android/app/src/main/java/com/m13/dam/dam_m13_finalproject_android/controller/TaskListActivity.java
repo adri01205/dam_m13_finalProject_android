@@ -67,7 +67,6 @@ public class TaskListActivity extends SynupMenuSearchableActivity
         new UpdateLocalAsync(this, this).execute(SynupSharedPreferences.getUserLoged(this));
 
         elv = (ExpandableListView)findViewById(R.id.lstLlistaExpandible);
-        chargeData();
 
         //registerForContextMenu(elv);
 
@@ -137,6 +136,7 @@ public class TaskListActivity extends SynupMenuSearchableActivity
 
     @Override
     public void onTaskComplete(ReturnObject result) {
+        chargeData();
         if (result.succes()) {
             switch (result.getCallback()){
                 case ReturnObject.UPDATE_LOCAL_CALLBACK:

@@ -45,7 +45,7 @@ import java.text.SimpleDateFormat;
 
 /* ORM Lite */
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD22";
+    public static final String BD_NAME = "SYNUP_BD33";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -585,7 +585,7 @@ public class SynupConversor {
 
         ContentValues args = new ContentValues();
 
-        args.put("code", code);
+        args.put("employee", code);
         db.insertOrThrow("Last", null, args);
 
         Cursor c = db.query(true,
