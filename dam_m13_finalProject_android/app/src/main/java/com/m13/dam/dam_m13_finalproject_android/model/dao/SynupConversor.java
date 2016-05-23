@@ -524,7 +524,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "TeamHistory",
-                new String[]{"id", "nif","code"},
+                new String[]{"id", "nif", "code"},
                 "id = ?",
                 new String[]{String.valueOf(id)},
                 null,
@@ -623,87 +623,8 @@ public class SynupConversor {
         return new Last(c.getInt(0),c.getString(1),c.getInt(2), c.getInt(3),c.getInt(4),c.getInt(5),c.getInt(6));
     }
 
-    public int getLastLocalTask() {
-        SQLiteDatabase db = helper.getReadableDatabase();
-
-        Cursor c = db.query(true,
-                "Last",
-                new String[]{"taskLog"},
-                "id = ?",
-                new String[]{String.valueOf(1)},
-                null,
-                null,
-                null,
-                null);
-
-        if(c==null || c.getCount()==0){
-            return -1;
-        }
-        c.moveToFirst();
-        return c.getInt(0);
-    }
-
-    public int getLastLocalEmployee() {
-        SQLiteDatabase db = helper.getReadableDatabase();
-
-        Cursor c = db.query(true,
-                "Last",
-                new String[]{"employeeLog"},
-                "id = ?",
-                new String[]{String.valueOf(1)},
-                null,
-                null,
-                null,
-                null);
-
-        if(c==null || c.getCount()==0){
-            return -1;
-        }
-        c.moveToFirst();
-        return c.getInt(0);
-    }
-
-    public int getLastLocalTeam() {
-        SQLiteDatabase db = helper.getReadableDatabase();
-
-        Cursor c = db.query(true,
-                "Last",
-                new String[]{"teamLog"},
-                "id = ?",
-                new String[]{String.valueOf(1)},
-                null,
-                null,
-                null,
-                null);
-
-        if(c==null || c.getCount()==0){
-            return -1;
-        }
-        c.moveToFirst();
-        return c.getInt(0);
-    }
 
     public int getLastServerTaskHistoryLog() {
-        SQLiteDatabase db = helper.getReadableDatabase();
-
-        Cursor c = db.query(true,
-                "Last",
-                new String[]{"taskHistoryLog"},
-                "id = ?",
-                new String[]{String.valueOf(1)},
-                null,
-                null,
-                null,
-                null);
-
-        if(c==null || c.getCount()==0){
-            return -1;
-        }
-        c.moveToFirst();
-        return c.getInt(0);
-    }
-
-    public int getLastLocalTeamHistory() {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         Cursor c = db.query(true,
