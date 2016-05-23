@@ -117,7 +117,7 @@ public class Employee {
              /*   Modified by Jesus on 10/05/2016
              "id=" + id +
              */
-                ", nif='" + nif + '\'' +
+                "  nif='" + nif + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", phone='" + phone + '\'' +

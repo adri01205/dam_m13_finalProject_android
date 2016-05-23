@@ -356,7 +356,7 @@ public class SynupConversor {
                 "Employee",
                 new String[]{"nif", "name", "surname", "phone", "email", "adress", "username", "password"},
                 "nif = ?",
-                new String[]{String.valueOf(nif)},
+                new String[]{nif},
                 null,
                 null,
                 null,
@@ -471,7 +471,7 @@ public class SynupConversor {
     {
         SQLiteDatabase db = helper.getReadableDatabase();
 
-        String sql = "SELECT te.code, te.name " +
+        String sql = "SELECT DISTINCT te.code, te.name " +
                 "FROM Team te " +
                 "INNER JOIN TeamHistory teh ON te.code = teh.code " +
                 "INNER JOIN Task t ON t.id_team = te.code " +
