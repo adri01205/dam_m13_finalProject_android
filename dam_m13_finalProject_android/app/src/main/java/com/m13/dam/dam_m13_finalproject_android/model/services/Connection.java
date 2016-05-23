@@ -26,7 +26,6 @@ public abstract class Connection {
             urlc.setRequestProperty("Connection", "close");
             urlc.setConnectTimeout(2000); // Timeout 2 seconds.
             urlc.connect();
-            int x = urlc.getResponseCode();
 
             return (urlc.getResponseCode() == 200);
 
