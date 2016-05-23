@@ -9,6 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.m13.dam.dam_m13_finalproject_android.R;
+import com.m13.dam.dam_m13_finalproject_android.controller.dialogs.Dialogs;
+import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
+import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupSharedPreferences;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
 
 /**
  * Created by adri on 13/05/2016.
@@ -19,9 +23,35 @@ public class SynupMainMenuActivity extends AppCompatActivity implements  Navigat
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        Intent intent;
         switch (id){
-            default:
+
+            case R.id.navigation_main_menu:
+                intent = new Intent(this, MenuActivity.class);
+                this.startActivity(intent);
+                break;
+            case R.id.navigation_myTask:
+                SynupConversor synupConversor = new SynupConversor(this);
+                Task t = synupConversor.getTaskAcctived(SynupSharedPreferences.getUserLoged(this));
+                if(t!= null) {
+                    intent = new Intent(this, DetailActivity.class);
+                    intent.putExtra("idTask", t.getCode());
+                    this.startActivity(intent);
+                } else {
+                    Dialogs.getErrorDialog(this, getResources().getString(R.string.ERROR_NO_TASK_TOOK)).show();
+                }
+                break;
+            case R.id.navigation_tasks:
+                intent = new Intent(this, TaskListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.navigation_log_out:
+                SynupSharedPreferences.setUserLoged(this, "");
+                intent = new Intent(this, LoginActivity.class);
+                this.startActivity(intent);
+                break;
+            case R.id.navigation_exit:
+                System.exit(0);
                 break;
         }
 

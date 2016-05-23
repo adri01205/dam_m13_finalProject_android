@@ -45,6 +45,7 @@ public class TaskListActivity extends SynupMenuSearchableActivity
     ArrayList<Team> teams;
     HashMap<Team, ArrayList<Task>> tasksMap;
     ExpandableListView elv;
+    String pattern = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -63,7 +64,7 @@ public class TaskListActivity extends SynupMenuSearchableActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        new UpdateLocalAsync(this, this).execute();
+        new UpdateLocalAsync(this, this).execute(SynupSharedPreferences.getUserLoged(this));
 
         elv = (ExpandableListView)findViewById(R.id.lstLlistaExpandible);
         chargeData();
@@ -104,7 +105,7 @@ public class TaskListActivity extends SynupMenuSearchableActivity
         teams = new ArrayList<>();
         tasksMap = new HashMap<>();
         SynupConversor syn = new SynupConversor(this);
-        Cursor cTeams =  syn.getTeamsByUser(SynupSharedPreferences.getUserLoged(this));
+        Cursor cTeams =  syn.getTeamsByUser(SynupSharedPreferences.getUserLoged(this),pattern);
 
         if (cTeams.moveToFirst()){
             do{
@@ -112,7 +113,7 @@ public class TaskListActivity extends SynupMenuSearchableActivity
                 teams.add(team);
                 ArrayList<Task> teamTasks = new ArrayList<>();
 
-                Cursor cTasks = syn.getTaskByTeam(team.getCode());
+                Cursor cTasks = syn.getTaskByTeam(team.getCode(),pattern);
 
                 if (cTasks.moveToFirst()){
                     do{
@@ -193,6 +194,7 @@ public class TaskListActivity extends SynupMenuSearchableActivity
 
     @Override
     void searchSubmit(String query) {
-        Toast.makeText(TaskListActivity.this, query, Toast.LENGTH_SHORT).show();
+        pattern = query;
+        chargeData();
     }
 }

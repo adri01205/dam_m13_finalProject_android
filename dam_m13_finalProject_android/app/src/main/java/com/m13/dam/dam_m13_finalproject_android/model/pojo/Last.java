@@ -12,27 +12,33 @@ package com.m13.dam.dam_m13_finalproject_android.model.pojo;
 public class Last {
 
     int id;
+    String employee;
     int employeeLog;
     int taskLog;
-    int employeTaskLog;
+    int taskHistoryLog;
     int teamLog;
+    int teamHistoryLog;
 
     public Last() {
     }
 
-    public Last(int id, int employeeLog, int taskLog, int employeTaskLog, int teamLog) {
+    public Last(int id, String employee, int employeeLog, int taskLog, int taskHistoryLog, int teamLog, int teamHistoryLog) {
         this.id = id;
+        this.employee = employee;
         this.employeeLog = employeeLog;
         this.taskLog = taskLog;
-        this.employeTaskLog = employeTaskLog;
+        this.taskHistoryLog = taskHistoryLog;
         this.teamLog = teamLog;
+        this.teamHistoryLog = teamHistoryLog;
     }
 
-    public Last(int employeeLog, int taskLog, int employeTaskLog, int teamLog) {
+    public Last(String employee, int employeeLog, int taskLog, int taskHistoryLog, int teamLog, int teamHistoryLog) {
+        this.employee = employee;
         this.employeeLog = employeeLog;
         this.taskLog = taskLog;
-        this.employeTaskLog = employeTaskLog;
+        this.taskHistoryLog = taskHistoryLog;
         this.teamLog = teamLog;
+        this.teamHistoryLog = teamHistoryLog;
     }
 
     public int getId() {
@@ -41,6 +47,14 @@ public class Last {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(String employee) {
+        this.employee = employee;
     }
 
     public int getEmployeeLog() {
@@ -59,12 +73,12 @@ public class Last {
         this.taskLog = taskLog;
     }
 
-    public int getEmployeTaskLog() {
-        return employeTaskLog;
+    public int getTaskHistoryLog() {
+        return taskHistoryLog;
     }
 
-    public void setEmployeTaskLog(int employeTaskLog) {
-        this.employeTaskLog = employeTaskLog;
+    public void setTaskHistoryLog(int taskHistoryLog) {
+        this.taskHistoryLog = taskHistoryLog;
     }
 
     public int getTeamLog() {
@@ -75,14 +89,24 @@ public class Last {
         this.teamLog = teamLog;
     }
 
+    public int getTeamHistoryLog() {
+        return teamHistoryLog;
+    }
+
+    public void setTeamHistoryLog(int teamHistoryLog) {
+        this.teamHistoryLog = teamHistoryLog;
+    }
+
     @Override
     public String toString() {
         return "Last{" +
                 "id=" + id +
+                ", employee='" + employee + '\'' +
                 ", employeeLog=" + employeeLog +
                 ", taskLog=" + taskLog +
-                ", employeTaskLog=" + employeTaskLog +
+                ", taskHistoryLog=" + taskHistoryLog +
                 ", teamLog=" + teamLog +
+                ", teamHistoryLog=" + teamHistoryLog +
                 '}';
     }
 }

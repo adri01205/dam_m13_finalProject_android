@@ -10,6 +10,7 @@ import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskC
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupSharedPreferences;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Employee;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.Last;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.LastServer;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
@@ -23,7 +24,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
+public class UpdateLocalAsync  extends AsyncTask<String, Void, Void> {
 
 
     private String Content;
@@ -51,6 +52,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
     private Activity context;
     private AsyncTaskCompleteListener<ReturnObject> listener;
     private SynupConversor conversor;
+    private String code = "";
 
     public UpdateLocalAsync(Activity context, AsyncTaskCompleteListener<ReturnObject> listener)
     {
@@ -73,16 +75,20 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
     }
 
     // Call after onPreExecute method
-        protected Void doInBackground(Void... urls) {
+        protected Void doInBackground(String... params) {
             if(!Connection.isConnected()){
                 ret.setCode(301);
                 ret.setMessage(context.getResources().getString(R.string.ERROR_NO_CONNECTION));
                 return null;
             }
+
         HttpURLConnection conn = null;
         boolean smtingDone = false;
         int status = 500;
         try {
+            code = params[0];
+            Last lastLocal = conversor.getLast(code);
+
             conn = (HttpURLConnection) new URL(serverURLLastServer).openConnection();
             conn.setRequestProperty("Accept-Charset", "UTF-8");
 
@@ -90,35 +96,35 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
 
             ArrayList<LastServer> lastServer = (ArrayList<LastServer>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(LastServer.class, conn.getInputStream());
             conn.disconnect();
-            int first = conversor.getLastLocalTask();
+            int first = lastLocal.getTaskLog();
             int last = lastServer.get(0).getTasklogId();
             if (last > first) {
                 updateTask(first, last);
                 smtingDone = true;
             }
 
-            first = conversor.getLastLocalTaskHistoryLog();
+            first = lastLocal.getTaskHistoryLog();
             last = lastServer.get(0).getTaskhistlogId();
             if (last > first) {
                 updateTaskHistory(first, last);
                  smtingDone = true;
             }
 
-            first = conversor.getLastLocalTeam();
+            first = lastLocal.getTeamLog();
             last = lastServer.get(0).getTeamlogId();
             if (last > first) {
                 updateTeam(first, last);
                 smtingDone = true;
             }
 
-            first = conversor.getLastLocalEmployee();
+            first = lastLocal.getEmployeeLog();
             last = lastServer.get(0).getEmplogId();
             if (last > first) {
                 updateEmployee(first, last);
                 smtingDone = true;
             }
 
-            first = conversor.getLastLocalTeamHistory();
+            first = lastLocal.getTeamHistoryLog();
             last = lastServer.get(0).getTeamhistlogId();
             if (last > first) {
                 updateTeamHistory(first, last);
@@ -137,7 +143,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
             ret.setCode(407);
             ret.setMessage("connection status: " + status + "\n" + e.toString());
         } catch (Exception e) {
-            ret.setCode(301);
+            ret.setCode(408);
             ret.setMessage(e.toString());
         } finally
         {
@@ -164,7 +170,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         updateUTask(first, last);
         updateDTask(first, last);
 
-        conversor.updateLastTask(last);
+        conversor.updateLastTask(code, last);
 
     }
 
@@ -228,7 +234,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         updateUTaskHistory(first, last);
         updateDTaskHistory(first, last);
 
-        conversor.updateLastTaskHistory(last);
+        conversor.updateLastTaskHistory(code, last);
 
     }
 
@@ -289,7 +295,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         updateUTeam(first, last);
         updateDTeam(first, last);
 
-        conversor.updateLastTeam(last);
+        conversor.updateLastTeam(code, last);
     }
 
     private void updateITeam(int first, int last) throws IOException {
@@ -349,7 +355,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         updateUEmployee(first, last);
         updateDEmployee(first, last);
 
-        conversor.updateLastEmployee(last);
+        conversor.updateLastEmployee(code, last);
     }
 
     private void updateIEmployee(int first, int last) throws IOException {
@@ -409,7 +415,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         updateUTeamHistory(first, last);
         updateDTeamHistory(first, last);
 
-        conversor.updateLastTeamHistory(last);
+        conversor.updateLastTeamHistory(code, last);
     }
 
     private void updateITeamHistory(int first, int last) throws IOException {

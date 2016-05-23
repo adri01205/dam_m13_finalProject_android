@@ -57,4 +57,5 @@
     <string name="CANCELED">_Canceled</string>
     <string name="ERROR_NO_CONNECTION">_No connection</string>
     <string name="NAVIGATION">_Navigation</string>
+    <string name="ERROR_NO_TASK_TOOK">_No task took</string>
 </resources>

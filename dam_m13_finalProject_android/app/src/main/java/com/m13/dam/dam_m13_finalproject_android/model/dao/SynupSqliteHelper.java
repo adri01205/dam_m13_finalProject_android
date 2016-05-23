@@ -39,11 +39,12 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
 
     static String createLast = "CREATE TABLE Last ( " +
           " id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-          " employeeLog INTEGER, " +
-          " taskLog INTEGER, " +
-          " taskHistoryLog INTEGER, " +
-          " teamLog INTEGER, " +
-          " teamHistoryLog INTEGER " +
+          " employee TEXT NOT NULL, " +
+          " employeeLog INTEGER DEFAULT 0, " +
+          " taskLog INTEGER DEFAULT 0, " +
+          " taskHistoryLog INTEGER DEFAULT 0, " +
+          " teamLog INTEGER DEFAULT 0, " +
+          " teamHistoryLog INTEGER DEFAULT 0 " +
           "); ";
 
     static String createEmployee = "CREATE TABLE Employee ( " +
@@ -117,6 +118,5 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
         db.execSQL(createTeam);
         db.execSQL(createTeamHistory);
         db.execSQL(createTrTHU);
-        db.execSQL("INSERT INTO Last VALUES (1,0,0,0,0,0);");
     }
 }

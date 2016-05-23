@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Employee;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.Last;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistory;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Team;
@@ -44,7 +45,7 @@ import java.text.SimpleDateFormat;
 
 /* ORM Lite */
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD21";
+    public static final String BD_NAME = "SYNUP_BD22";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -74,7 +75,7 @@ public class SynupConversor {
                 "TaskHistoryLog",
                 new String[]{"id", "id_taskHistory", "operation", "when"},
                 "id > ?",
-                new String[] { String.valueOf(first)},
+                new String[]{String.valueOf(first)},
                 null,
                 null,
                 null,
@@ -168,21 +169,22 @@ public class SynupConversor {
     public long saveTaskHistory(TaskHistory th) {
         long index = -1;
         SQLiteDatabase db = helper.getWritableDatabase();
-        ContentValues dades = new ContentValues();
+        if(getTaskHistory(th.getId()) == null) {
+            ContentValues dades = new ContentValues();
 
-        dades.put("id", th.getId());
-        dades.put("id_employee", th.getId_employee());
-        dades.put("id_task", th.getId_task());
-        dades.put("startDate", dataFormat.format(th.getStartDate()));
-        dades.put("finishDate", dataFormat.format(th.getFinishDate()));
-        dades.put("comment", th.getComment());
-        dades.put("isFinished", th.getIsFinished());
+            dades.put("id", th.getId());
+            dades.put("id_employee", th.getId_employee());
+            dades.put("id_task", th.getId_task());
+            dades.put("startDate", dataFormat.format(th.getStartDate()));
+            dades.put("finishDate", dataFormat.format(th.getFinishDate()));
+            dades.put("comment", th.getComment());
+            dades.put("isFinished", th.getIsFinished());
 
-        try {
-            index = db.insertOrThrow("TaskHistory", null, dades);
-        }
-        catch(Exception e) {
-            Log.e("ERROR_BUG", "Error on insert the task history register");
+            try {
+                index = db.insertOrThrow("TaskHistory", null, dades);
+            } catch (Exception e) {
+                Log.e("ERROR_BUG", "Error on insert the task history register");
+            }
         }
         return index;
     }
@@ -275,15 +277,15 @@ public class SynupConversor {
     }
 
     //GET BY TEAM
-    public Cursor getTaskByTeam(String code)
+    public Cursor getTaskByTeam(String code, String taskName)
     {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         Cursor c = db.query(true,
                 "Task",
                 new String[]{"id_team", "code", "priorityDate", "description", "localization", "project", "name"},
-                "id_team = ?",
-                new String[]{String.valueOf(code)},
+                "id_team = ? and name LIKE ?",
+                new String[]{code, "%" + taskName + "%"},
                 null,
                 null,
                 null,
@@ -296,23 +298,26 @@ public class SynupConversor {
     public long saveTask(Task t) {
         long index = -1;
         SQLiteDatabase db = helper.getWritableDatabase();
-        ContentValues dades = new ContentValues();
 
-        dades.put("id_team", t.getId_team());
-        dades.put("code", t.getCode());
-        dades.put("priorityDate", dataFormat.format(t.getPriorityDate()));
-        dades.put("description", t.getDescription());
-        dades.put("localization", t.getLocalization());
-        dades.put("project", t.getProject());
-        dades.put("name", t.getName());
-        dades.put("priority", t.getPriority());
-        dades.put("state", t.getState());
+        if(getTask(t.getCode()) == null) {
 
-        try {
-            index = db.insertOrThrow("Task", null, dades);
-        }
-        catch(Exception e) {
-            Log.e("ERROR_BUG", "Error on insert the task");
+            ContentValues dades = new ContentValues();
+
+            dades.put("id_team", t.getId_team());
+            dades.put("code", t.getCode());
+            dades.put("priorityDate", dataFormat.format(t.getPriorityDate()));
+            dades.put("description", t.getDescription());
+            dades.put("localization", t.getLocalization());
+            dades.put("project", t.getProject());
+            dades.put("name", t.getName());
+            dades.put("priority", t.getPriority());
+            dades.put("state", t.getState());
+
+            try {
+                index = db.insertOrThrow("Task", null, dades);
+            } catch (Exception e) {
+                Log.e("ERROR_BUG", "Error on insert the task");
+            }
         }
         return index;
     }
@@ -332,14 +337,14 @@ public class SynupConversor {
         args.put("name", t.getName());
         args.put("priority", t.getPriority());
         args.put("state", t.getState());
-        db.update("Task", args, "code='" + t.getCode()+"'", null);
+        db.update("Task", args, "code='" + t.getCode() + "'", null);
 
     }
 
     //DELETE TASK
     public void deleteTask(String code) throws Exception{
         SQLiteDatabase db = helper.getReadableDatabase();
-        db.delete("Task", "code='" + code+"'", null);
+        db.delete("Task", "code='" + code + "'", null);
     }
 
     //EMPLOYEE LOCAL DB FUNCTIONS
@@ -393,22 +398,23 @@ public class SynupConversor {
     public long saveEmployee(Employee e) {
         long index = -1;
         SQLiteDatabase db = helper.getWritableDatabase();
-        ContentValues args = new ContentValues();
+        if(getEmployee(e.getNif()) == null) {
+            ContentValues args = new ContentValues();
 
-        args.put("nif", e.getNif());
-        args.put("name", e.getName());
-        args.put("surname", e.getSurname());
-        args.put("adress", e.getAdress());
-        args.put("email",e.getEmail());
-        args.put("password", e.getPassword());
-        args.put("username", e.getUsername());
-        args.put("phone", e.getPhone());
+            args.put("nif", e.getNif());
+            args.put("name", e.getName());
+            args.put("surname", e.getSurname());
+            args.put("adress", e.getAdress());
+            args.put("email", e.getEmail());
+            args.put("password", e.getPassword());
+            args.put("username", e.getUsername());
+            args.put("phone", e.getPhone());
 
-        try {
-            index = db.insertOrThrow("Employee", null, args);
-        }
-        catch(Exception ex) {
-            Log.e("ERROR_BUG", "Error on insert the Employee");
+            try {
+                index = db.insertOrThrow("Employee", null, args);
+            } catch (Exception ex) {
+                Log.e("ERROR_BUG", "Error on insert the Employee");
+            }
         }
         return index;
     }
@@ -428,13 +434,13 @@ public class SynupConversor {
         args.put("username", e.getUsername());
         args.put("phone", e.getPhone());
 
-        db.update("Employee", args, "nif='" + e.getNif()+"'", null);
+        db.update("Employee", args, "nif='" + e.getNif() + "'", null);
     }
 
     //DELETE
     public void deleteEmployee(String nif) throws Exception{
         SQLiteDatabase db = helper.getReadableDatabase();
-        db.delete("Employee", "nif='" + nif+"'", null);
+        db.delete("Employee", "nif='" + nif + "'", null);
     }
 
     //TEAM LOCAL DB FUNCTIONS
@@ -461,15 +467,17 @@ public class SynupConversor {
     }
 
     //GET BY USER
-    public Cursor getTeamsByUser(String nif)
+    public Cursor getTeamsByUser(String nif, String taskName)
     {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         String sql = "SELECT te.code, te.name " +
-                "FROM Team te INNER JOIN TeamHistory teh ON te.code = teh.code" +
-                " WHERE teh.nif = ?";
+                "FROM Team te " +
+                "INNER JOIN TeamHistory teh ON te.code = teh.code " +
+                "INNER JOIN Task t ON t.id_team = te.code " +
+                "WHERE teh.nif = ? and t.name LIKE ?";
 
-        Cursor c = db.rawQuery(sql, new String[]{nif});
+        Cursor c = db.rawQuery(sql, new String[]{nif, "%" + taskName + "%"});
 
         return c;
     }
@@ -478,16 +486,17 @@ public class SynupConversor {
     public long saveTeam(Team t) {
         long index = -1;
         SQLiteDatabase db = helper.getWritableDatabase();
-        ContentValues args = new ContentValues();
+        if(getTeam(t.getCode()) == null) {
+            ContentValues args = new ContentValues();
 
-        args.put("code", t.getCode());
-        args.put("name", t.getName());
+            args.put("code", t.getCode());
+            args.put("name", t.getName());
 
-        try {
-            index = db.insertOrThrow("Team", null, args);
-        }
-        catch(Exception ex) {
-            Log.e("ERROR_BUG", "Error on insert the Team");
+            try {
+                index = db.insertOrThrow("Team", null, args);
+            } catch (Exception ex) {
+                Log.e("ERROR_BUG", "Error on insert the Team");
+            }
         }
         return index;
     }
@@ -500,31 +509,52 @@ public class SynupConversor {
 
         args.put("code", t.getCode());
         args.put("name", t.getName());
-        db.update("Team", args, "code='" + t.getCode()+"'", null);
+        db.update("Team", args, "code='" + t.getCode() + "'", null);
     }
 
     //DELETE
     public void deleteTeam(String code) throws Exception{
         SQLiteDatabase db = helper.getReadableDatabase();
-        db.delete("Team", "code='" + code+"'", null);
+        db.delete("Team", "code='" + code + "'", null);
     }
 
     //TEAMHISTORY LOCAL DB FUNCTIONS
+    public TeamHistory getTeamHitory(int id){
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor c = db.query(true,
+                "TeamHistory",
+                new String[]{"id", "nif","code"},
+                "id = ?",
+                new String[]{String.valueOf(id)},
+                null,
+                null,
+                null,
+                null);
+
+        if(c==null || c.getCount()==0){
+            return null;
+        }
+        c.moveToFirst();
+
+        return new TeamHistory(c.getInt(0),c.getString(1),c.getString(2));
+    }
     //SAVE -> INSERT
     public long saveTeamHistory(TeamHistory teh) {
         long index = -1;
         SQLiteDatabase db = helper.getWritableDatabase();
-        ContentValues args = new ContentValues();
+        if(getTeamHitory(teh.getId()) == null) {
+            ContentValues args = new ContentValues();
 
-        args.put("id", teh.getId());
-        args.put("nif", teh.getNif());
-        args.put("code", teh.getCode());
+            args.put("id", teh.getId());
+            args.put("nif", teh.getNif());
+            args.put("code", teh.getCode());
 
-        try {
-            index = db.insertOrThrow("TeamHistory", null, args);
-        }
-        catch(Exception ex) {
-            Log.e("ERROR_BUG", "Error on insert the Team");
+            try {
+                index = db.insertOrThrow("TeamHistory", null, args);
+            } catch (Exception ex) {
+                Log.e("ERROR_BUG", "Error on insert the Team");
+            }
         }
         return index;
     }
@@ -548,7 +578,51 @@ public class SynupConversor {
     }
 
     //LAST LOCAL DB FUNCTIONS -- ONLY GET/UPDATE
+
+    public Last saveLast(String code) throws Exception{
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        ContentValues args = new ContentValues();
+
+        args.put("code", code);
+        db.insertOrThrow("Last", null, args);
+
+        Cursor c = db.query(true,
+                "Last",
+                new String[]{"id","employee","employeeLog","taskLog","taskHistoryLog","teamLog","teamHistoryLog"},
+                "code = ?",
+                new String[]{code},
+                null,
+                null,
+                null,
+                null);
+
+        c.moveToFirst();
+        return new Last(c.getInt(0),c.getString(1),c.getInt(3),c.getInt(4),c.getInt(5),c.getInt(6),c.getInt(7));
+    }
+
     //GET
+    public Last getLast(String code) throws Exception{
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor c = db.query(true,
+                "Last",
+                new String[]{"id","employee","employeeLog","taskLog","taskHistoryLog","teamLog","teamHistoryLog"},
+                "employee = ?",
+                new String[]{code},
+                null,
+                null,
+                null,
+                null);
+
+        if(c==null || c.getCount()==0){
+            return saveLast(code);
+        }
+        c.moveToFirst();
+        return new Last(c.getInt(0),c.getString(1),c.getInt(3),c.getInt(4),c.getInt(5),c.getInt(6),c.getInt(7));
+    }
+
     public int getLastLocalTask() {
         SQLiteDatabase db = helper.getReadableDatabase();
 
@@ -650,63 +724,64 @@ public class SynupConversor {
     }
 
     //UPDATE
-    public boolean updateLastTaskHistory(int lastTaskHistory) {
+    public boolean updateLastTaskHistory(String code, int lastTaskHistory) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         ContentValues args = new ContentValues();
 
         args.put("taskHistoryLog", lastTaskHistory);
         try {
-            db.update("Last", args, "id=1", null);
+            db.update("Last", args, "code="+code, null);
         } catch (Exception e){
             return false;
         }
         return true;
     }
 
-    public boolean updateLastTask(int lastTask) {
+    public boolean updateLastTask(String code, int lastTask) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         ContentValues args = new ContentValues();
 
         args.put("taskLog", lastTask);
         try {
-            db.update("Last", args, "id=1", null);
+            db.update("Last", args, "code="+code, null);
         } catch (Exception e){
             return false;
         }
         return true;
     }
 
-    public boolean updateLastTeam(int lastTeam) {
+    public boolean updateLastTeam(String code, int lastTeam) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         ContentValues args = new ContentValues();
 
         args.put("teamLog", lastTeam);
         try {
-            db.update("Last", args, "id=1", null);
+            db.update("Last", args, "code="+code, null);
         } catch (Exception e){
             return false;
         }
         return true;
     }
 
-    public boolean updateLastEmployee(int lastEmployee) {
+    public boolean updateLastEmployee(String code, int lastEmployee) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         ContentValues args = new ContentValues();
 
         args.put("employeeLog", lastEmployee);
         try {
-            db.update("Last", args, "id=1", null);
+            db.update("Last", args, "code="+code, null);
         } catch (Exception e){
+
             return false;
         }
         return true;
     }
 
-    public boolean updateLastTeamHistory(int lastTeamHistory) {
+    public boolean updateLastTeamHistory(String code, int lastTeamHistory) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         ContentValues args = new ContentValues();
@@ -714,7 +789,7 @@ public class SynupConversor {
         args.put("teamHistoryLog", lastTeamHistory);
 
         try {
-            db.update("Last", args, "id=1", null);
+            db.update("Last", args, "code="+code, null);
         } catch (Exception e){
             return false;
         }

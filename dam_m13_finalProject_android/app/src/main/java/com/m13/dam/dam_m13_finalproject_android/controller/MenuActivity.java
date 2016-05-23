@@ -66,6 +66,8 @@ public class MenuActivity extends SynupMainMenuActivity  {
                     Intent intent = new Intent(context, DetailActivity.class);
                     intent.putExtra("idTask", t.getCode());
                     context.startActivity(intent);
+                } else {
+                    Dialogs.getErrorDialog(context, getResources().getString(R.string.ERROR_NO_TASK_TOOK)).show();
                 }
 
             }

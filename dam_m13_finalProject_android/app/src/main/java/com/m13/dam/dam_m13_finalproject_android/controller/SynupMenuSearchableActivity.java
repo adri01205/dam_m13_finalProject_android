@@ -30,7 +30,8 @@ public abstract class SynupMenuSearchableActivity extends SynupMenuActivity {
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextChange(String query) {
+                searchSubmit(query);
                 return false;
             }
         });
