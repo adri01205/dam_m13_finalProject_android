@@ -591,7 +591,7 @@ public class SynupConversor {
         Cursor c = db.query(true,
                 "Last",
                 new String[]{"id","employee","employeeLog","taskLog","taskHistoryLog","teamLog","teamHistoryLog"},
-                "code = ?",
+                "employee = ?",
                 new String[]{code},
                 null,
                 null,
