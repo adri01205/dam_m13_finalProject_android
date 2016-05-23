@@ -173,10 +173,15 @@ public class SynupConversor {
             ContentValues dades = new ContentValues();
 
             dades.put("id", th.getId());
+            if(th.getId_employee() != null)
             dades.put("id_employee", th.getId_employee());
+            if(th.getId_task() != null)
             dades.put("id_task", th.getId_task());
+            if(th.getStartDate() != null)
             dades.put("startDate", dataFormat.format(th.getStartDate()));
+            if(th.getFinishDate() != null)
             dades.put("finishDate", dataFormat.format(th.getFinishDate()));
+            if(th.getComment() != null)
             dades.put("comment", th.getComment());
             dades.put("isFinished", th.getIsFinished());
 
@@ -303,12 +308,19 @@ public class SynupConversor {
 
             ContentValues dades = new ContentValues();
 
+            if(t.getId_team() != null)
             dades.put("id_team", t.getId_team());
+            if(t.getCode() != null)
             dades.put("code", t.getCode());
+            if(t.getPriorityDate() != null)
             dades.put("priorityDate", dataFormat.format(t.getPriorityDate()));
+            if(t.getDescription() != null)
             dades.put("description", t.getDescription());
+            if(t.getLocalization() != null)
             dades.put("localization", t.getLocalization());
+            if(t.getProject() != null)
             dades.put("project", t.getProject());
+            if(t.getName() != null)
             dades.put("name", t.getName());
             dades.put("priority", t.getPriority());
             dades.put("state", t.getState());
@@ -401,13 +413,21 @@ public class SynupConversor {
         if(getEmployee(e.getNif()) == null) {
             ContentValues args = new ContentValues();
 
+            if(e.getNif() != null)
             args.put("nif", e.getNif());
+            if(e.getName() != null)
             args.put("name", e.getName());
+            if(e.getSurname() != null)
             args.put("surname", e.getSurname());
+            if(e.getAdress() != null)
             args.put("adress", e.getAdress());
+            if(e.getEmail() != null)
             args.put("email", e.getEmail());
+            if(e.getPassword() != null)
             args.put("password", e.getPassword());
+            if(e.getUsername() != null)
             args.put("username", e.getUsername());
+            if(e.getPhone() != null)
             args.put("phone", e.getPhone());
 
             try {
@@ -489,7 +509,9 @@ public class SynupConversor {
         if(getTeam(t.getCode()) == null) {
             ContentValues args = new ContentValues();
 
+            if(t.getCode() != null)
             args.put("code", t.getCode());
+            if(t.getName() != null)
             args.put("name", t.getName());
 
             try {
@@ -547,7 +569,9 @@ public class SynupConversor {
             ContentValues args = new ContentValues();
 
             args.put("id", teh.getId());
+            if(teh.getNif() != null)
             args.put("nif", teh.getNif());
+            if(teh.getCode() != null)
             args.put("code", teh.getCode());
 
             try {
