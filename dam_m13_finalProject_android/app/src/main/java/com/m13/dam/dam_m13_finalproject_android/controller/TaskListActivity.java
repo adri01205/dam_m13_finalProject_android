@@ -136,7 +136,7 @@ public class TaskListActivity extends SynupMenuSearchableActivity
 
     @Override
     public void onTaskComplete(ReturnObject result) {
-        chargeData();
+
         if (result.succes()) {
             switch (result.getCallback()){
                 case ReturnObject.UPDATE_LOCAL_CALLBACK:
@@ -144,10 +144,12 @@ public class TaskListActivity extends SynupMenuSearchableActivity
                     break;
                 case ReturnObject.UPDATE_SERVER_CALLBACK:
                     SynupSharedPreferences.setUpdatedData(this, "1");
+                    chargeData();
                     break;
             }
 
         } else {
+            chargeData();
             if(result.getCode() == 301){
                 SynupSharedPreferences.setUpdatedData(this, "0");
             } else {
