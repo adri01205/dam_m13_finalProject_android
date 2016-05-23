@@ -599,7 +599,7 @@ public class SynupConversor {
                 null);
 
         c.moveToFirst();
-        return new Last(c.getInt(0),c.getString(1),c.getInt(3),c.getInt(4),c.getInt(5),c.getInt(6),c.getInt(7));
+        return new Last(c.getInt(0),c.getString(1),c.getInt(2), c.getInt(3),c.getInt(4),c.getInt(5),c.getInt(6));
     }
 
     //GET
@@ -620,7 +620,7 @@ public class SynupConversor {
             return saveLast(code);
         }
         c.moveToFirst();
-        return new Last(c.getInt(0),c.getString(1),c.getInt(3),c.getInt(4),c.getInt(5),c.getInt(6),c.getInt(7));
+        return new Last(c.getInt(0),c.getString(1),c.getInt(2), c.getInt(3),c.getInt(4),c.getInt(5),c.getInt(6));
     }
 
     public int getLastLocalTask() {
