@@ -14,7 +14,6 @@ import com.m13.dam.dam_m13_finalproject_android.R;
  * Created by adri on 13/05/2016.
  */
 public class SynupMainMenuActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

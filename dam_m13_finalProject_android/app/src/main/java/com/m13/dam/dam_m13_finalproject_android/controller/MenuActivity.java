@@ -17,10 +17,10 @@ import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskC
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupSharedPreferences;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
 import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateLocalAsync;
 
-public class MenuActivity extends SynupMainMenuActivity implements
-        AsyncTaskCompleteListener<ReturnObject> {
+public class MenuActivity extends SynupMainMenuActivity  {
 
     Activity context;
 
@@ -46,9 +46,8 @@ public class MenuActivity extends SynupMainMenuActivity implements
             Dialogs.getErrorDialog(this, errors);
         }
 
-        SynupSharedPreferences.setUpdatedData(this, "0");
         if (!SynupSharedPreferences.getUpdatedData(this).equals("1")) {
-            new UpdateLocalAsync(this, this).execute();
+            findViewById(R.id.activity_menu_ll_not_updated).setVisibility(View.VISIBLE);
         }
 
         setButtons();
@@ -62,13 +61,12 @@ public class MenuActivity extends SynupMainMenuActivity implements
             @Override
             public void onClick(View v) {
                 SynupConversor synupConversor = new SynupConversor(context);
-//                Task t = synupConversor.getTaskAcctived(SynupSharedPreferences.getUserLoged(context));
-//                if(t!= null) {
-                Intent intent = new Intent(context, DetailActivity.class);
-//                    intent.putExtra("idTask", t.getCode());
-                intent.putExtra("idTask", "task1");
-                context.startActivity(intent);
-//                }
+                Task t = synupConversor.getTaskAcctived(SynupSharedPreferences.getUserLoged(context));
+                if(t!= null) {
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra("idTask", t.getCode());
+                    context.startActivity(intent);
+                }
 
             }
         });
@@ -90,18 +88,5 @@ public class MenuActivity extends SynupMainMenuActivity implements
             }
         });
     }
-
-    @Override
-    public void onTaskComplete(ReturnObject result) {
-        if (result.succes()) {
-            SynupSharedPreferences.setUpdatedData(this, "1");
-        } else {
-            Dialogs.getErrorDialog(this, result).show();
-            findViewById(R.id.activity_menu_ll_not_updated).setVisibility(View.VISIBLE);
-
-        }
-    }
-
-
 
 }

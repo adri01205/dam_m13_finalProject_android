@@ -20,10 +20,15 @@ import android.widget.Toast;
 
 import com.m13.dam.dam_m13_finalproject_android.R;
 import com.m13.dam.dam_m13_finalproject_android.controller.adapters.TeamTaskAdapter;
+import com.m13.dam.dam_m13_finalproject_android.controller.dialogs.Dialogs;
+import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskCompleteListener;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupSharedPreferences;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Team;
+import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateLocalAsync;
+import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateServerAsync;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,11 +39,12 @@ import java.util.HashMap;
  */
 
 public class TaskListActivity extends SynupMenuSearchableActivity
-        implements ExpandableListView.OnGroupClickListener, ExpandableListView.OnChildClickListener {
+        implements ExpandableListView.OnGroupClickListener, ExpandableListView.OnChildClickListener, AsyncTaskCompleteListener<ReturnObject> {
 
 
     ArrayList<Team> teams;
     HashMap<Team, ArrayList<Task>> tasksMap;
+    ExpandableListView elv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -57,13 +63,11 @@ public class TaskListActivity extends SynupMenuSearchableActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        new UpdateLocalAsync(this, this).execute();
 
+        elv = (ExpandableListView)findViewById(R.id.lstLlistaExpandible);
         chargeData();
 
-        ExpandableListView elv = (ExpandableListView)findViewById(R.id.lstLlistaExpandible);
-        TeamTaskAdapter expandableAdapter = new TeamTaskAdapter(this, teams, tasksMap);
-
-        elv.setAdapter(expandableAdapter);
         //registerForContextMenu(elv);
 
         elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -124,6 +128,31 @@ public class TaskListActivity extends SynupMenuSearchableActivity
 
                 tasksMap.put(team, teamTasks);
             } while (cTeams.moveToNext ());
+        }
+
+        TeamTaskAdapter expandableAdapter = new TeamTaskAdapter(this, teams, tasksMap);
+        elv.setAdapter(expandableAdapter);
+    }
+
+    @Override
+    public void onTaskComplete(ReturnObject result) {
+        if (result.succes()) {
+            switch (result.getCallback()){
+                case ReturnObject.UPDATE_LOCAL_CALLBACK:
+                    new UpdateServerAsync(this,this).execute();
+                    break;
+                case ReturnObject.UPDATE_SERVER_CALLBACK:
+                    SynupSharedPreferences.setUpdatedData(this, "1");
+                    break;
+            }
+
+        } else {
+            if(result.getCode() == 301){
+                SynupSharedPreferences.setUpdatedData(this, "0");
+            } else {
+                Dialogs.getErrorDialog(this, result).show();
+            }
+
         }
     }
 

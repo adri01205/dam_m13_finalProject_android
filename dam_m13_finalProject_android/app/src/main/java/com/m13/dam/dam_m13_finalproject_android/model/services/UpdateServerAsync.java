@@ -26,9 +26,10 @@ import java.util.ArrayList;
 
 public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
 
+
     private String Content;
     private ReturnObject ret;
-    private String serverURL =  "http://"+ Connection.getDomain()+ "Login/";
+    private String serverURL =  "http://"+ Connection.getDomain()+ "TaskHistoryUpdate/";
     private ProgressDialog progressDialog;
     private Context context;
     private AsyncTaskCompleteListener<ReturnObject> listener;
@@ -37,7 +38,7 @@ public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
     {
         this.context = context;
         this.listener = listener;
-        ret = new ReturnObject(200,"OK");
+        ret = new ReturnObject(200,"OK",ReturnObject.UPDATE_SERVER_CALLBACK);
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Connecting to server..");
         progressDialog.setIndeterminate(false);

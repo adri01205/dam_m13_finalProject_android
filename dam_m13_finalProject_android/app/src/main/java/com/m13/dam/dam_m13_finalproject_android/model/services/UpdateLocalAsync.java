@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
 
+
     private String Content;
     private ReturnObject ret;
 
@@ -56,7 +57,7 @@ public class UpdateLocalAsync  extends AsyncTask<Void, Void, Void> {
         this.context = context;
         this.listener = listener;
         this.employeeId = SynupSharedPreferences.getUserLoged(context);
-        ret = new ReturnObject(200,"OK");
+        ret = new ReturnObject(200,"OK",ReturnObject.UPDATE_LOCAL_CALLBACK);
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Connecting to server..");
         progressDialog.setIndeterminate(false);
