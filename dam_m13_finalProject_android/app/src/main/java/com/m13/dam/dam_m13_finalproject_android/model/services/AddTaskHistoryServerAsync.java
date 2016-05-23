@@ -37,7 +37,7 @@ public class AddTaskHistoryServerAsync extends AsyncTask<String, Void, Void> {
     {
         this.context = context;
         this.listener = listener;
-        ret = new ReturnObject(200,"OK");
+        ret = new ReturnObject(200,"OK",ReturnObject.ADD_TASK_HISTORY_CALLBACK);
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Connecting to server..");
         progressDialog.setIndeterminate(false);

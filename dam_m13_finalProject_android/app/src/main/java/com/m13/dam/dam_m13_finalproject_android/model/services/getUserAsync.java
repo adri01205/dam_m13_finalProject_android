@@ -34,7 +34,7 @@ public class getUserAsync extends AsyncTask<String, Void, Void> {
     {
         this.context = context;
         this.listener = listener;
-        ret = new ReturnObject(200,"OK");
+        ret = new ReturnObject(200,"OK",ReturnObject.GET_USER_CALLBACK);
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Connecting to server..");
         progressDialog.setIndeterminate(false);

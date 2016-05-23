@@ -60,4 +60,5 @@
     <string name="SINCRONIZE">_Sincronize</string>
     <string name="CANCELED">_Canceled</string>
     <string name="ERROR_NO_CONNECTION">_No connection</string>
+    <string name="NAVIGATION">_Navigation</string>
 </resources>

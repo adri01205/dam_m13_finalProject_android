@@ -1,37 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group>
-        <item
-            android:id="@+id/navigation_main_menu"
-            android:title="@string/MAIN_MENU"
-            android:checked="true"
-            android:icon="@drawable/ic_home_white_24dp"/>
-        <item
-            android:id="@+id/navigation_sincronize"
-            android:title="@string/SINCRONIZE"
-            android:checked="true"
-            android:icon="@drawable/ic_home_white_24dp"/>
-        <item
-            android:id="@+id/navigation_myTask"
-            android:title="@string/SINCRONIZE"
-            android:checked="true"
-            android:icon="@drawable/ic_home_white_24dp"/>
-        <item
-            android:id="@+id/navigation_all_tasks"
-            android:title="@string/SINCRONIZE"
-            android:checked="true"
-            android:icon="@drawable/ic_home_white_24dp"/>
+    <group android:checkableBehavior="none">
+        <item android:title="@string/NAVIGATION">
+            <menu>
+                <item
+                    android:id="@+id/navigation_main_menu"
+                    android:title="@string/MAIN_MENU"
+                    android:checked="true"
+                    android:icon="@drawable/ic_home_white_24dp"/>
+                <item
+                    android:id="@+id/navigation_sincronize"
+                    android:title="@string/VIEW_ACCTIVE_TASK"
+                    android:checked="true"
+                    android:icon="@drawable/ic_folder_black_24dp"/>
+                <item
+                    android:id="@+id/navigation_myTask"
+                    android:title="@string/VIEW_TASKS"
+                    android:checked="true"
+                    android:icon="@drawable/ic_folder_shared_black_24dp"/>
+            </menu>
+        </item>
+        <!--<item-->
+            <!--android:id="@+id/navigation_all_tasks"-->
+            <!--android:title="@string/SINCRONIZE"-->
+            <!--android:checked="true"-->
+            <!--android:icon="@drawable/ic_home_white_24dp"/>-->
 
         <item android:title="Manage">
             <menu>
                 <item
                     android:id="@+id/navigation_log_out"
                     android:title="@string/LOG_OUT"
-                    android:icon="@drawable/ic_home_white_24dp"/>
+                    android:icon="@drawable/ic_backspace_black_24dp"/>
                 <item
                     android:id="@+id/navigation_exit"
                     android:title="@string/EXIT"
-                    android:icon="@drawable/ic_home_white_24dp"/>
+                    android:icon="@drawable/ic_exit_to_app_black_24dp"/>
             </menu>
         </item>
 
