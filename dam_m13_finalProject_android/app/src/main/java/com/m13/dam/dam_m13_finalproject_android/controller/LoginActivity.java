@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskComplet
 
         if(!(userName.isEmpty() || password.isEmpty())) {
 
-           // password = md5(password);
+            password = md5(password);
             SynupConversor sc = new SynupConversor(this);
 
 
@@ -91,6 +91,8 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskComplet
 
     }
 
+    //Mètode per passar una string a md5
+    //Modified by Jesus
     public String md5(String s) {
         try {
             // Create MD5 Hash
@@ -100,8 +102,14 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskComplet
 
             // Create Hex String
             StringBuffer hexString = new StringBuffer();
-            for (int i=0; i<messageDigest.length; i++)
-                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+            for (int i=0; i<messageDigest.length; i++) {
+                String hex = Integer.toHexString(0xFF & messageDigest[i]);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+
             return hexString.toString();
 
         } catch (NoSuchAlgorithmException e) {
