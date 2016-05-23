@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.m13.dam.dam_m13_finalproject_android.R;
 import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskCompleteListener;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
@@ -54,6 +55,11 @@ public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
 
     // Call after onPreExecute method
     protected Void doInBackground(Void... urls) {
+        if(!Connection.isConnected()){
+            ret.setCode(301);
+            ret.setMessage(context.getResources().getString(R.string.ERROR_NO_CONNECTION));
+            return null;
+        }
         try {
             SynupConversor conversor = new SynupConversor((Activity)context);
 

@@ -1,19 +1,15 @@
 package com.m13.dam.dam_m13_finalproject_android.controller;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.m13.dam.dam_m13_finalproject_android.R;
 import com.m13.dam.dam_m13_finalproject_android.controller.dialogs.Dialogs;
@@ -42,6 +38,13 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         taskCode = this.getIntent().getStringExtra("idTask");
 
@@ -57,7 +60,7 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
         if(task == null){
             Intent i = new Intent(this, MenuActivity.class);
             i.putExtra("ERROR", getResources().getString(R.string.TASK_NOT_EXISTS));
-            //startActivity(i);
+            startActivity(i);
             return false;
 
         }
@@ -74,49 +77,59 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
         Button buttonFinish = ((Button) findViewById(R.id.activity_detail_bt_finish));
         Button buttonAbandone = ((Button) findViewById(R.id.activity_detail_bt_abandone));
 
-//        status = "";
-//        if(taskHistory == null){
-//            status = getResources().getString(R.string.NEW);
-//            buttonFinish.setText(getResources().getString(R.string.TAKE));
-//            buttonFinish.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    take();
-//                }
-//            });
-//
-//        } else if(taskHistory.getFinishDate() == null){
-//            status = getResources().getString(R.string.IN_PROGRESS);
-//            buttonFinish.setText(getResources().getString(R.string.FINISH));
-//            buttonFinish.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    finishTask();
-//                }
-//            });
-//
-//            buttonAbandone.setVisibility(View.VISIBLE);
-//            buttonAbandone.setText(getResources().getString(R.string.ABANDONE));
-//            buttonAbandone.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    abandone();
-//                }
-//            });
-//
-//        } else if (taskHistory.getIsFinished() == 1){
-//            status = getResources().getString(R.string.ABANDONED);
-//            buttonFinish.setText(getResources().getString(R.string.TAKE));
-//            buttonFinish.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    take();
-//                }
-//            });
-//        } else {
-//            status = getResources().getString(R.string.FINISHED);
-//            buttonFinish.setVisibility(View.GONE);
-//        }
+
+
+        status = "";
+        switch (task.getState()){
+            case Task.UNSELECTED:
+                status = getResources().getString(R.string.NEW);
+                buttonFinish.setText(getResources().getString(R.string.TAKE));
+                buttonFinish.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        take();
+                    }
+                });
+                break;
+            case Task.ONGOING:
+                status = getResources().getString(R.string.IN_PROGRESS);
+                buttonFinish.setText(getResources().getString(R.string.FINISH));
+                buttonFinish.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finishTask();
+                    }
+                });
+
+                buttonAbandone.setVisibility(View.VISIBLE);
+                buttonAbandone.setText(getResources().getString(R.string.ABANDONE));
+                buttonAbandone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        abandone();
+                    }
+                });
+                break;
+            case Task.ABANDONED:
+                status = getResources().getString(R.string.ABANDONED);
+                buttonFinish.setText(getResources().getString(R.string.TAKE));
+                buttonFinish.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        take();
+                    }
+                });
+                break;
+            case Task.FINISHED:
+                status = getResources().getString(R.string.FINISHED);
+                buttonFinish.setVisibility(View.GONE);
+                break;
+            case Task.CANCELED:
+                status = getResources().getString(R.string.CANCELED);
+                buttonFinish.setVisibility(View.GONE);
+                break;
+        }
+
     }
 
     private void setTexts(){
@@ -135,11 +148,13 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
     }
 
     private void abandone() {
+        task.setState(Task.ABANDONED);
         taskHistory.setFinishDate(new java.sql.Date(new java.util.Date().getTime()));
         goMainMenu();
     }
 
     private void finishTask() {
+        task.setState(Task.FINISHED);
         taskHistory.setFinishDate(new java.sql.Date(new java.util.Date().getTime()));
         goMainMenu();
     }
@@ -151,7 +166,13 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
     @Override
     public void onTaskComplete(ReturnObject result) {
         if (result.succes()) {
-            goMainMenu();
+            if(result.getAssociatedObject() == null){
+                Dialogs.getErrorDialog(this,"ERROR");
+
+            } else {
+                task.setState(Task.ONGOING);
+                goMainMenu();
+            }
         } else {
             if(result.getCode() == 301){
                 Dialogs.getErrorDialog(this, getResources().getString(R.string.ERROR_NO_CONNECTION_TAKE_TASK)).show();

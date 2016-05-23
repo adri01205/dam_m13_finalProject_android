@@ -58,4 +58,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="SINCRONIZE">_Sincronize</string>
+    <string name="CANCELED">_Canceled</string>
+    <string name="ERROR_NO_CONNECTION">_No connection</string>
 </resources>
