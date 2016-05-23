@@ -45,7 +45,7 @@ import java.text.SimpleDateFormat;
 
 /* ORM Lite */
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD33";
+    public static final String BD_NAME = "SYNUP_BD35";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -652,7 +652,7 @@ public class SynupConversor {
 
         args.put("taskHistoryLog", lastTaskHistory);
         try {
-            db.update("Last", args, "code="+code, null);
+            db.update("Last", args, "employee="+code, null);
         } catch (Exception e){
             return false;
         }
@@ -666,7 +666,7 @@ public class SynupConversor {
 
         args.put("taskLog", lastTask);
         try {
-            db.update("Last", args, "code="+code, null);
+            db.update("Last", args, "employee="+code, null);
         } catch (Exception e){
             return false;
         }
@@ -680,7 +680,7 @@ public class SynupConversor {
 
         args.put("teamLog", lastTeam);
         try {
-            db.update("Last", args, "code="+code, null);
+            db.update("Last", args, "employee="+code, null);
         } catch (Exception e){
             return false;
         }
@@ -694,7 +694,7 @@ public class SynupConversor {
 
         args.put("employeeLog", lastEmployee);
         try {
-            db.update("Last", args, "code="+code, null);
+            db.update("Last", args, "employee="+code, null);
         } catch (Exception e){
 
             return false;
@@ -710,7 +710,7 @@ public class SynupConversor {
         args.put("teamHistoryLog", lastTeamHistory);
 
         try {
-            db.update("Last", args, "code="+code, null);
+            db.update("Last", args, "employee="+code, null);
         } catch (Exception e){
             return false;
         }
