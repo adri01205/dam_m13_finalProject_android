@@ -12,17 +12,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.m13.dam.dam_m13_finalproject_android.R;
+import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupSharedPreferences;
 
 /**
  * Created by adri on 13/05/2016.
  */
 public class SynupMenuActivity extends SynupMainMenuActivity implements  NavigationView.OnNavigationItemSelectedListener {
 
+    protected Menu menu;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        this.menu = menu;
         getMenuInflater().inflate(R.menu.menu, menu);
+        if(SynupSharedPreferences.getUpdatedData(this) == "0"){
+            MenuItem item = menu.findItem(R.id.menu_error_connection);
+            if(item != null)
+            item.setVisible(true);
+        }
+        // Inflate the menu; this adds items to the action bar if it is present.
         return true;
     }
 
@@ -38,6 +46,13 @@ public class SynupMenuActivity extends SynupMainMenuActivity implements  Navigat
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showErrorItemMenu(){
+        if(menu != null) {
+            MenuItem item = menu.findItem(R.id.menu_error_connection);
+            item.setVisible(true);
+        }
     }
 
 }
