@@ -493,9 +493,9 @@ public class SynupConversor {
 
         String sql = "SELECT te.code, te.name " +
                 "FROM Team te " +
-                "INNER JOIN TeamHistory teh ON te.code = teh.code " +
+                "INNER JOIN TeamHistory teh ON te.code = teh.id_team " +
                 "INNER JOIN Task t ON t.id_team = te.code " +
-                "WHERE teh.nif = ? and t.name LIKE ? and teh.exitDate is null " +
+                "WHERE teh.id_employee = ? and t.name LIKE ? and teh.exitDate is null " +
                 "GROUP BY te.code, te.name";
 
         Cursor c = db.rawQuery(sql, new String[]{nif, "%" + taskName + "%"});
