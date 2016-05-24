@@ -12,7 +12,8 @@
     tools:showIn="@layout/activity_menu"
     android:orientation="vertical"
     android:weightSum="10"
-    android:paddingBottom="@dimen/activity_horizontal_margin">
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:id="@+id/activity_menu_ll_not_updated"

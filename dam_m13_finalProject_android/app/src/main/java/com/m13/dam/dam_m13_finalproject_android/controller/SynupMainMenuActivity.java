@@ -51,7 +51,10 @@ public class SynupMainMenuActivity extends AppCompatActivity implements  Navigat
                 this.startActivity(intent);
                 break;
             case R.id.navigation_exit:
-                System.exit(0);
+                intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 break;
         }
 

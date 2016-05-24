@@ -49,7 +49,7 @@ public class Task {
     // Modified by jesus on 10/05/2016
 
 
-    public Task(String id_team, String code, Date priorityDate, String description, String localization, String project, String name) {
+    public Task(String id_team, String code, Date priorityDate, String description, String localization, String project, String name, int priority, int state) {
         this.id_team = id_team;
         this.code = code;
         this.priorityDate = priorityDate;
@@ -57,6 +57,19 @@ public class Task {
         this.localization = localization;
         this.project = project;
         this.name = name;
+        this.priority = priority;
+        this.state = state;
+    }
+
+    public Task(String code, Date priorityDate, String description, String localization, String project, String name, int priority, int state) {
+        this.code = code;
+        this.priorityDate = priorityDate;
+        this.description = description;
+        this.localization = localization;
+        this.project = project;
+        this.name = name;
+        this.priority = priority;
+        this.state = state;
     }
 
     public String getId_team() {

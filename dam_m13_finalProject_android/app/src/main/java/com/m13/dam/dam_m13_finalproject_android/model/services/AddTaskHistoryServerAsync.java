@@ -51,11 +51,11 @@ public class AddTaskHistoryServerAsync extends AsyncTask<String, Void, Void> {
     }
 
     protected Void doInBackground(String... params) {
-        /*if(!Connection.isConnected()){
+        if(!Connection.isConnected()){
             ret.setCode(301);
             ret.setMessage(context.getResources().getString(R.string.ERROR_NO_CONNECTION));
             return null;
-        }*/
+        }
         HttpURLConnection conn = null;
         int status = 500;
         try {

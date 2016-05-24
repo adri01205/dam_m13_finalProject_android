@@ -265,7 +265,7 @@ public class UpdateLocalAsync  extends AsyncTask<String, Void, Void> {
 
 
         for (TaskHistory t : tasks) {
-            conversor.updateTaskHistory(t.getId(), t.getFinishDate());
+            conversor.updateTaskHistory(t.getId(), t.getFinishDate(), t.getIsFinished());
         }
 
         conn.disconnect();
