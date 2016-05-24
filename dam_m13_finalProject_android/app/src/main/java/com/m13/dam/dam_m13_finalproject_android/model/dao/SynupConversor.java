@@ -547,7 +547,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "TeamHistory",
-                new String[]{"id", "nif", "code", "entranceDay", "exitDate"},
+                new String[]{"id", "id_employee", "id_team", "entranceDay", "exitDate"},
                 "id = ?",
                 new String[]{String.valueOf(id)},
                 null,
@@ -577,10 +577,10 @@ public class SynupConversor {
             ContentValues args = new ContentValues();
 
             args.put("id", teh.getId());
-            if(teh.getNif() != null)
-                args.put("nif", teh.getNif());
-            if(teh.getCode() != null)
-                args.put("code", teh.getCode());
+            if(teh.getId_employee() != null)
+                args.put("nif", teh.getId_employee());
+            if(teh.getId_team() != null)
+                args.put("code", teh.getId_team());
             if(teh.getEntranceDay() != null)
                 args.put("entranceDay", dataFormat.format(teh.getEntranceDay()));
             if(teh.getExitDate() != null)
@@ -601,8 +601,8 @@ public class SynupConversor {
 
         ContentValues args = new ContentValues();
 
-        args.put("nif", teh.getNif());
-        args.put("code", teh.getCode());
+        args.put("nif", teh.getId_employee());
+        args.put("code", teh.getId_team());
 
         db.update("TeamHistory", args, "id=" + teh.getId(), null);
     }

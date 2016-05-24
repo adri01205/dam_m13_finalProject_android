@@ -12,10 +12,10 @@ public class TeamHistory
 
     @JsonProperty("id")
     private int id;
-    @JsonProperty("nif")
-    private String nif;
-    @JsonProperty("code")
-    private String code;
+    @JsonProperty("id_employee")
+    private String id_employee;
+    @JsonProperty("id_team")
+    private String id_team;
     @JsonProperty("entranceDay")
     private Date entranceDay;
     @JsonProperty("exitDate")
@@ -23,11 +23,11 @@ public class TeamHistory
 
     public TeamHistory() { }
 
-    public TeamHistory(int id, String nif, String code, Date entranceDay, Date exitDate)
+    public TeamHistory(int id, String id_employee, String id_team, Date entranceDay, Date exitDate)
     {
         this.id = id;
-        this.nif = nif;
-        this.code = code;
+        this.id_employee = id_employee;
+        this.id_team = id_team;
         this.entranceDay = entranceDay;
         this.exitDate = exitDate;
     }
@@ -40,20 +40,20 @@ public class TeamHistory
         this.id = id;
     }
 
-    public String getNif() {
-        return nif;
+    public String getId_employee() {
+        return id_employee;
     }
 
-    public void setNif(String nif) {
-        this.nif = nif;
+    public void setId_employee(String id_employee) {
+        this.id_employee = id_employee;
     }
 
-    public String getCode() {
-        return code;
+    public String getId_team() {
+        return id_team;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setId_team(String id_team) {
+        this.id_team = id_team;
     }
 
     public Date getEntranceDay() {
