@@ -21,8 +21,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="SynUp"
+        android:text="@string/SYNUP"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/syn_up64"
+        android:drawableStart="@drawable/syn_up64"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#191818"
         android:textSize="20dp" />

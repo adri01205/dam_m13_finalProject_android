@@ -1,16 +1,10 @@
 <resources>
-    <string-array name="navigationBarArray">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-    </string-array>
     <string name="app_name">Synup</string>
     <string name="action_settings">Settings</string>
     <string name="error">Error</string>
     <string name="ok">ok</string>
     <string name="code">code:</string>
-    <string name="btn_Accept">LOGUIN</string>
+    <string name="btn_Accept">LOGIN</string>
     <string name="rememberUser">Remember user</string>
     <string name="ERROR_FILL_ALL_FIELDS">Please fill all fields</string>
     <string name="ERROR_USER_NOT_EXISTS">User does not exists, insert again please</string>
@@ -20,46 +14,48 @@
     <string name="LOG_OUT">log out</string>
     <string name="EXIT">exit</string>
     <string name="not_data_updated">The shown data could not be acctualized, please connect to internet</string>
-    <string name="ERROR_NO_CONNECTION_LOGIN">To login with a new user you must have internet connection, try again</string>
-    <string name="VIEW_ACCTIVE_TASK">view acctive task</string>
+    <string name="ERROR_NO_CONNECTION_LOGIN">To login with a new user you must have internet connection, try again.</string>
+    <string name="VIEW_ACCTIVE_TASK">view active task</string>
     <string name="VIEW_TASKS">view your team tasks</string>
     <string name="title_activity_detail">Task Detail</string>
-    <string name="NEW">_new</string>
-    <string name="IN_PROGRESS">_in progress</string>
-    <string name="ABANDONED">_Abandoned</string>
-    <string name="FINISHED">_Finished</string>
-    <string name="NOT_ASSIGNED">_Not Assigned</string>
-    <string name="NOT_STARTED">_Not started</string>
+    <string name="NEW">New</string>
+    <string name="IN_PROGRESS">In progress</string>
+    <string name="ABANDONED">Abandoned</string>
+    <string name="FINISHED">Finished</string>
+    <string name="NOT_ASSIGNED">Not Assigned</string>
+    <string name="NOT_STARTED">Not Started</string>
     <string name="NAME">Name:</string>
-    <string name="CODE">_Code:</string>
-    <string name="PROJECT">_Project:</string>
-    <string name="ATTENDANT">_Attendant:</string>
-    <string name="TEAM">_Team:</string>
-    <string name="PRIORITY_DATE">_Priority Date:</string>
-    <string name="START_DATE">_Start Date:</string>
-    <string name="FINISH_DATE">_Finish Date:</string>
-    <string name="STATUS">_Status:</string>
-    <string name="IS_FINISHED">_Is Finished:</string>
-    <string name="DESCRIPTION">_Description:</string>
-    <string name="LOCATION">_Location:</string>
-    <string name="TASK_NOT_EXISTS">_Task don\'t exists</string>
-    <string name="MAIN_MENU">_main menu</string>
-    <string name="FINISH">_finish</string>
-    <string name="ABANDONE">_abandone</string>
-    <string name="TAKE">_take</string>
-    <string name="TASK_TOOK">_task took</string>
-    <string name="ERROR_NO_CONNECTION_TAKE_TASK">_You need internet connection to take a task</string>
-    <string name="SEARCH">_search</string>
-    <string name="title_activity_list">_Task list</string>
-    <string name="OPEN">_open</string>
-    <string name="CLOSE">_close</string>
+    <string name="CODE">Code:</string>
+    <string name="PROJECT">Project:</string>
+    <string name="ATTENDANT">Responsible:</string>
+    <string name="TEAM">Team:</string>
+    <string name="PRIORITY_DATE">Priority Date:</string>
+    <string name="START_DATE">Start Date:</string>
+    <string name="FINISH_DATE">Finish Date:</string>
+    <string name="STATUS">Status:</string>
+    <string name="IS_FINISHED">Is Finished:</string>
+    <string name="DESCRIPTION">Description:</string>
+    <string name="LOCATION">Location:</string>
+    <string name="TASK_NOT_EXISTS">Task doesn't exists</string>
+    <string name="MAIN_MENU">Main Menu</string>
+    <string name="FINISH">Finish</string>
+    <string name="ABANDONE">Abandon</string>
+    <string name="TAKE">Take</string>
+    <string name="TASK_TOOK">Task taken</string>
+    <string name="ERROR_NO_CONNECTION_TAKE_TASK">You need internet connection to take a task.</string>
+    <string name="SEARCH">Search</string>
+    <string name="title_activity_list">Task list</string>
+    <string name="OPEN">Open</string>
+    <string name="CLOSE">Close</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="SINCRONIZE">_Sincronize</string>
-    <string name="CANCELED">_Canceled</string>
-    <string name="ERROR_NO_CONNECTION">_No connection</string>
-    <string name="NAVIGATION">_Navigation</string>
-    <string name="ERROR_NO_TASK_TOOK">_No task took</string>
+    <string name="SINCRONIZE">Sincronize</string>
+    <string name="CANCELED">Canceled</string>
+    <string name="ERROR_NO_CONNECTION">No connection</string>
+    <string name="NAVIGATION">Navigation</string>
+    <string name="ERROR_NO_TASK_TOOK">No task taken</string>
+    <string name="SYNUP">SynUp</string>
+    <string name="SEARCH_TASK">Select Task</string>
 </resources>
