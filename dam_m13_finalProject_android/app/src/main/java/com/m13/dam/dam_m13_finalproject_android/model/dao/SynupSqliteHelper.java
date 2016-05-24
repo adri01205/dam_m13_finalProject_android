@@ -69,6 +69,8 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
             "id INTEGER NOT NULL, " +
             "nif TEXT NOT NULL, " +
             "code TEXT NOT NULL," +
+            "entranceDay DATE NOT NULL," +
+            "exitDate DATE NULL," +
             "PRIMARY KEY(id) " +
             ");";
 

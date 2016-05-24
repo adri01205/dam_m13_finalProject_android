@@ -45,7 +45,7 @@ import java.text.SimpleDateFormat;
 
 /* ORM Lite */
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD40";
+    public static final String BD_NAME = "SYNUP_BD43";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -491,11 +491,12 @@ public class SynupConversor {
     {
         SQLiteDatabase db = helper.getReadableDatabase();
 
-        String sql = "SELECT DISTINCT te.code, te.name " +
+        String sql = "SELECT te.code, te.name " +
                 "FROM Team te " +
                 "INNER JOIN TeamHistory teh ON te.code = teh.code " +
                 "INNER JOIN Task t ON t.id_team = te.code " +
-                "WHERE teh.nif = ? and t.name LIKE ?";
+                "WHERE teh.nif = ? and t.name LIKE ? " +
+                "GROUP BY te.code, te.name";
 
         Cursor c = db.rawQuery(sql, new String[]{nif, "%" + taskName + "%"});
 
@@ -546,7 +547,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "TeamHistory",
-                new String[]{"id", "nif", "code"},
+                new String[]{"id", "nif", "code", "entranceDay", "exitDate"},
                 "id = ?",
                 new String[]{String.valueOf(id)},
                 null,
@@ -559,7 +560,14 @@ public class SynupConversor {
         }
         c.moveToFirst();
 
-        return new TeamHistory(c.getInt(0),c.getString(1),c.getString(2));
+        try{
+            return new TeamHistory(c.getInt(0),c.getString(1),c.getString(2),
+                    new java.sql.Date(dataFormat.parse(c.getString(3)).getTime()),
+                    new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
     //SAVE -> INSERT
     public long saveTeamHistory(TeamHistory teh) {
@@ -570,9 +578,13 @@ public class SynupConversor {
 
             args.put("id", teh.getId());
             if(teh.getNif() != null)
-            args.put("nif", teh.getNif());
+                args.put("nif", teh.getNif());
             if(teh.getCode() != null)
-            args.put("code", teh.getCode());
+                args.put("code", teh.getCode());
+            if(teh.getEntranceDay() != null)
+                args.put("entranceDay", dataFormat.format(teh.getEntranceDay()));
+            if(teh.getExitDate() != null)
+                args.put("exitDate", dataFormat.format(teh.getExitDate()));
 
             try {
                 index = db.insertOrThrow("TeamHistory", null, args);
