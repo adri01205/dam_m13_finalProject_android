@@ -3,13 +3,13 @@
     <string name="action_settings">Settings</string>
     <string name="error">Error</string>
     <string name="ok">ok</string>
-    <string name="code">code:</string>
+    <string name="code">Code:</string>
     <string name="btn_Accept">LOGIN</string>
     <string name="rememberUser">Remember user</string>
     <string name="ERROR_FILL_ALL_FIELDS">Please fill all fields</string>
-    <string name="ERROR_USER_NOT_EXISTS">User does not exists, insert again please</string>
-    <string name="PLACEHOLDER_USERNAME">username</string>
-    <string name="PLACEHOLDER_PASSWORD">password</string>
+    <string name="ERROR_USER_NOT_EXISTS">User does not exists, try again please.</string>
+    <string name="PLACEHOLDER_USERNAME">Username</string>
+    <string name="PLACEHOLDER_PASSWORD">Password</string>
     <string name="title_activity_menu">MAIN MENU</string>
     <string name="LOG_OUT">log out</string>
     <string name="EXIT">exit</string>
@@ -36,7 +36,7 @@
     <string name="IS_FINISHED">Is Finished:</string>
     <string name="DESCRIPTION">Description:</string>
     <string name="LOCATION">Location:</string>
-    <string name="TASK_NOT_EXISTS">Task doesn't exists</string>
+    <string name="TASK_NOT_EXISTS">Task does not exists</string>
     <string name="MAIN_MENU">Main Menu</string>
     <string name="FINISH">Finish</string>
     <string name="ABANDONE">Abandon</string>
@@ -55,7 +55,7 @@
     <string name="CANCELED">Canceled</string>
     <string name="ERROR_NO_CONNECTION">No connection</string>
     <string name="NAVIGATION">Navigation</string>
-    <string name="ERROR_NO_TASK_TOOK">No task taken</string>
+    <string name="ERROR_NO_TASK_TOOK">No available task</string>
     <string name="SYNUP">SynUp</string>
     <string name="SEARCH_TASK">Select Task</string>
 </resources>
