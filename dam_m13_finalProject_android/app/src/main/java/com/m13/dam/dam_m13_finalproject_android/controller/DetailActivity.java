@@ -12,7 +12,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -33,6 +36,9 @@ import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistory;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Team;
 import com.m13.dam.dam_m13_finalproject_android.model.services.AddTaskHistoryServerAsync;
 import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateLocalAsync;
+
+import java.sql.PreparedStatement;
+import java.util.Calendar;
 
 public class DetailActivity extends SynupMenuActivity implements AsyncTaskCompleteListener<ReturnObject> {
     private static final LatLng INS_BOSC_DE_LA_COMA = new LatLng(42.1727,2.47631);
@@ -139,7 +145,7 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
             return false;
 
         }
-        taskHistory = sc.getTaskHistoryByEmployee(taskCode);
+        taskHistory = sc.getTaskHistoryByTask(taskCode);
         team = sc.getTeam(task.getId_team());
         employee = null;
         if (taskHistory != null) {
@@ -220,17 +226,21 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
         ((CheckBox) findViewById(R.id.activity_detail_cb_finished)).setChecked(taskHistory != null && taskHistory.getFinishDate() != null);
         ((TextView) findViewById(R.id.activity_detail_tv_team)).setText(team != null ? team.getName() : "");
 
+
     }
 
     private void abandone() {
         task.setState(Task.ABANDONED);
-        taskHistory.setFinishDate(new java.sql.Date(new java.util.Date().getTime()));
+        java.sql.Date ourJavaDateObject = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        taskHistory.setFinishDate( ourJavaDateObject);
         goMainMenu();
     }
 
     private void finishTask() {
         task.setState(Task.FINISHED);
-        taskHistory.setFinishDate(new java.sql.Date(new java.util.Date().getTime()));
+        java.sql.Date ourJavaDateObject = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        taskHistory.setFinishDate( ourJavaDateObject);
+        taskHistory.setIsFinished(1);
         goMainMenu();
     }
 
@@ -241,17 +251,18 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
     @Override
     public void onTaskComplete(ReturnObject result) {
         if (result.succes()) {
-            if(result.getAssociatedObject() == null) {
-                Dialogs.getErrorDialog(this, "ERROR");
-            } else {
+           // if(result.getAssociatedObject() == null) {
+//                Dialogs.getErrorDialog(this, "ERROR").show();
+            //} else {
                 switch (result.getCallback()){
                 case ReturnObject.ADD_TASK_HISTORY_CALLBACK:
                     new UpdateLocalAsync(this, this).execute(SynupSharedPreferences.getUserLoged(this));
                     break;
                 case ReturnObject.UPDATE_LOCAL_CALLBACK:
+                    goMainMenu();
                     break;
                 }
-           }
+           //}
         } else {
             if(result.getCode() == 301){
                 Dialogs.getErrorDialog(this, getResources().getString(R.string.ERROR_NO_CONNECTION_TAKE_TASK)).show();

@@ -37,7 +37,8 @@ public class ReturnObject {
     }
 
     public boolean succes(){
-        return this.getCode()/100 == 2;
+        int x = this.getCode()/100;
+        return x == 2;
     }
 
     public Object getAssociatedObject() {

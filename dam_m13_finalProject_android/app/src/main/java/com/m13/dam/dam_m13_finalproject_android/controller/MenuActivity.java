@@ -52,24 +52,20 @@ public class MenuActivity extends SynupMainMenuActivity  {
 
         setButtons();
 
-
-
     }
 
     private void setButtons(){
         findViewById(R.id.activity_menu_bt_my_task).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                SynupConversor synupConversor = new SynupConversor(context);
-//                Task t = synupConversor.getTaskAcctived(SynupSharedPreferences.getUserLoged(context));
-//                if(t!= null) {
+                SynupConversor synupConversor = new SynupConversor(context);
+                Task t = synupConversor.getTaskAcctived(SynupSharedPreferences.getUserLoged(context));
+                if(t!= null) {
                     Intent intent = new Intent(context, DetailActivity.class);
-//                    intent.putExtra("idTask", t.getCode());
-                    intent.putExtra("idTask", "1");
-                    context.startActivity(intent);
-//                } else {
-//                    Dialogs.getErrorDialog(context, getResources().getString(R.string.ERROR_NO_TASK_TOOK)).show();
-//                }
+                    intent.putExtra("idTask", t.getCode());
+                } else {
+                    Dialogs.getErrorDialog(context, getResources().getString(R.string.ERROR_NO_TASK_TOOK)).show();
+                }
 
             }
         });
