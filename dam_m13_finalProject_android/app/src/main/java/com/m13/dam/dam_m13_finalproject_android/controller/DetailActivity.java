@@ -65,69 +65,69 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
        if(setTaskObject()) {
            setStatus();
            setTexts();
-//           configurarMapa();
+           configurarMapa();
        }
     }
-//    private void configurarMapa() {
-//        // Fer una comprovació de l'objecte map amb null per confirmar
-//        // que no l'hàgim instanciat prèviament
-//        if (mMap == null) {
-//            SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager()
-//                    .findFragmentById(R.id.map);
-//            mMap = mapFrag.getMap();
-//        }
-//        // Comprovar si s'ha obtingut correctament l'objecte
-//        if (mMap != null) {
-//            // El mapa s'ha comprovat. Ara es pot manipular
-//            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-//            mMap.getUiSettings().setAllGesturesEnabled(true);
-//            mMap.getUiSettings().setMyLocationButtonEnabled(true);
-//            mMap.setMyLocationEnabled(true);
-//            mMap.addMarker(new MarkerOptions()
-//                    .position(INS_BOSC_DE_LA_COMA)  // la posició
-//                    .title("HOLAA") // el títol
-//                            // un fragment de text
-//                    .snippet("Estudis: ESO, Batxillerat, Cicles Formatius i CAS")
-//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-//            //.icon(BitmapDescriptorFactory.fromResource(R.drawable.logoverd)));
-//
-//            PolylineOptions rectOptions = new PolylineOptions()
-//                    .add(new LatLng(42.1627, 2.46631))
-//                            // Nord del punt anterior, però a la mateixa longitud
-//                    .add(new LatLng(42.1827, 2.46631))
-//                            // Mateixa latitud, però a uns kms a l'oest
-//                    .add(new LatLng(42.1827, 2.48631))
-//                            // Mateixa longitud, però uns kms al sud
-//                    .add(new LatLng(42.1627, 2.48631))
-//                            // Tancar el polígon
-//                    .add(new LatLng(42.1627, 2.46631));
-//
-//            // Assignar un color
-//            rectOptions.color(Color.RED);
-//            // Afegir el nou polígon basat en línies
-//            Polyline polyline = mMap.addPolyline(rectOptions);
-//
-//            PolygonOptions rectOptions2 =
-//                    new PolygonOptions()
-//                            .add(new LatLng(42.1627, 2.46631))
-//                                    // Nord del punt anterior, però a la mateixa longitud
-//                            .add(new LatLng(42.1827, 2.46631))
-//                                    // Mateixa latitud, però a uns kms a l'oest
-//                            .add(new LatLng(42.1827, 2.48631))
-//                                    // Mateixa longitud, però uns kms al sud
-//                            .add(new LatLng(42.1627, 2.48631))
-//                                    // Tancar el polígon
-//                            .add(new LatLng(42.1627, 2.46631));
-//
-//            // Assignar un color
-//            rectOptions2.addHole(rectOptions.getPoints());  // punts d'un altre rectangle
-//            rectOptions2.fillColor(Color.BLUE);
-//            // Afegir el nou polígon
-//            Polygon poligon = mMap.addPolygon(rectOptions2);
-//
-//        }
-//
-//    }
+    private void configurarMapa() {
+        // Fer una comprovació de l'objecte map amb null per confirmar
+        // que no l'hàgim instanciat prèviament
+        if (mMap == null) {
+            SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            mMap = mapFrag.getMap();
+        }
+        // Comprovar si s'ha obtingut correctament l'objecte
+        if (mMap != null) {
+            // El mapa s'ha comprovat. Ara es pot manipular
+            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            mMap.getUiSettings().setAllGesturesEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            mMap.setMyLocationEnabled(true);
+            mMap.addMarker(new MarkerOptions()
+                    .position(INS_BOSC_DE_LA_COMA)  // la posició
+                    .title("HOLAA") // el títol
+                            // un fragment de text
+                    .snippet("Estudis: ESO, Batxillerat, Cicles Formatius i CAS")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            //.icon(BitmapDescriptorFactory.fromResource(R.drawable.logoverd)));
+
+            PolylineOptions rectOptions = new PolylineOptions()
+                    .add(new LatLng(42.1627, 2.46631))
+                            // Nord del punt anterior, però a la mateixa longitud
+                    .add(new LatLng(42.1827, 2.46631))
+                            // Mateixa latitud, però a uns kms a l'oest
+                    .add(new LatLng(42.1827, 2.48631))
+                            // Mateixa longitud, però uns kms al sud
+                    .add(new LatLng(42.1627, 2.48631))
+                            // Tancar el polígon
+                    .add(new LatLng(42.1627, 2.46631));
+
+            // Assignar un color
+            rectOptions.color(Color.RED);
+            // Afegir el nou polígon basat en línies
+            Polyline polyline = mMap.addPolyline(rectOptions);
+
+            PolygonOptions rectOptions2 =
+                    new PolygonOptions()
+                            .add(new LatLng(42.1627, 2.46631))
+                                    // Nord del punt anterior, però a la mateixa longitud
+                            .add(new LatLng(42.1827, 2.46631))
+                                    // Mateixa latitud, però a uns kms a l'oest
+                            .add(new LatLng(42.1827, 2.48631))
+                                    // Mateixa longitud, però uns kms al sud
+                            .add(new LatLng(42.1627, 2.48631))
+                                    // Tancar el polígon
+                            .add(new LatLng(42.1627, 2.46631));
+
+            // Assignar un color
+            rectOptions2.addHole(rectOptions.getPoints());  // punts d'un altre rectangle
+            rectOptions2.fillColor(Color.BLUE);
+            // Afegir el nou polígon
+            Polygon poligon = mMap.addPolygon(rectOptions2);
+
+        }
+
+    }
 
     private boolean setTaskObject(){
         sc = new SynupConversor(this);
