@@ -491,12 +491,11 @@ public class SynupConversor {
     {
         SQLiteDatabase db = helper.getReadableDatabase();
 
-        String sql = "SELECT te.code, te.name " +
+        String sql = "SELECT DISTINCT te.code, te.name " +
                 "FROM Team te " +
                 "INNER JOIN TeamHistory teh ON te.code = teh.id_team " +
                 "INNER JOIN Task t ON t.id_team = te.code " +
-                "WHERE teh.id_employee = ? and t.name LIKE ? and teh.exitDate is null " +
-                "GROUP BY te.code, te.name";
+                "WHERE teh.id_employee = ? and t.name LIKE ? ";
 
         Cursor c = db.rawQuery(sql, new String[]{nif, "%" + taskName + "%"});
 
@@ -578,9 +577,9 @@ public class SynupConversor {
 
             args.put("id", teh.getId());
             if(teh.getId_employee() != null)
-                args.put("nif", teh.getId_employee());
+                args.put("id_employee", teh.getId_employee());
             if(teh.getId_team() != null)
-                args.put("code", teh.getId_team());
+                args.put("id_team", teh.getId_team());
             if(teh.getEntranceDay() != null)
                 args.put("entranceDay", dataFormat.format(teh.getEntranceDay()));
             if(teh.getExitDate() != null)
@@ -601,8 +600,8 @@ public class SynupConversor {
 
         ContentValues args = new ContentValues();
 
-        args.put("nif", teh.getId_employee());
-        args.put("code", teh.getId_team());
+        args.put("id_employee", teh.getId_employee());
+        args.put("id_team", teh.getId_team());
 
         db.update("TeamHistory", args, "id=" + teh.getId(), null);
     }
