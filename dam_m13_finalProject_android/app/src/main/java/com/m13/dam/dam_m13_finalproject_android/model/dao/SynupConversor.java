@@ -45,7 +45,7 @@ import java.text.SimpleDateFormat;
 
 /* ORM Lite */
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD36";
+    public static final String BD_NAME = "SYNUP_BD40";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -124,10 +124,10 @@ public class SynupConversor {
         c.moveToFirst();
 
         try {
-            return new TaskHistory(c.getInt(0),c.getString(1).trim(),c.getString(2).trim(),
-                    new java.sql.Date(dataFormat.parse(c.getString(3).trim()).getTime()),
-                    new java.sql.Date(dataFormat.parse(c.getString(4).trim()).getTime()),
-                    c.getString(5).trim(), c.getInt(6));
+            return new TaskHistory(c.getInt(0),c.getString(1),c.getString(2),
+                    new java.sql.Date(dataFormat.parse(c.getString(3)).getTime()),
+                    new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()),
+                    c.getString(5), c.getInt(6));
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -154,10 +154,10 @@ public class SynupConversor {
         c.moveToLast();
 
         try {
-            return new TaskHistory(c.getInt(0),c.getString(1).trim(),c.getString(2).trim(),
-                    new java.sql.Date(dataFormat.parse(c.getString(3).trim()).getTime()),
-                    new java.sql.Date(dataFormat.parse(c.getString(4).trim()).getTime()),
-                    c.getString(5).trim(), c.getInt(6));
+            return new TaskHistory(c.getInt(0),c.getString(1),c.getString(2),
+                    new java.sql.Date(dataFormat.parse(c.getString(3)).getTime()),
+                    new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()),
+                    c.getString(5), c.getInt(6));
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -173,10 +173,15 @@ public class SynupConversor {
             ContentValues dades = new ContentValues();
 
             dades.put("id", th.getId());
+            if(th.getId_employee() != null)
             dades.put("id_employee", th.getId_employee());
+            if(th.getId_task() != null)
             dades.put("id_task", th.getId_task());
+            if(th.getStartDate() != null)
             dades.put("startDate", dataFormat.format(th.getStartDate()));
+            if(th.getFinishDate() != null)
             dades.put("finishDate", dataFormat.format(th.getFinishDate()));
+            if(th.getComment() != null)
             dades.put("comment", th.getComment());
             dades.put("isFinished", th.getIsFinished());
 
@@ -239,8 +244,8 @@ public class SynupConversor {
         c.moveToFirst();
 
         try {
-            return new Task(c.getString(0).trim(),c.getString(1).trim(), new java.sql.Date(dataFormat.parse(c.getString(2).trim()).getTime()),
-                    c.getString(3).trim(),c.getString(4).trim(),c.getString(5).trim(),c.getString(6));
+            return new Task(c.getString(0),c.getString(1), new java.sql.Date(dataFormat.parse(c.getString(2)).getTime()),
+                    c.getString(3),c.getString(4),c.getString(5),c.getString(6));
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
@@ -268,8 +273,8 @@ public class SynupConversor {
         c.moveToFirst();
 
         try {
-            return new Task(c.getString(0).trim(),c.getString(1).trim(), new java.sql.Date(dataFormat.parse(c.getString(2).trim()).getTime()),
-                    c.getString(3).trim(),c.getString(4).trim(),c.getString(5).trim(),c.getString(6));
+            return new Task(c.getString(0),c.getString(1), new java.sql.Date(dataFormat.parse(c.getString(2)).getTime()),
+                    c.getString(3),c.getString(4),c.getString(5),c.getString(6));
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
@@ -303,12 +308,19 @@ public class SynupConversor {
 
             ContentValues dades = new ContentValues();
 
+            if(t.getId_team() != null)
             dades.put("id_team", t.getId_team());
+            if(t.getCode() != null)
             dades.put("code", t.getCode());
+            if(t.getPriorityDate() != null)
             dades.put("priorityDate", dataFormat.format(t.getPriorityDate()));
+            if(t.getDescription() != null)
             dades.put("description", t.getDescription());
+            if(t.getLocalization() != null)
             dades.put("localization", t.getLocalization());
+            if(t.getProject() != null)
             dades.put("project", t.getProject());
+            if(t.getName() != null)
             dades.put("name", t.getName());
             dades.put("priority", t.getPriority());
             dades.put("state", t.getState());
@@ -367,8 +379,8 @@ public class SynupConversor {
         }
         c.moveToFirst();
 
-        return new Employee(c.getString(0).trim(),c.getString(1).trim(),
-                c.getString(2).trim(),c.getString(3).trim(),c.getString(4).trim(),c.getString(5).trim(),c.getString(6).trim(),c.getString(7).trim());
+        return new Employee(c.getString(0),c.getString(1),
+                c.getString(2),c.getString(3),c.getString(4),c.getString(5),c.getString(6),c.getString(7));
     }
 
     //GET BY USERNAME AND LOGIN
@@ -390,8 +402,8 @@ public class SynupConversor {
         }
         c.moveToFirst();
 
-        return new Employee(c.getString(0).trim(),c.getString(1).trim(), c.getString(2).trim(),c.getString(3).trim(),
-                c.getString(4).trim(),c.getString(5).trim(),c.getString(6).trim(),c.getString(7).trim());
+        return new Employee(c.getString(0),c.getString(1), c.getString(2),c.getString(3),
+                c.getString(4),c.getString(5),c.getString(6),c.getString(7));
     }
 
     //SAVE -> INSERT
@@ -401,13 +413,21 @@ public class SynupConversor {
         if(getEmployee(e.getNif()) == null) {
             ContentValues args = new ContentValues();
 
+            if(e.getNif() != null)
             args.put("nif", e.getNif());
+            if(e.getName() != null)
             args.put("name", e.getName());
+            if(e.getSurname() != null)
             args.put("surname", e.getSurname());
+            if(e.getAdress() != null)
             args.put("adress", e.getAdress());
+            if(e.getEmail() != null)
             args.put("email", e.getEmail());
+            if(e.getPassword() != null)
             args.put("password", e.getPassword());
+            if(e.getUsername() != null)
             args.put("username", e.getUsername());
+            if(e.getPhone() != null)
             args.put("phone", e.getPhone());
 
             try {
@@ -463,7 +483,7 @@ public class SynupConversor {
         }
         c.moveToFirst();
 
-        return new Team(c.getString(0).trim(),c.getString(1).trim());
+        return new Team(c.getString(0),c.getString(1));
     }
 
     //GET BY USER
@@ -489,7 +509,9 @@ public class SynupConversor {
         if(getTeam(t.getCode()) == null) {
             ContentValues args = new ContentValues();
 
+            if(t.getCode() != null)
             args.put("code", t.getCode());
+            if(t.getName() != null)
             args.put("name", t.getName());
 
             try {
@@ -547,7 +569,9 @@ public class SynupConversor {
             ContentValues args = new ContentValues();
 
             args.put("id", teh.getId());
+            if(teh.getNif() != null)
             args.put("nif", teh.getNif());
+            if(teh.getCode() != null)
             args.put("code", teh.getCode());
 
             try {
@@ -652,7 +676,7 @@ public class SynupConversor {
 
         args.put("taskHistoryLog", lastTaskHistory);
         try {
-            db.update("Last", args, "employee="+code, null);
+            db.update("Last", args, "employee='"+code+"'", null);
         } catch (Exception e){
             return false;
         }
@@ -666,7 +690,7 @@ public class SynupConversor {
 
         args.put("taskLog", lastTask);
         try {
-            db.update("Last", args, "employee="+code, null);
+            db.update("Last", args, "employee='"+code+"'", null);
         } catch (Exception e){
             return false;
         }
@@ -680,7 +704,7 @@ public class SynupConversor {
 
         args.put("teamLog", lastTeam);
         try {
-            db.update("Last", args, "employee="+code, null);
+            db.update("Last", args, "employee='"+code+"'", null);
         } catch (Exception e){
             return false;
         }
@@ -694,7 +718,7 @@ public class SynupConversor {
 
         args.put("employeeLog", lastEmployee);
         try {
-            db.update("Last", args, "employee="+code, null);
+            db.update("Last", args, "employee='"+code+"'", null);
         } catch (Exception e){
 
             return false;
@@ -710,7 +734,7 @@ public class SynupConversor {
         args.put("teamHistoryLog", lastTeamHistory);
 
         try {
-            db.update("Last", args, "employee="+code, null);
+            db.update("Last", args, "employee='"+code+"'", null);
         } catch (Exception e){
             return false;
         }

@@ -1,6 +1,7 @@
 package com.m13.dam.dam_m13_finalproject_android.controller;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +12,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.m13.dam.dam_m13_finalproject_android.R;
 import com.m13.dam.dam_m13_finalproject_android.controller.dialogs.Dialogs;
 import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskCompleteListener;
@@ -22,8 +32,10 @@ import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistory;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Team;
 import com.m13.dam.dam_m13_finalproject_android.model.services.AddTaskHistoryServerAsync;
+import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateLocalAsync;
 
 public class DetailActivity extends SynupMenuActivity implements AsyncTaskCompleteListener<ReturnObject> {
+    private static final LatLng INS_BOSC_DE_LA_COMA = new LatLng(42.1727,2.47631);
     Task task;
     Employee employee;
     TaskHistory taskHistory;
@@ -31,6 +43,8 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
     String taskCode;
     String status;
     SynupConversor sc;
+    GoogleMap mMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +65,69 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
        if(setTaskObject()) {
            setStatus();
            setTexts();
+//           configurarMapa();
        }
     }
+//    private void configurarMapa() {
+//        // Fer una comprovació de l'objecte map amb null per confirmar
+//        // que no l'hàgim instanciat prèviament
+//        if (mMap == null) {
+//            SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager()
+//                    .findFragmentById(R.id.map);
+//            mMap = mapFrag.getMap();
+//        }
+//        // Comprovar si s'ha obtingut correctament l'objecte
+//        if (mMap != null) {
+//            // El mapa s'ha comprovat. Ara es pot manipular
+//            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+//            mMap.getUiSettings().setAllGesturesEnabled(true);
+//            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+//            mMap.setMyLocationEnabled(true);
+//            mMap.addMarker(new MarkerOptions()
+//                    .position(INS_BOSC_DE_LA_COMA)  // la posició
+//                    .title("HOLAA") // el títol
+//                            // un fragment de text
+//                    .snippet("Estudis: ESO, Batxillerat, Cicles Formatius i CAS")
+//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+//            //.icon(BitmapDescriptorFactory.fromResource(R.drawable.logoverd)));
+//
+//            PolylineOptions rectOptions = new PolylineOptions()
+//                    .add(new LatLng(42.1627, 2.46631))
+//                            // Nord del punt anterior, però a la mateixa longitud
+//                    .add(new LatLng(42.1827, 2.46631))
+//                            // Mateixa latitud, però a uns kms a l'oest
+//                    .add(new LatLng(42.1827, 2.48631))
+//                            // Mateixa longitud, però uns kms al sud
+//                    .add(new LatLng(42.1627, 2.48631))
+//                            // Tancar el polígon
+//                    .add(new LatLng(42.1627, 2.46631));
+//
+//            // Assignar un color
+//            rectOptions.color(Color.RED);
+//            // Afegir el nou polígon basat en línies
+//            Polyline polyline = mMap.addPolyline(rectOptions);
+//
+//            PolygonOptions rectOptions2 =
+//                    new PolygonOptions()
+//                            .add(new LatLng(42.1627, 2.46631))
+//                                    // Nord del punt anterior, però a la mateixa longitud
+//                            .add(new LatLng(42.1827, 2.46631))
+//                                    // Mateixa latitud, però a uns kms a l'oest
+//                            .add(new LatLng(42.1827, 2.48631))
+//                                    // Mateixa longitud, però uns kms al sud
+//                            .add(new LatLng(42.1627, 2.48631))
+//                                    // Tancar el polígon
+//                            .add(new LatLng(42.1627, 2.46631));
+//
+//            // Assignar un color
+//            rectOptions2.addHole(rectOptions.getPoints());  // punts d'un altre rectangle
+//            rectOptions2.fillColor(Color.BLUE);
+//            // Afegir el nou polígon
+//            Polygon poligon = mMap.addPolygon(rectOptions2);
+//
+//        }
+//
+//    }
 
     private boolean setTaskObject(){
         sc = new SynupConversor(this);
@@ -166,13 +241,17 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
     @Override
     public void onTaskComplete(ReturnObject result) {
         if (result.succes()) {
-            if(result.getAssociatedObject() == null){
-                Dialogs.getErrorDialog(this,"ERROR");
-
+            if(result.getAssociatedObject() == null) {
+                Dialogs.getErrorDialog(this, "ERROR");
             } else {
-                task.setState(Task.ONGOING);
-                goMainMenu();
-            }
+                switch (result.getCallback()){
+                case ReturnObject.ADD_TASK_HISTORY_CALLBACK:
+                    new UpdateLocalAsync(this, this).execute(SynupSharedPreferences.getUserLoged(this));
+                    break;
+                case ReturnObject.UPDATE_LOCAL_CALLBACK:
+                    break;
+                }
+           }
         } else {
             if(result.getCode() == 301){
                 Dialogs.getErrorDialog(this, getResources().getString(R.string.ERROR_NO_CONNECTION_TAKE_TASK)).show();
