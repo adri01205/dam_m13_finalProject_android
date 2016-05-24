@@ -131,7 +131,6 @@ public class UpdateLocalAsync  extends AsyncTask<String, Void, Void> {
                 smtingDone = true;
             }
 
-
             if(!smtingDone){
                 ret.setCode(201);
             }
