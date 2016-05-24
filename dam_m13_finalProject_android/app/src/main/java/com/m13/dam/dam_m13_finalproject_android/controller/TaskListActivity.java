@@ -149,6 +149,7 @@ public class TaskListActivity extends SynupMenuSearchableActivity
             }
 
         } else {
+            showErrorItemMenu();
             chargeData();
             if(result.getCode() == 301){
                 SynupSharedPreferences.setUpdatedData(this, "0");

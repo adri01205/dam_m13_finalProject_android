@@ -2,8 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/menu_error_connection"
+        android:icon="@drawable/warning"
+        android:visible="false"
+        app:showAsAction="always"
+        android:orderInCategory="20"
+        android:enabled="false"/>
+    <item
         android:id="@+id/menu_main_menu"
         android:title="@string/MAIN_MENU"
         android:icon="@drawable/ic_home_white_24dp"
-        app:showAsAction="always"/>
+        app:showAsAction="always"
+        android:orderInCategory="10"/>
 </menu>
