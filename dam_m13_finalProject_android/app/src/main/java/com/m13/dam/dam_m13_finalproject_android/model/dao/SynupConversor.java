@@ -156,10 +156,14 @@ public class SynupConversor {
         c.moveToLast();
 
         try {
-            return new TaskHistory(c.getInt(0),c.getString(1),c.getString(2),
+            return new TaskHistory(
+                    c.getInt(0),
+                    c.getString(1),
+                    c.getString(2),
                     new java.sql.Date(dataFormat.parse(c.getString(3)).getTime()),
-                    new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()),
-                    c.getString(5), c.getInt(6));
+                    c.getString(4) != null ? new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()) : null,
+                    c.getString(5) != null ? c.getString(5) : "" ,
+                    c.getInt(6));
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -202,11 +206,12 @@ public class SynupConversor {
      * @param date
      * @return
      */
-    public boolean updateTaskHistory(int id, Date date){
+    public boolean updateTaskHistory(int id, Date date, int finish){
         SQLiteDatabase db = helper.getReadableDatabase();
 
         ContentValues args = new ContentValues();
         args.put("finishDate", dataFormat.format(date));
+        args.put("isFinished", finish);
         try {
             db.update("TaskHistory", args, "id=" + id, null);
         } catch (Exception e){

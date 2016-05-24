@@ -232,15 +232,16 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
     private void abandone() {
         task.setState(Task.ABANDONED);
         java.sql.Date ourJavaDateObject = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-        taskHistory.setFinishDate( ourJavaDateObject);
+        SynupConversor conversor = new SynupConversor(this);
+        conversor.updateTaskHistory(taskHistory.getId(), ourJavaDateObject, 0);
         goMainMenu();
     }
 
     private void finishTask() {
         task.setState(Task.FINISHED);
         java.sql.Date ourJavaDateObject = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-        taskHistory.setFinishDate( ourJavaDateObject);
-        taskHistory.setIsFinished(1);
+        SynupConversor conversor = new SynupConversor(this);
+        conversor.updateTaskHistory(taskHistory.getId(), ourJavaDateObject, 1);
         goMainMenu();
     }
 
