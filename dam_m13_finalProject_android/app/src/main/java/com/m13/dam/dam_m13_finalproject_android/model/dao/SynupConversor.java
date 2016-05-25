@@ -200,6 +200,7 @@ public class SynupConversor {
      * @param date
      * @return
      */
+
     public boolean updateTaskHistory(int id, Date date){
         SQLiteDatabase db = helper.getReadableDatabase();
 
@@ -245,7 +246,7 @@ public class SynupConversor {
 
         try {
             return new Task(c.getString(0),c.getString(1), new java.sql.Date(dataFormat.parse(c.getString(2)).getTime()),
-                    c.getString(3),c.getString(4),c.getString(5),c.getString(6));
+                    c.getString(3),c.getString(4),c.getString(5),c.getString(6), c.getInt(7), c.getInt(8));
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
@@ -259,7 +260,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "Task",
-                new String[]{"id_team", "code", "priorityDate", "description", "localization", "project", "name"},
+                new String[]{"id_team", "code", "priorityDate", "description", "localization", "project", "name", "priority", "state"},
                 "code = ?",
                 new String[]{String.valueOf(code)},
                 null,
@@ -274,7 +275,7 @@ public class SynupConversor {
 
         try {
             return new Task(c.getString(0),c.getString(1), new java.sql.Date(dataFormat.parse(c.getString(2)).getTime()),
-                    c.getString(3),c.getString(4),c.getString(5),c.getString(6));
+                    c.getString(3),c.getString(4),c.getString(5),c.getString(6), c.getInt(7), c.getInt(8));
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
@@ -288,7 +289,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "Task",
-                new String[]{"id_team", "code", "priorityDate", "description", "localization", "project", "name"},
+                new String[]{"id_team", "code", "priorityDate", "description", "localization", "project", "name", "priority", "state"},
                 "id_team = ? and name LIKE ?",
                 new String[]{code, "%" + taskName + "%"},
                 null,
@@ -298,6 +299,20 @@ public class SynupConversor {
 
         return c;
     }
+
+    public Cursor getTaskByEmployee(String nif, String taskName){
+
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        String sql = "SELECT t.id_team, t.code, t.priorityDate, t.description, t.localization, t.project, t.name, t.priority, t.state " +
+                "FROM Task t INNER JOIN TaskHistory th ON th.id_employee=t.code " +
+                "WHERE th.finishDate is null and th.id_employee = ? and t.name LIKE ?";
+        Cursor c = db.rawQuery(sql, new String[]{nif, "%" + taskName + "%"});
+
+        return c;
+    }
+
 
     //SAVE -> INSERT
     public long saveTask(Task t) {

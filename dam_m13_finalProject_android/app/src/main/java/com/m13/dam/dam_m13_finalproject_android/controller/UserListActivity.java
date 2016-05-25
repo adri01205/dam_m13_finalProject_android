@@ -64,7 +64,7 @@ public class UserListActivity extends SynupMenuSearchableActivity implements Lis
         tasksName = new ArrayList<>();
 
         SynupConversor syn = new SynupConversor(this);
-        Cursor cTasks =  syn.getTasksByEmployee(SynupSharedPreferences.getUserLoged(this), pattern);
+        Cursor cTasks =  syn.getTaskByEmployee(SynupSharedPreferences.getUserLoged(this), pattern);
 
         if (cTasks.moveToFirst()) {
             do {
@@ -76,7 +76,9 @@ public class UserListActivity extends SynupMenuSearchableActivity implements Lis
                         cTasks.getString(3),
                         cTasks.getString(4),
                         cTasks.getString(5),
-                        cTasks.getString(6));
+                        cTasks.getString(6),
+                        cTasks.getInt(7),
+                        cTasks.getInt(8));
 
                 tasks.add(task);
                 tasksName.add(task.getName());
