@@ -44,7 +44,8 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
           " taskLog INTEGER DEFAULT 0, " +
           " taskHistoryLog INTEGER DEFAULT 0, " +
           " teamLog INTEGER DEFAULT 0, " +
-          " teamHistoryLog INTEGER DEFAULT 0 " +
+          " teamHistoryLog INTEGER DEFAULT 0, " +
+          " taskHistoryLogServer INTEGER DEFAULT 0 " +
           "); ";
 
     static String createEmployee = "CREATE TABLE Employee ( " +

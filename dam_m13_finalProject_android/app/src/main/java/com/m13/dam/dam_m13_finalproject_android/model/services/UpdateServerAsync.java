@@ -10,6 +10,7 @@ import android.util.Log;
 import com.m13.dam.dam_m13_finalproject_android.R;
 import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskCompleteListener;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.Last;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistoryLog;
 
@@ -24,7 +25,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
+public class UpdateServerAsync  extends AsyncTask<String , Void, Void> {
 
 
     private String Content;
@@ -33,6 +34,7 @@ public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
     private ProgressDialog progressDialog;
     private Context context;
     private AsyncTaskCompleteListener<ReturnObject> listener;
+    String code;
 
     public UpdateServerAsync(Context context, AsyncTaskCompleteListener<ReturnObject> listener)
     {
@@ -55,7 +57,7 @@ public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
     }
 
     // Call after onPreExecute method
-    protected Void doInBackground(Void... urls) {
+    protected Void doInBackground(String... params) {
         if(!Connection.isConnected()){
             ret.setCode(301);
             ret.setMessage(context.getResources().getString(R.string.ERROR_NO_CONNECTION));
@@ -64,10 +66,14 @@ public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
         try {
             SynupConversor conversor = new SynupConversor((Activity)context);
 
-            int serverLast = conversor.getLastServerTaskHistoryLog();
-            if(conversor.getLastLocalTaskHistoryLog() > serverLast) {
+            code = params[0];
+            Last lastLocal = conversor.getLast(code);
 
-                Cursor c = conversor.getCursorTaskHistoryLog(serverLast);
+            int first = lastLocal.getTaskHistoryLogServer();
+            int last = conversor.getLastLocalTaskHistoryLog();
+            if(last > first) {
+
+                Cursor c = conversor.getCursorTaskHistoryLog(first);
                 ArrayList<TaskHistoryLog> list = new ArrayList();
                 if (c != null) {
                     while (c.moveToNext()) {
@@ -82,12 +88,14 @@ public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
                 HttpURLConnection urlConnection =
                         (HttpURLConnection) urlToRequest.openConnection();
                 urlConnection.setDoOutput(true);
-                urlConnection.setRequestMethod("POST");
+                urlConnection.setRequestMethod("PUT");
                 urlConnection.setRequestProperty("Content-Type",
                         "application/x-www-form-urlencoded");
 
                 //urlConnection.setFixedLengthStreamingMode(postParameters.getBytes().length);
                 MarshallingUnmarshalling.jsonJacksonMarshalling(list, urlConnection.getOutputStream());
+
+                conversor.updateTaskHistoryLogServer(code, last);
             } else {
                 ret.setCode(201);
             }

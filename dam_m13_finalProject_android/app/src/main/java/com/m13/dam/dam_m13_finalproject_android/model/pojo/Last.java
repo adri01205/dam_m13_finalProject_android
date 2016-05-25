@@ -18,11 +18,12 @@ public class Last {
     int taskHistoryLog;
     int teamLog;
     int teamHistoryLog;
+    int taskHistoryLogServer;
 
     public Last() {
     }
 
-    public Last(int id, String employee, int employeeLog, int taskLog, int taskHistoryLog, int teamLog, int teamHistoryLog) {
+    public Last(int id, String employee, int employeeLog, int taskLog, int taskHistoryLog, int teamLog, int teamHistoryLog, int taskHistoryLogServer) {
         this.id = id;
         this.employee = employee;
         this.employeeLog = employeeLog;
@@ -30,15 +31,25 @@ public class Last {
         this.taskHistoryLog = taskHistoryLog;
         this.teamLog = teamLog;
         this.teamHistoryLog = teamHistoryLog;
+        this.taskHistoryLogServer = taskHistoryLogServer;
     }
 
-    public Last(String employee, int employeeLog, int taskLog, int taskHistoryLog, int teamLog, int teamHistoryLog) {
+    public Last(String employee, int employeeLog, int taskLog, int taskHistoryLog, int teamLog, int teamHistoryLog, int taskHistoryLogServer) {
         this.employee = employee;
         this.employeeLog = employeeLog;
         this.taskLog = taskLog;
         this.taskHistoryLog = taskHistoryLog;
         this.teamLog = teamLog;
         this.teamHistoryLog = teamHistoryLog;
+        this.taskHistoryLogServer = taskHistoryLogServer;
+    }
+
+    public int getTaskHistoryLogServer() {
+        return taskHistoryLogServer;
+    }
+
+    public void setTaskHistoryLogServer(int taskHistoryLogServer) {
+        this.taskHistoryLogServer = taskHistoryLogServer;
     }
 
     public int getId() {
