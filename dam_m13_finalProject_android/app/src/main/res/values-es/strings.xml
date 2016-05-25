@@ -54,4 +54,5 @@
     <string name="FINISH">Acabar</string>
     <string name="SYNUP">SynUp</string>
     <string name="SEARCH_TASK">Seleccionar Tasca</string>
+    <string name="PLEASE_WAIT">_Please wait</string>
 </resources>

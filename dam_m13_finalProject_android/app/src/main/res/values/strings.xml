@@ -58,4 +58,5 @@
     <string name="ERROR_NO_TASK_TOOK">No available task</string>
     <string name="SYNUP">SynUp</string>
     <string name="SEARCH_TASK">Select Task</string>
+    <string name="PLEASE_WAIT">_Please wait</string>
 </resources>

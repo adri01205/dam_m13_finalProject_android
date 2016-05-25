@@ -12,6 +12,7 @@ import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskC
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Last;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistory;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistoryLog;
 
 import java.io.BufferedReader;
@@ -52,7 +53,7 @@ public class UpdateServerAsync  extends AsyncTask<String , Void, Void> {
         // NOTE: You can call UI Element here.
 
         //Start Progress Dialog (Message)
-        progressDialog.setMessage("Please wait..");
+        progressDialog.setMessage(context.getResources().getString(R.string.PLEASE_WAIT));
         progressDialog.show();
     }
 
@@ -74,10 +75,10 @@ public class UpdateServerAsync  extends AsyncTask<String , Void, Void> {
             if(last > first) {
 
                 Cursor c = conversor.getCursorTaskHistoryLog(first);
-                ArrayList<TaskHistoryLog> list = new ArrayList();
+                ArrayList<TaskHistory> list = new ArrayList();
                 if (c != null) {
                     while (c.moveToNext()) {
-                        list.add(new TaskHistoryLog(c.getInt(0), c.getInt(1), c.getString(2), new java.sql.Date(SynupConversor.dataFormat.parse(c.getString(3)).getTime())));
+                        list.add(conversor.getTaskHistory(c.getInt(1)));
                     }
                     c.close();
                 } else {
