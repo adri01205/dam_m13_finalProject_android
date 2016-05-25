@@ -1,5 +1,6 @@
 package com.m13.dam.dam_m13_finalproject_android.model.services;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -43,6 +44,7 @@ public abstract class MarshallingUnmarshalling {
         ObjectMapper mapper = new ObjectMapper();
         JavaType type = mapper.getTypeFactory().
                 constructCollectionType(Collection.class, clas);
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 //        return mapper.readValue(inputStream, new TypeReference<Collection<Employee>>() { });
         return mapper.readValue(inputStream, type);
     }

@@ -44,13 +44,13 @@ public class UpdateServerAsync  extends AsyncTask<String , Void, Void> {
         this.listener = listener;
         ret = new ReturnObject(200,"OK",ReturnObject.UPDATE_SERVER_CALLBACK);
         progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Connecting to server..");
+        progressDialog.setMessage(context.getResources().getString(R.string.CONNECTING));
         progressDialog.setIndeterminate(false);
         progressDialog.setCancelable(false);
 
     }
 
-    protected void onPreExecute() {
+    protected void onpreexecute() {
         // NOTE: You can call UI Element here.
 
         //Start Progress Dialog (Message)

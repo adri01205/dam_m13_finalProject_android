@@ -39,14 +39,14 @@ public class AddTaskHistoryServerAsync extends AsyncTask<String, Void, Void> {
         this.listener = listener;
         ret = new ReturnObject(200,"OK",ReturnObject.ADD_TASK_HISTORY_CALLBACK);
         progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Connecting to server..");
+        progressDialog.setMessage(context.getResources().getString(R.string.CONNECTING));
         progressDialog.setIndeterminate(false);
         progressDialog.setCancelable(false);
 
     }
 
     protected void onPreExecute() {
-        progressDialog.setMessage("Please wait..");
+        progressDialog.setMessage(context.getResources().getString(R.string.PLEASE_WAIT));
         progressDialog.show();
     }
 

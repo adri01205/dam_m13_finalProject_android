@@ -151,7 +151,7 @@ public class SynupConversor {
         if(c==null || c.getCount()==0){
             return null;
         }
-        c.moveToLast();
+        c.moveToFirst();
 
         try {
             return new TaskHistory(

@@ -7,7 +7,7 @@ public class ReturnObject {
     public static final int UPDATE_LOCAL_CALLBACK = 0;
     public static final int UPDATE_SERVER_CALLBACK = 1;
     public static final int GET_USER_CALLBACK = 2;
-    public static final int ADD_TASK_HISTORY_CALLBACK = 1;
+    public static final int ADD_TASK_HISTORY_CALLBACK = 3;
 
     int code;
     String message;

@@ -33,6 +33,7 @@ import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistory;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Team;
 import com.m13.dam.dam_m13_finalproject_android.model.services.AddTaskHistoryServerAsync;
 import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateLocalAsync;
+import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateServerAsync;
 
 import java.util.Calendar;
 
@@ -46,6 +47,8 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
     String status;
     SynupConversor sc;
     GoogleMap mMap;
+    private String dialogMessage = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -241,7 +244,8 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
         SynupConversor conversor = new SynupConversor(this);
         conversor.updateTaskHistory(taskHistory.getId(), ourJavaDateObject, 0);
         conversor.updateTask(task);
-        goMainMenu();
+        dialogMessage = getResources().getString(R.string.TASK_ABANDONED);
+        new UpdateServerAsync(this,this).execute(SynupSharedPreferences.getUserLoged(this));
     }
 
     private void finishTask() {
@@ -249,31 +253,47 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
         java.sql.Date ourJavaDateObject = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         SynupConversor conversor = new SynupConversor(this);
         conversor.updateTaskHistory(taskHistory.getId(), ourJavaDateObject, 1);
-        goMainMenu();
+        dialogMessage = getResources().getString(R.string.TASK_FINISHED);
+        new UpdateServerAsync(this,this).execute(SynupSharedPreferences.getUserLoged(this));
     }
 
     public void take(){
+        dialogMessage = getResources().getString(R.string.TASK_TOOK);
         new AddTaskHistoryServerAsync(this,this).execute(SynupSharedPreferences.getUserLoged(this), taskCode);
     }
 
     @Override
     public void onTaskComplete(ReturnObject result) {
         if (result.succes()) {
-           // if(result.getAssociatedObject() == null) {
-//                Dialogs.getErrorDialog(this, "ERROR").show();
-            //} else {
+
                 switch (result.getCallback()){
                 case ReturnObject.ADD_TASK_HISTORY_CALLBACK:
-                    new UpdateLocalAsync(this, this).execute(SynupSharedPreferences.getUserLoged(this));
+                    if(result.getAssociatedObject() == null) {
+                        dialogMessage = "ERROR";
+                        goMainMenu();
+                    } else {
+                        new UpdateServerAsync(this, this).execute(SynupSharedPreferences.getUserLoged(this));
+                    }
                     break;
                 case ReturnObject.UPDATE_LOCAL_CALLBACK:
                     goMainMenu();
                     break;
-                }
-           //}
+                case ReturnObject.UPDATE_SERVER_CALLBACK:
+                    new UpdateLocalAsync(this, this).execute(SynupSharedPreferences.getUserLoged(this));
+                    break;
+            }
         } else {
             if(result.getCode() == 301){
+                switch (result.getCallback()){
+                    case ReturnObject.ADD_TASK_HISTORY_CALLBACK:
+                        break;
+                    default:
+                        goMainMenu();
+
+
+                }
                 Dialogs.getErrorDialog(this, getResources().getString(R.string.ERROR_NO_CONNECTION_TAKE_TASK)).show();
+
             } else {
                 Dialogs.getErrorDialog(this, result).show();
             }
@@ -281,7 +301,6 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
     }
 
     public void goMainMenu(){
-        Intent i = new Intent(this, MenuActivity.class);
-        startActivity(i);
+        Dialogs.getMessageDialogClickActivity(this, dialogMessage, MenuActivity.class).show();
     }
 }

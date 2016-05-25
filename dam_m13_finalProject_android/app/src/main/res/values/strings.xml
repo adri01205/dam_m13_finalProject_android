@@ -60,4 +60,8 @@
     <string name="SEARCH_TASK">Select Task</string>
     <string name="PLEASE_WAIT">_Please wait</string>
     <string name="NOT_FINISHED">_Not finished</string>
+    <string name="TASK_ABANDONED">_Task abandoned</string>
+    <string name="TASK_FINISHED">_Task finished</string>
+    <string name="CONNECTING">_Connecting</string>
+    <string name="SUCCES">_Succes</string>
 </resources>

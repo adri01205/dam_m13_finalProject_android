@@ -61,7 +61,7 @@ public class UpdateLocalAsync  extends AsyncTask<String, Void, Void> {
         this.employeeId = SynupSharedPreferences.getUserLoged(context);
         ret = new ReturnObject(200,"OK",ReturnObject.UPDATE_LOCAL_CALLBACK);
         progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Connecting to server..");
+        progressDialog.setMessage(context.getResources().getString(R.string.CONNECTING));
         progressDialog.setIndeterminate(false);
         progressDialog.setCancelable(false);
         conversor = new SynupConversor(context);
@@ -70,7 +70,7 @@ public class UpdateLocalAsync  extends AsyncTask<String, Void, Void> {
     protected void onPreExecute() {
         // NOTE: You can call UI Element here.
 
-        progressDialog.setMessage("Please wait..");
+        progressDialog.setMessage(context.getResources().getString(R.string.PLEASE_WAIT));
         progressDialog.show();
     }
 
