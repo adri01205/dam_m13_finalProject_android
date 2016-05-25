@@ -59,4 +59,5 @@
     <string name="SYNUP">SynUp</string>
     <string name="SEARCH_TASK">Select Task</string>
     <string name="PLEASE_WAIT">_Please wait</string>
+    <string name="NOT_FINISHED">_Not finished</string>
 </resources>

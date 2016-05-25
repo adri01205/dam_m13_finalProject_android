@@ -126,7 +126,7 @@ public class SynupConversor {
         try {
             return new TaskHistory(c.getInt(0),c.getString(1),c.getString(2),
                     new java.sql.Date(dataFormat.parse(c.getString(3)).getTime()),
-                    new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()),
+                    c.getString(4) != null ? new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()) : null,
                     c.getString(5), c.getInt(6));
 
         } catch (ParseException e) {
@@ -135,13 +135,13 @@ public class SynupConversor {
         }
     }
 
-    public TaskHistory getTaskHistoryByEmployee(String code) {
+    public TaskHistory getTaskHistoryByTask(String code) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         Cursor c = db.query(true,
                 "TaskHistory",
                 new String[]{"id", "id_employee", "id_task", "startDate", "finishDate", "comment", "isFinished"},
-                "id_employee = ?",
+                "id_task = ?",
                 new String[]{code},
                 null,
                 null,
@@ -154,10 +154,14 @@ public class SynupConversor {
         c.moveToLast();
 
         try {
-            return new TaskHistory(c.getInt(0),c.getString(1),c.getString(2),
+            return new TaskHistory(
+                    c.getInt(0),
+                    c.getString(1),
+                    c.getString(2),
                     new java.sql.Date(dataFormat.parse(c.getString(3)).getTime()),
-                    new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()),
-                    c.getString(5), c.getInt(6));
+                    c.getString(4) != null ? new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()) : null,
+                    c.getString(5) != null ? c.getString(5) : "" ,
+                    c.getInt(6));
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -201,11 +205,12 @@ public class SynupConversor {
      * @return
      */
 
-    public boolean updateTaskHistory(int id, Date date){
+    public boolean updateTaskHistory(int id, Date date, int finish){
         SQLiteDatabase db = helper.getReadableDatabase();
 
         ContentValues args = new ContentValues();
         args.put("finishDate", dataFormat.format(date));
+        args.put("isFinished", finish);
         try {
             db.update("TaskHistory", args, "id=" + id, null);
         } catch (Exception e){
@@ -234,9 +239,10 @@ public class SynupConversor {
 
         SQLiteDatabase db = helper.getReadableDatabase();
 
-        String sql = "SELECT t.id_team, t.code, t.priorityDate, t.description, t.localization, t.project, t.name " +
+        String sql = "SELECT t.id_team, t.code, t.priorityDate, t.description, t.localization, t.project, t.name, t.priority, t.state " +
                 "FROM Task t INNER JOIN TaskHistory th ON th.id_employee=t.code " +
-                "WHERE th.finishDate is null and t.code = ?";
+                "WHERE th.finishDate is null and t.code = ? ORDER BY t.name";
+
         Cursor c = db.rawQuery(sql, new String[]{code});
 
         if(c==null || c.getCount()==0){
@@ -260,7 +266,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "Task",
-                new String[]{"id_team", "code", "priorityDate", "description", "localization", "project", "name", "priority", "state"},
+                new String[]{"id_team", "code", "priorityDate", "description", "localization", "project", "name","priority", "state"},
                 "code = ?",
                 new String[]{String.valueOf(code)},
                 null,
@@ -275,7 +281,7 @@ public class SynupConversor {
 
         try {
             return new Task(c.getString(0),c.getString(1), new java.sql.Date(dataFormat.parse(c.getString(2)).getTime()),
-                    c.getString(3),c.getString(4),c.getString(5),c.getString(6), c.getInt(7), c.getInt(8));
+                    c.getString(3),c.getString(4),c.getString(5),c.getString(6),c.getInt(7),c.getInt(8));
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
@@ -294,7 +300,7 @@ public class SynupConversor {
                 new String[]{code, "%" + taskName + "%"},
                 null,
                 null,
-                null,
+                "priority",
                 null);
 
         return c;
@@ -593,9 +599,9 @@ public class SynupConversor {
 
             args.put("id", teh.getId());
             if(teh.getId_employee() != null)
-                args.put("nif", teh.getId_employee());
+                args.put("id_employee", teh.getId_employee());
             if(teh.getId_team() != null)
-                args.put("code", teh.getId_team());
+                args.put("id_team", teh.getId_team());
             if(teh.getEntranceDay() != null)
                 args.put("entranceDay", dataFormat.format(teh.getEntranceDay()));
             if(teh.getExitDate() != null)
@@ -616,8 +622,8 @@ public class SynupConversor {
 
         ContentValues args = new ContentValues();
 
-        args.put("nif", teh.getId_employee());
-        args.put("code", teh.getId_team());
+        args.put("id_employee", teh.getId_employee());
+        args.put("id_team", teh.getId_team());
 
         db.update("TeamHistory", args, "id=" + teh.getId(), null);
     }

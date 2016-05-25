@@ -12,10 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -37,7 +34,6 @@ import com.m13.dam.dam_m13_finalproject_android.model.pojo.Team;
 import com.m13.dam.dam_m13_finalproject_android.model.services.AddTaskHistoryServerAsync;
 import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateLocalAsync;
 
-import java.sql.PreparedStatement;
 import java.util.Calendar;
 
 public class DetailActivity extends SynupMenuActivity implements AsyncTaskCompleteListener<ReturnObject> {
@@ -157,9 +153,6 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
     private void setStatus(){
         Button buttonFinish = ((Button) findViewById(R.id.activity_detail_bt_finish));
         Button buttonAbandone = ((Button) findViewById(R.id.activity_detail_bt_abandone));
-
-
-
         status = "";
         switch (task.getState()){
             case Task.UNSELECTED:
@@ -174,22 +167,26 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
                 break;
             case Task.ONGOING:
                 status = getResources().getString(R.string.IN_PROGRESS);
-                buttonFinish.setText(getResources().getString(R.string.FINISH));
-                buttonFinish.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finishTask();
-                    }
-                });
+                if(employee != null && employee.getNif() == SynupSharedPreferences.getUserLoged(this)) {
+                    buttonFinish.setText(getResources().getString(R.string.FINISH));
+                    buttonFinish.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            finishTask();
+                        }
+                    });
 
-                buttonAbandone.setVisibility(View.VISIBLE);
-                buttonAbandone.setText(getResources().getString(R.string.ABANDONE));
-                buttonAbandone.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        abandone();
-                    }
-                });
+                    buttonAbandone.setVisibility(View.VISIBLE);
+                    buttonAbandone.setText(getResources().getString(R.string.ABANDONE));
+                    buttonAbandone.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            abandone();
+                        }
+                    });
+                } else {
+                    buttonFinish.setVisibility(View.GONE);
+                }
                 break;
             case Task.ABANDONED:
                 status = getResources().getString(R.string.ABANDONED);
@@ -214,11 +211,19 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
     }
 
     private void setTexts(){
+
+        if(task.getState() == Task.FINISHED && taskHistory != null && taskHistory.getFinishDate() != null && taskHistory.getIsFinished() == 1){
+            ((TextView) findViewById(R.id.activity_detail_tv_finish_date)).setText(sc.dataFormat.format(taskHistory.getFinishDate()));
+        } else if(task.getState() == Task.UNSELECTED){
+            ((TextView) findViewById(R.id.activity_detail_tv_finish_date)).setText(getResources().getString(R.string.NOT_STARTED));
+        }else{
+            ((TextView) findViewById(R.id.activity_detail_tv_finish_date)).setText(getResources().getString(R.string.NOT_FINISHED));
+        }
+
         ((TextView) findViewById(R.id.activity_detail_tv_name)).setText(task.getName());
         ((TextView) findViewById(R.id.activity_detail_tv_code)).setText(task.getCode());
         ((TextView) findViewById(R.id.activity_detail_tv_description)).setText(task.getDescription());
         ((TextView) findViewById(R.id.activity_detail_tv_employee)).setText(taskHistory != null ? employee.getName() : getResources().getString(R.string.NOT_ASSIGNED));
-        ((TextView) findViewById(R.id.activity_detail_tv_finish_date)).setText(taskHistory != null && taskHistory.getFinishDate() != null ? sc.dataFormat.format(taskHistory.getFinishDate()) : getResources().getString(R.string.NOT_STARTED));
         ((TextView) findViewById(R.id.activity_detail_tv_priority_date)).setText(sc.dataFormat.format(task.getPriorityDate()));
         ((TextView) findViewById(R.id.activity_detail_tv_project)).setText(task.getProject());
         ((TextView) findViewById(R.id.activity_detail_tv_start_date)).setText(taskHistory != null ? sc.dataFormat.format(taskHistory.getStartDate()) : getResources().getString(R.string.NOT_STARTED));
