@@ -10,7 +10,9 @@ import android.util.Log;
 import com.m13.dam.dam_m13_finalproject_android.R;
 import com.m13.dam.dam_m13_finalproject_android.controller.interfaces.AsyncTaskCompleteListener;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.Last;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.ReturnObject;
+import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistory;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistoryLog;
 
 import java.io.BufferedReader;
@@ -24,7 +26,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
+public class UpdateServerAsync  extends AsyncTask<String , Void, Void> {
 
 
     private String Content;
@@ -33,6 +35,7 @@ public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
     private ProgressDialog progressDialog;
     private Context context;
     private AsyncTaskCompleteListener<ReturnObject> listener;
+    String code;
 
     public UpdateServerAsync(Context context, AsyncTaskCompleteListener<ReturnObject> listener)
     {
@@ -50,12 +53,12 @@ public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
         // NOTE: You can call UI Element here.
 
         //Start Progress Dialog (Message)
-        progressDialog.setMessage("Please wait..");
+        progressDialog.setMessage(context.getResources().getString(R.string.PLEASE_WAIT));
         progressDialog.show();
     }
 
     // Call after onPreExecute method
-    protected Void doInBackground(Void... urls) {
+    protected Void doInBackground(String... params) {
         if(!Connection.isConnected()){
             ret.setCode(301);
             ret.setMessage(context.getResources().getString(R.string.ERROR_NO_CONNECTION));
@@ -64,14 +67,18 @@ public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
         try {
             SynupConversor conversor = new SynupConversor((Activity)context);
 
-            int serverLast = conversor.getLastServerTaskHistoryLog();
-            if(conversor.getLastLocalTaskHistoryLog() > serverLast) {
+            code = params[0];
+            Last lastLocal = conversor.getLast(code);
 
-                Cursor c = conversor.getCursorTaskHistoryLog(serverLast);
-                ArrayList<TaskHistoryLog> list = new ArrayList();
+            int first = lastLocal.getTaskHistoryLogServer();
+            int last = conversor.getLastLocalTaskHistoryLog();
+            if(last > first) {
+
+                Cursor c = conversor.getCursorTaskHistoryLog(first);
+                ArrayList<TaskHistory> list = new ArrayList();
                 if (c != null) {
                     while (c.moveToNext()) {
-                        list.add(new TaskHistoryLog(c.getInt(0), c.getInt(1), c.getString(2), new java.sql.Date(SynupConversor.dataFormat.parse(c.getString(3)).getTime())));
+                        list.add(conversor.getTaskHistory(c.getInt(1)));
                     }
                     c.close();
                 } else {
@@ -82,12 +89,14 @@ public class UpdateServerAsync  extends AsyncTask<Void, Void, Void> {
                 HttpURLConnection urlConnection =
                         (HttpURLConnection) urlToRequest.openConnection();
                 urlConnection.setDoOutput(true);
-                urlConnection.setRequestMethod("POST");
+                urlConnection.setRequestMethod("PUT");
                 urlConnection.setRequestProperty("Content-Type",
                         "application/x-www-form-urlencoded");
 
                 //urlConnection.setFixedLengthStreamingMode(postParameters.getBytes().length);
                 MarshallingUnmarshalling.jsonJacksonMarshalling(list, urlConnection.getOutputStream());
+
+                conversor.updateTaskHistoryLogServer(code, last);
             } else {
                 ret.setCode(201);
             }

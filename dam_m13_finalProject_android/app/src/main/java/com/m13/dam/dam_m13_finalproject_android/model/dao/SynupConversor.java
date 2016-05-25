@@ -45,7 +45,7 @@ import java.text.SimpleDateFormat;
 
 /* ORM Lite */
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD48";
+    public static final String BD_NAME = "SYNUP_BD50";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -73,7 +73,7 @@ public class SynupConversor {
 
         return db.query(true,
                 "TaskHistoryLog",
-                new String[]{"id", "id_taskHistory", "operation", "when"},
+                new String[]{"id", "id_taskHistory", "operation", "'when'"},
                 "id > ?",
                 new String[]{String.valueOf(first)},
                 null,
@@ -626,7 +626,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "Last",
-                new String[]{"id","employee","employeeLog","taskLog","taskHistoryLog","teamLog","teamHistoryLog"},
+                new String[]{"id","employee","employeeLog","taskLog","taskHistoryLog","teamLog","teamHistoryLog","taskHistoryLogServer"},
                 "employee = ?",
                 new String[]{code},
                 null,
@@ -635,7 +635,7 @@ public class SynupConversor {
                 null);
 
         c.moveToFirst();
-        return new Last(c.getInt(0),c.getString(1),c.getInt(2), c.getInt(3),c.getInt(4),c.getInt(5),c.getInt(6));
+        return new Last(c.getInt(0),c.getString(1),c.getInt(2), c.getInt(3),c.getInt(4),c.getInt(5),c.getInt(6),c.getInt(7));
     }
 
     //GET
@@ -644,7 +644,7 @@ public class SynupConversor {
 
         Cursor c = db.query(true,
                 "Last",
-                new String[]{"id","employee","employeeLog","taskLog","taskHistoryLog","teamLog","teamHistoryLog"},
+                new String[]{"id","employee","employeeLog","taskLog","taskHistoryLog","teamLog","teamHistoryLog","taskHistoryLogServer"},
                 "employee = ?",
                 new String[]{code},
                 null,
@@ -656,7 +656,7 @@ public class SynupConversor {
             return saveLast(code);
         }
         c.moveToFirst();
-        return new Last(c.getInt(0),c.getString(1),c.getInt(2), c.getInt(3),c.getInt(4),c.getInt(5),c.getInt(6));
+        return new Last(c.getInt(0),c.getString(1),c.getInt(2), c.getInt(3),c.getInt(4),c.getInt(5),c.getInt(6),c.getInt(7));
     }
 
 
@@ -744,6 +744,21 @@ public class SynupConversor {
         ContentValues args = new ContentValues();
 
         args.put("teamHistoryLog", lastTeamHistory);
+
+        try {
+            db.update("Last", args, "employee='"+code+"'", null);
+        } catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateTaskHistoryLogServer(String code, int lastTaskHistoryLogServer) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        ContentValues args = new ContentValues();
+
+        args.put("taskHistoryLogServer", lastTaskHistoryLogServer);
 
         try {
             db.update("Last", args, "employee='"+code+"'", null);

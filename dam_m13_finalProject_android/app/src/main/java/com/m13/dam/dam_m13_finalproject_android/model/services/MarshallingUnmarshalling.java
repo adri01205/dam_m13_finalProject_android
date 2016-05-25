@@ -6,13 +6,17 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Employee;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,9 +47,6 @@ public abstract class MarshallingUnmarshalling {
         return mapper.readValue(inputStream, type);
     }
 
-
-
-
     /**
      * marshalling (objectes a fitxer) de ficheros json utilizando Jackson. Las
      * classes con las que quieres trabajar tienen que tener las etiquetas de
@@ -60,9 +61,9 @@ public abstract class MarshallingUnmarshalling {
      */
     public static void jsonJacksonMarshalling(Object object, OutputStream out) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-            mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            //mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
-            mapper.writeValue(out, object);
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        mapper.setDateFormat(SynupConversor.dataFormat);
+        mapper.writeValue(out,object);
 
     }
 }

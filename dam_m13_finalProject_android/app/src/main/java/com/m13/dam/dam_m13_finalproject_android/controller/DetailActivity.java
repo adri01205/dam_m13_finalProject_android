@@ -218,7 +218,7 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
         ((TextView) findViewById(R.id.activity_detail_tv_code)).setText(task.getCode());
         ((TextView) findViewById(R.id.activity_detail_tv_description)).setText(task.getDescription());
         ((TextView) findViewById(R.id.activity_detail_tv_employee)).setText(taskHistory != null ? employee.getName() : getResources().getString(R.string.NOT_ASSIGNED));
-        ((TextView) findViewById(R.id.activity_detail_tv_finish_date)).setText(taskHistory != null ? sc.dataFormat.format(taskHistory.getFinishDate()) : getResources().getString(R.string.NOT_STARTED));
+        ((TextView) findViewById(R.id.activity_detail_tv_finish_date)).setText(taskHistory != null && taskHistory.getFinishDate() != null ? sc.dataFormat.format(taskHistory.getFinishDate()) : getResources().getString(R.string.NOT_STARTED));
         ((TextView) findViewById(R.id.activity_detail_tv_priority_date)).setText(sc.dataFormat.format(task.getPriorityDate()));
         ((TextView) findViewById(R.id.activity_detail_tv_project)).setText(task.getProject());
         ((TextView) findViewById(R.id.activity_detail_tv_start_date)).setText(taskHistory != null ? sc.dataFormat.format(taskHistory.getStartDate()) : getResources().getString(R.string.NOT_STARTED));

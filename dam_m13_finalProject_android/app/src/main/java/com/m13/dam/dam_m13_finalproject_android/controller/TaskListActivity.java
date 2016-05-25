@@ -140,7 +140,7 @@ public class TaskListActivity extends SynupMenuSearchableActivity
         if (result.succes()) {
             switch (result.getCallback()){
                 case ReturnObject.UPDATE_LOCAL_CALLBACK:
-                    new UpdateServerAsync(this,this).execute();
+                    new UpdateServerAsync(this,this).execute(SynupSharedPreferences.getUserLoged(this));
                     break;
                 case ReturnObject.UPDATE_SERVER_CALLBACK:
                     SynupSharedPreferences.setUpdatedData(this, "1");
