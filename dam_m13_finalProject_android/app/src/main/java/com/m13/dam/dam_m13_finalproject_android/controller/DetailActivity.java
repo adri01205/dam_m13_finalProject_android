@@ -7,6 +7,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -231,7 +232,7 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
         ((TextView) findViewById(R.id.activity_detail_tv_project)).setText(task.getProject());
         ((TextView) findViewById(R.id.activity_detail_tv_start_date)).setText(taskHistory != null ? sc.dataFormat.format(taskHistory.getStartDate()) : getResources().getString(R.string.NOT_STARTED));
         ((TextView) findViewById(R.id.activity_detail_tv_status)).setText(status);
-        ((CheckBox) findViewById(R.id.activity_detail_cb_finished)).setChecked(taskHistory != null && taskHistory.getFinishDate() != null);
+        ((CheckBox) findViewById(R.id.activity_detail_cb_finished)).setChecked(taskHistory != null && taskHistory.getFinishDate() != null && taskHistory.getIsFinished() == 1);
         ((TextView) findViewById(R.id.activity_detail_tv_team)).setText(team != null ? team.getName() : "");
 
 
@@ -265,17 +266,20 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
     @Override
     public void onTaskComplete(ReturnObject result) {
         if (result.succes()) {
-
                 switch (result.getCallback()){
                 case ReturnObject.ADD_TASK_HISTORY_CALLBACK:
                     if(result.getAssociatedObject() == null) {
                         dialogMessage = "ERROR";
+                        hideErrorItemMenu();
+                        SynupSharedPreferences.setUpdatedData(this, "1");
                         goMainMenu();
                     } else {
                         new UpdateServerAsync(this, this).execute(SynupSharedPreferences.getUserLoged(this));
                     }
                     break;
                 case ReturnObject.UPDATE_LOCAL_CALLBACK:
+                    hideErrorItemMenu();
+                    SynupSharedPreferences.setUpdatedData(this, "1");
                     goMainMenu();
                     break;
                 case ReturnObject.UPDATE_SERVER_CALLBACK:
@@ -286,16 +290,19 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
             if(result.getCode() == 301){
                 switch (result.getCallback()){
                     case ReturnObject.ADD_TASK_HISTORY_CALLBACK:
+                        Dialogs.getErrorDialog(this, getResources().getString(R.string.ERROR_NO_CONNECTION_TAKE_TASK)).show();
+                        showErrorItemMenu();
+                        SynupSharedPreferences.setUpdatedData(this, "0");
                         break;
                     default:
+                        showErrorItemMenu();
+                        SynupSharedPreferences.setUpdatedData(this, "0");
                         goMainMenu();
-
-
                 }
-                Dialogs.getErrorDialog(this, getResources().getString(R.string.ERROR_NO_CONNECTION_TAKE_TASK)).show();
 
             } else {
-                Dialogs.getErrorDialog(this, result).show();
+                Log.e("SYNUP_ERROR", result.getMessage());
+//                Dialogs.getErrorDialog(this, result).show();
             }
         }
     }

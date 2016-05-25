@@ -51,7 +51,16 @@ public class SynupMenuActivity extends SynupMainMenuActivity implements  Navigat
     public void showErrorItemMenu(){
         if(menu != null) {
             MenuItem item = menu.findItem(R.id.menu_error_connection);
+            if(item != null)
             item.setVisible(true);
+        }
+    }
+
+    public void hideErrorItemMenu(){
+        if(menu != null) {
+            MenuItem item = menu.findItem(R.id.menu_error_connection);
+            if(item != null)
+                item.setVisible(false);
         }
     }
 

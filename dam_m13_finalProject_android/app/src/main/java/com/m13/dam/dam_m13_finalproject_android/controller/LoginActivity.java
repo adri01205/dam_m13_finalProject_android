@@ -3,6 +3,7 @@ package com.m13.dam.dam_m13_finalproject_android.controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -87,8 +88,10 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskComplet
             }
         } else if (result.getCode()==301){
             Dialogs.getErrorDialog(this, getResources().getString(R.string.ERROR_NO_CONNECTION_LOGIN)).show();
-        }else       {
-            Dialogs.getErrorDialog(this, result).show();
+        }else {
+            Log.e("SYNUP_ERROR", result.getMessage());
+            Dialogs.getErrorDialog(this, getResources().getString(R.string.ERROR_USER_NOT_EXISTS)).show();
+//            Dialogs.getErrorDialog(this, result).show();
         }
 
     }

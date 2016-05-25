@@ -10,10 +10,10 @@
     <string name="ERROR_USER_NOT_EXISTS">User does not exists, try again please.</string>
     <string name="PLACEHOLDER_USERNAME">Username</string>
     <string name="PLACEHOLDER_PASSWORD">Password</string>
-    <string name="title_activity_menu">MAIN MENU</string>
+    <string name="title_activity_menu">SYNUP</string>
     <string name="LOG_OUT">log out</string>
     <string name="EXIT">exit</string>
-    <string name="not_data_updated">The shown data could not be acctualized, please connect to internet</string>
+    <string name="not_data_updated">Server\'s connection unreachable, the data may not be updated and if you have done any change in any task, these changes would not be visible for the others.</string>
     <string name="ERROR_NO_CONNECTION_LOGIN">To login with a new user you must have internet connection, try again.</string>
     <string name="VIEW_ACCTIVE_TASK">view active task</string>
     <string name="VIEW_TASKS">view your team tasks</string>
