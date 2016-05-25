@@ -61,9 +61,11 @@ public abstract class MarshallingUnmarshalling {
      */
     public static void jsonJacksonMarshalling(Object object, OutputStream out) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        mapper.setDateFormat(SynupConversor.dataFormat);
+//        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+//        mapper.setDateFormat(SynupConversor.dataFormat);
         mapper.writeValue(out,object);
+        out.flush();
+
 
     }
 }

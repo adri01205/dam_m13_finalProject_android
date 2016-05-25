@@ -63,8 +63,6 @@ public class AddTaskHistoryServerAsync extends AsyncTask<String, Void, Void> {
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Accept-Charset", "UTF-8");
 
-            status = conn.getResponseCode();
-
             ArrayList<TaskHistory> taskHistories = (ArrayList<TaskHistory>) MarshallingUnmarshalling.jsonJacksonUnmarshalling(TaskHistory.class, conn.getInputStream());
 
             if(taskHistories != null && taskHistories.size() > 0){

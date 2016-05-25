@@ -45,7 +45,7 @@ import java.text.SimpleDateFormat;
 
 /* ORM Lite */
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD50";
+    public static final String BD_NAME = "SYNUP_BD51";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -356,7 +356,7 @@ public class SynupConversor {
     }
 
     // UPDATE
-    public void updateTask(Task t) throws Exception{
+    public void updateTask(Task t){
         SQLiteDatabase db = helper.getReadableDatabase();
 
         ContentValues args = new ContentValues();
@@ -514,9 +514,9 @@ public class SynupConversor {
 
         String sql = "SELECT te.code, te.name " +
                 "FROM Team te " +
-                "INNER JOIN TeamHistory teh ON te.code = teh.code " +
+                "INNER JOIN TeamHistory teh ON te.code = teh.id_team " +
                 "INNER JOIN Task t ON t.id_team = te.code " +
-                "WHERE teh.nif = ? and t.name LIKE ? and teh.exitDate is null" +
+                "WHERE teh.id_employee = ? and t.name LIKE ? and teh.exitDate is null " +
                 "GROUP BY te.code, te.name";
 
         Cursor c = db.rawQuery(sql, new String[]{nif, "%" + taskName + "%"});

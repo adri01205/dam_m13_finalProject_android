@@ -64,7 +64,7 @@ public class TaskListActivity extends SynupMenuSearchableActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        new UpdateLocalAsync(this, this).execute(SynupSharedPreferences.getUserLoged(this));
+        new UpdateServerAsync(this,this).execute(SynupSharedPreferences.getUserLoged(this));
 
         elv = (ExpandableListView)findViewById(R.id.lstLlistaExpandible);
 
@@ -140,11 +140,11 @@ public class TaskListActivity extends SynupMenuSearchableActivity
         if (result.succes()) {
             switch (result.getCallback()){
                 case ReturnObject.UPDATE_LOCAL_CALLBACK:
-                    new UpdateServerAsync(this,this).execute(SynupSharedPreferences.getUserLoged(this));
-                    break;
-                case ReturnObject.UPDATE_SERVER_CALLBACK:
                     SynupSharedPreferences.setUpdatedData(this, "1");
                     chargeData();
+                    break;
+                case ReturnObject.UPDATE_SERVER_CALLBACK:
+                    new UpdateLocalAsync(this, this).execute(SynupSharedPreferences.getUserLoged(this));
                     break;
             }
 

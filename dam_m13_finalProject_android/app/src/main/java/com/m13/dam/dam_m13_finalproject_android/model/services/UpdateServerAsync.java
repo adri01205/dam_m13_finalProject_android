@@ -18,6 +18,7 @@ import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistoryLog;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -58,12 +59,12 @@ public class UpdateServerAsync  extends AsyncTask<String , Void, Void> {
     }
 
     // Call after onPreExecute method
-    protected Void doInBackground(String... params) {
-        if(!Connection.isConnected()){
+    protected Void doInBackground(String... params) {if(!Connection.isConnected()){
             ret.setCode(301);
             ret.setMessage(context.getResources().getString(R.string.ERROR_NO_CONNECTION));
             return null;
         }
+        HttpURLConnection urlConnection = null;
         try {
             SynupConversor conversor = new SynupConversor((Activity)context);
 
@@ -86,15 +87,19 @@ public class UpdateServerAsync  extends AsyncTask<String , Void, Void> {
                 }
 
                 URL urlToRequest = new URL(serverURL);
-                HttpURLConnection urlConnection =
+                urlConnection =
                         (HttpURLConnection) urlToRequest.openConnection();
                 urlConnection.setDoOutput(true);
                 urlConnection.setRequestMethod("PUT");
-                urlConnection.setRequestProperty("Content-Type",
-                        "application/x-www-form-urlencoded");
-
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.setRequestProperty("Accept", "application/json");
                 //urlConnection.setFixedLengthStreamingMode(postParameters.getBytes().length);
-                MarshallingUnmarshalling.jsonJacksonMarshalling(list, urlConnection.getOutputStream());
+                OutputStream out = urlConnection.getOutputStream();
+                MarshallingUnmarshalling.jsonJacksonMarshalling(list, out);
+                out.close();
+                urlConnection.getResponseCode();
+                urlConnection.disconnect();
+
 
                 conversor.updateTaskHistoryLogServer(code, last);
             } else {
@@ -116,8 +121,11 @@ public class UpdateServerAsync  extends AsyncTask<String , Void, Void> {
         } catch (Exception e) {
             ret.setCode(405);
             ret.setMessage(e.toString());
+        } finally {
+            try {
+                urlConnection.disconnect();
+            } catch (Exception e) { }
         }
-
         return null;
     }
 

@@ -12,16 +12,19 @@ import java.net.URL;
  * Created by adri on 10/05/2016.
  */
 public abstract class Connection {
-    //public static String host = "172.16.10.57" ;
-    public static String host = "192.168.1.113" ;
-    public static String port = "1567";
+    public static String host = "172.16.10.57" ;
+//    public static String host = "192.168.1.113" ;
+//    public static String port = "1567";
+    public static String port = "1289";
 
     public static String getDomain(){
-        return host+":"+port + "/Synup/api/";
+//        return host+":"+port + "/Synup/api/";
+        return host+":"+port + "/api/";
     }
     public static boolean isConnected() {
         try {
-            URL url = new URL("http://" + host+":"+port + "/Synup/");
+//            URL url = new URL("http://" + host+":"+port + "/Synup/");
+            URL url = new URL("http://" + host+":"+port + "/");
             HttpURLConnection urlc = (HttpURLConnection) url
                     .openConnection();
             urlc.setRequestProperty("Connection", "close");

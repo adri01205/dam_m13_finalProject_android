@@ -167,7 +167,7 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
                 break;
             case Task.ONGOING:
                 status = getResources().getString(R.string.IN_PROGRESS);
-                if(employee != null && employee.getNif() == SynupSharedPreferences.getUserLoged(this)) {
+                if(employee != null && employee.getNif().equals(SynupSharedPreferences.getUserLoged(this))) {
                     buttonFinish.setText(getResources().getString(R.string.FINISH));
                     buttonFinish.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -237,8 +237,10 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
     private void abandone() {
         task.setState(Task.ABANDONED);
         java.sql.Date ourJavaDateObject = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+
         SynupConversor conversor = new SynupConversor(this);
         conversor.updateTaskHistory(taskHistory.getId(), ourJavaDateObject, 0);
+        conversor.updateTask(task);
         goMainMenu();
     }
 
