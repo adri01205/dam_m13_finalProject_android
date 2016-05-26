@@ -64,19 +64,19 @@ public class TeamTaskAdapter extends BaseExpandableListAdapter {
 
         txtListChild.setText(childText.getName());
 
-        switch (childText.getState()){
-            case Task.UNSELECTED:
-            case Task.ABANDONED:
-                txtListChild.setBackgroundColor(Color.RED);
-                break;
-            case Task.CANCELED:
-            case Task.FINISHED:
-                txtListChild.setBackgroundColor(Color.GREEN);
-                break;
-            case Task.ONGOING:
-                txtListChild.setBackgroundColor(context.getResources().getColor((R.color.colorPrimary)));
-                break;
-        }
+//        switch (childText.getState()){
+//            case Task.UNSELECTED:
+//            case Task.ABANDONED:
+//                txtListChild.setBackgroundColor(Color.RED);
+//                break;
+//            case Task.CANCELED:
+//            case Task.FINISHED:
+//                txtListChild.setBackgroundColor(Color.GREEN);
+//                break;
+//            case Task.ONGOING:
+//                txtListChild.setBackgroundColor(context.getResources().getColor((R.color.colorPrimary)));
+//                break;
+//        }
 
         return convertView;
     }

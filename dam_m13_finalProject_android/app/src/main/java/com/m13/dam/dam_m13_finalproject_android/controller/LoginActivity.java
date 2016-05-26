@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskComplet
 
         if(!(userName.isEmpty() || password.isEmpty())) {
 
-            password = md5(password);
+            password = md5(password).toUpperCase();
             SynupConversor sc = new SynupConversor(this);
 
 

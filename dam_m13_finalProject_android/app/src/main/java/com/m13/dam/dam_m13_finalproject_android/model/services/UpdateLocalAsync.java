@@ -193,7 +193,6 @@ public class UpdateLocalAsync  extends AsyncTask<String, Void, Void> {
 
     private void updateUTask(int first, int last) throws Exception {
         // Defined URL  where to send data
-
         URL url = new URL(serverURLTasksU + employeeId + "/" + first + "/" + last);
 
         // Send POST data request

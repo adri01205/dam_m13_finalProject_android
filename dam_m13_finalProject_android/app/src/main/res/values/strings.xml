@@ -65,4 +65,5 @@
     <string name="CONNECTING">Connecting to server</string>
     <string name="SUCCES">Action success</string>
     <string name="PRIORITY">Priority</string>
+    <string name="ERROR_INESPERADO">UNEXPECTED ERROR, CONTACT WITH THE ADMINISTRATOR</string>
 </resources>
