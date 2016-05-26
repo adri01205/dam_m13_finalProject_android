@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -140,6 +141,7 @@ public class TaskListActivity extends SynupMenuSearchableActivity
         if (result.succes()) {
             switch (result.getCallback()){
                 case ReturnObject.UPDATE_LOCAL_CALLBACK:
+                    hideErrorItemMenu();
                     SynupSharedPreferences.setUpdatedData(this, "1");
                     chargeData();
                     break;
@@ -154,7 +156,8 @@ public class TaskListActivity extends SynupMenuSearchableActivity
             if(result.getCode() == 301){
                 SynupSharedPreferences.setUpdatedData(this, "0");
             } else {
-                Dialogs.getErrorDialog(this, result).show();
+                Log.e("SYNUP_ERROR", result.getMessage());
+//                Dialogs.getErrorDialog(this, result).show();
             }
 
         }

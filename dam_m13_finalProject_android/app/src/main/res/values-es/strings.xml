@@ -10,10 +10,10 @@
     <string name="ERROR_USER_NOT_EXISTS">El usuario no existe, vuélvelo a intentar vez por favor.</string>
     <string name="PLACEHOLDER_USERNAME">Usuario</string>
     <string name="PLACEHOLDER_PASSWORD">Contraseña</string>
-    <string name="title_activity_menu">MENU PRINCIPAL</string>
+    <string name="title_activity_menu">SYNUP</string>
     <string name="LOG_OUT">Desconectarse</string>
     <string name="EXIT">exit</string>
-    <string name="not_data_updated">Los datos mostrados de la aplicación puede que no esten acctualizados, por favor connectese a internet</string>
+    <string name="not_data_updated">No tiene conexión con el servidor, puede ser que sus datos no esten actualizados y si ha actualizado alguna tarea, los cambios no seran visibles para el resto.</string>
     <string name="ERROR_NO_CONNECTION_LOGIN">Para registrarse con un nuevo usuario necesita connexion a internet, por favor intentelo de nuevo.</string>
     <string name="VIEW_ACCTIVE_TASK">Ver tasca acctiva</string>
     <string name="VIEW_TASKS">Ver las tascas de tu equipo</string>
