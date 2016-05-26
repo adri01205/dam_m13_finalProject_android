@@ -17,7 +17,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
-        android:layout_weight="1.5" />
+        android:layout_weight="0.5" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:src="@drawable/syn_up64"
+        android:layout_weight="1" />
 
     <EditText
         android:id="@+id/activity_login_et_username"
@@ -58,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView2"
-        android:layout_weight="0.5" />
+        android:layout_weight="0.3" />
 
     <CheckBox
         android:id="@+id/activity_login_cb_remember"
@@ -73,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView3"
-        android:layout_weight="0.5" />
+        android:layout_weight="0.3" />
 
     <Button
         android:id="@+id/activity_login_bt_signup"
