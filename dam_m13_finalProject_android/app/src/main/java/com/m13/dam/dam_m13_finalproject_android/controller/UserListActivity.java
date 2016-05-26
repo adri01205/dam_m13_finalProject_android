@@ -39,7 +39,7 @@ public class UserListActivity extends SynupMenuSearchableActivity implements Lis
 
         final Activity context = this;
 
-        setContentView(R.layout.activity_user_list);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
