@@ -77,6 +77,7 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
            configurarMapa();
        }
     }
+
     private void configurarMapa() {
         // Fer una comprovació de l'objecte map amb null per confirmar
         // que no l'hàgim instanciat prèviament
@@ -91,8 +92,8 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
             mMap.setMyLocationEnabled(true);
             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             mMap.getUiSettings().setAllGesturesEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(true);
             mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
             mMap.getUiSettings().setZoomControlsEnabled(true);
 
             if(!task.getLocalization().equals("")) {
@@ -215,6 +216,8 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
         ((TextView) findViewById(R.id.activity_detail_tv_status)).setText(status);
         ((CheckBox) findViewById(R.id.activity_detail_cb_finished)).setChecked(taskHistory != null && taskHistory.getFinishDate() != null && taskHistory.getIsFinished() == 1);
         ((TextView) findViewById(R.id.activity_detail_tv_team)).setText(team != null ? team.getName() : "");
+        ((TextView) findViewById(R.id.activity_detail_tv_priority)).setText(String.valueOf(task.getPriority()));
+
 
 
     }
