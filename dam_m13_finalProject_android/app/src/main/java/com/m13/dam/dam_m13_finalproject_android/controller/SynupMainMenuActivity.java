@@ -1,6 +1,7 @@
 package com.m13.dam.dam_m13_finalproject_android.controller;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -32,10 +33,9 @@ public class SynupMainMenuActivity extends AppCompatActivity implements  Navigat
                 break;
             case R.id.navigation_myTask:
                 SynupConversor synupConversor = new SynupConversor(this);
-                Task t = synupConversor.getTaskAcctived(SynupSharedPreferences.getUserLoged(this));
-                if(t!= null) {
-                    intent = new Intent(this, DetailActivity.class);
-                    intent.putExtra("idTask", t.getCode());
+                Cursor c = synupConversor.getTaskByEmployee(SynupSharedPreferences.getUserLoged(this), "");
+                if(c.getCount() > 0) {
+                    intent = new Intent(this, UserListActivity.class);
                     this.startActivity(intent);
                 } else {
                     Dialogs.getErrorDialog(this, getResources().getString(R.string.ERROR_NO_TASK_TOOK)).show();
@@ -48,12 +48,13 @@ public class SynupMainMenuActivity extends AppCompatActivity implements  Navigat
             case R.id.navigation_log_out:
                 SynupSharedPreferences.setUserLoged(this, "");
                 intent = new Intent(this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 this.startActivity(intent);
                 break;
             case R.id.navigation_exit:
                 intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_HOME);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 break;
         }

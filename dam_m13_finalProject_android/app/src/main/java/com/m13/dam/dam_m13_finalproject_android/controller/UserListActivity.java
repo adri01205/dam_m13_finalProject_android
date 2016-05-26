@@ -40,6 +40,7 @@ public class UserListActivity extends SynupMenuSearchableActivity implements Lis
         final Activity context = this;
 
         setContentView(R.layout.activity_user_list);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -57,6 +58,8 @@ public class UserListActivity extends SynupMenuSearchableActivity implements Lis
 
         lv = (ListView) findViewById(R.id.lstLlistaUserTask);
         lv.setAdapter(adapter);
+        lv.setOnItemClickListener(this);
+
     }
 
     public void chargeData()
@@ -97,7 +100,7 @@ public class UserListActivity extends SynupMenuSearchableActivity implements Lis
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra("idTask", tasks.get(position).getName());
+        intent.putExtra("idTask", tasks.get(position).getCode());
         startActivity(intent);
     }
 }

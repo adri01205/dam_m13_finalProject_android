@@ -63,7 +63,7 @@ public class MenuActivity extends SynupMainMenuActivity  {
             public void onClick(View v) {
                 SynupConversor synupConversor = new SynupConversor(context);
                 Cursor c = synupConversor.getTaskByEmployee(SynupSharedPreferences.getUserLoged(context), "");
-                if(c!= null) {
+                if(c.getCount() > 0) {
                     Intent intent = new Intent(context, UserListActivity.class);
                     context.startActivity(intent);
                 } else {
@@ -86,6 +86,7 @@ public class MenuActivity extends SynupMainMenuActivity  {
             public void onClick(View v) {
                 SynupSharedPreferences.setUserLoged(context, "");
                 Intent intent = new Intent(context, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 context.startActivity(intent);
             }
         });

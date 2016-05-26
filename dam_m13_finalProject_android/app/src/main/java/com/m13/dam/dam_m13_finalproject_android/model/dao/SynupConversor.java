@@ -312,8 +312,9 @@ public class SynupConversor {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         String sql = "SELECT t.id_team, t.code, t.priorityDate, t.description, t.localization, t.project, t.name, t.priority, t.state " +
-                "FROM Task t INNER JOIN TaskHistory th ON th.id_employee=t.code " +
+                "FROM Task t INNER JOIN TaskHistory th ON th.id_task=t.code " +
                 "WHERE th.finishDate is null and th.id_employee = ? and t.name LIKE ?";
+
         Cursor c = db.rawQuery(sql, new String[]{nif, "%" + taskName + "%"});
 
         return c;

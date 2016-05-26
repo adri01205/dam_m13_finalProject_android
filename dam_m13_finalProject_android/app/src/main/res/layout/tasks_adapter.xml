@@ -24,12 +24,14 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
+
     <ExpandableListView
         android:id="@+id/lstLlistaExpandible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
 </LinearLayout>
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -38,4 +40,5 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/dawer" />
+
 </android.support.v4.widget.DrawerLayout>
