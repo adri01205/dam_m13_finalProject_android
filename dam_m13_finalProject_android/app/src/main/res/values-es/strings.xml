@@ -18,12 +18,12 @@
     <string name="VIEW_ACCTIVE_TASK">Ver tasca acctiva</string>
     <string name="VIEW_TASKS">Ver las tascas de tu equipo</string>
     <string name="title_activity_detail">Detalles de la tasca</string>
-    <string name="NEW">Nuevo</string>
+    <string name="NEW">Nueva</string>
     <string name="IN_PROGRESS">En progreso</string>
     <string name="ABANDONED">Abandonada</string>
     <string name="FINISHED">Acabado</string>
-    <string name="NOT_ASSIGNED">No Asignado</string>
-    <string name="NOT_STARTED">No Empezado</string>
+    <string name="NOT_ASSIGNED">No Asignada</string>
+    <string name="NOT_STARTED">No Empezada</string>
     <string name="NAME">Name:</string>
     <string name="CODE">Codigo:</string>
     <string name="PROJECT">Proyecto:</string>
@@ -54,11 +54,10 @@
     <string name="FINISH">Acabar</string>
     <string name="SYNUP">SynUp</string>
     <string name="SEARCH_TASK">Seleccionar Tasca</string>
-    <string name="PLEASE_WAIT">_Please wait</string>
-    <string name="NOT_FINISHED">_Not finished</string>
-    <string name="TASK_ABANDONED">_Task abandoned</string>
-    <string name="TASK_FINISHED">_Task finished</string>
-    <string name="CONNECTING">_Connecting</string>
-    <string name="SUCCES">_Succes</string>
-    <string name="PRIORITY">_Priority</string>
+    <string name="PLEASE_WAIT">Por favor espere</string>
+    <string name="NOT_FINISHED">No finalizada</string>
+    <string name="TASK_ABANDONED">Tasca abandonada</string>
+    <string name="TASK_FINISHED">Tasca finalitzada</string>
+    <string name="CONNECTING">Conectando al servidor</string>
+    <string name="SUCCES">Accion realizada con éxito</string>
 </resources>

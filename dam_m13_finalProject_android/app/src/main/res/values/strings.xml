@@ -58,11 +58,10 @@
     <string name="ERROR_NO_TASK_TOOK">No available task</string>
     <string name="SYNUP">SynUp</string>
     <string name="SEARCH_TASK">Select Task</string>
-    <string name="PLEASE_WAIT">_Please wait</string>
-    <string name="NOT_FINISHED">_Not finished</string>
-    <string name="TASK_ABANDONED">_Task abandoned</string>
-    <string name="TASK_FINISHED">_Task finished</string>
-    <string name="CONNECTING">_Connecting</string>
-    <string name="SUCCES">_Succes</string>
-    <string name="PRIORITY">_Priority</string>
+    <string name="PLEASE_WAIT">Please wait</string>
+    <string name="NOT_FINISHED">Not Finished</string>
+    <string name="TASK_ABANDONED">Task abandoned</string>
+    <string name="TASK_FINISHED">Task Finished</string>
+    <string name="CONNECTING">Connecting to server</string>
+    <string name="SUCCES">Action success</string>
 </resources>
