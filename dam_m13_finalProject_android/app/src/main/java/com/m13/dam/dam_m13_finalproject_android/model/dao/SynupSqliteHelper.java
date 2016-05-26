@@ -69,9 +69,9 @@ public class SynupSqliteHelper extends SQLiteOpenHelper {
     static String createTeamHistory = "CREATE TABLE TeamHistory( " +
             "id INTEGER NOT NULL, " +
             "id_employee TEXT NOT NULL, " +
-            "id_team TEXT NOT NULL," +
-            "entranceDay DATE NOT NULL," +
-            "exitDate DATE NULL," +
+            "id_team TEXT NOT NULL, " +
+            "entranceDay DATE NOT NULL, " +
+            "exitDate DATE NULL, " +
             "PRIMARY KEY(id) " +
             ");";
 

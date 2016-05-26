@@ -2,6 +2,7 @@ package com.m13.dam.dam_m13_finalproject_android.controller;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -61,8 +62,8 @@ public class MenuActivity extends SynupMainMenuActivity  {
             @Override
             public void onClick(View v) {
                 SynupConversor synupConversor = new SynupConversor(context);
-                Task t = synupConversor.getTaskAcctived(SynupSharedPreferences.getUserLoged(context));
-                if(t!= null) {
+                Cursor c = synupConversor.getTaskByEmployee(SynupSharedPreferences.getUserLoged(context), "");
+                if(c!= null) {
                     Intent intent = new Intent(context, UserListActivity.class);
                     context.startActivity(intent);
                 } else {

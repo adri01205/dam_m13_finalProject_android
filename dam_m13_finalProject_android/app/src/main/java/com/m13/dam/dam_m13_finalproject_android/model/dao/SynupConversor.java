@@ -296,7 +296,7 @@ public class SynupConversor {
         Cursor c = db.query(true,
                 "Task",
                 new String[]{"id_team", "code", "priorityDate", "description", "localization", "project", "name", "priority", "state"},
-                "id_team = ? and name LIKE ?",
+                "id_team = ? and name LIKE ? ",
                 new String[]{code, "%" + taskName + "%"},
                 null,
                 null,
