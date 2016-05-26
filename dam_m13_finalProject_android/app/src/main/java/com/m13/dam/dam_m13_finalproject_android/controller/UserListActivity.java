@@ -21,7 +21,7 @@ import com.m13.dam.dam_m13_finalproject_android.model.pojo.Team;
 
 
 import java.util.ArrayList;
-import java.sql.Date;
+import java.util.Date;
 
 
 public class UserListActivity extends SynupMenuSearchableActivity implements ListView.OnItemClickListener{

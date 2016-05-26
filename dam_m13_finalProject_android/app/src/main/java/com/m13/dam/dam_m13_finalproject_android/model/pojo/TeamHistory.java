@@ -2,7 +2,7 @@ package com.m13.dam.dam_m13_finalproject_android.model.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by jesus on 17/05/2016.

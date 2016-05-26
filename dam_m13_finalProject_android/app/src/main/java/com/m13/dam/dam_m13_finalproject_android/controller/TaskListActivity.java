@@ -123,7 +123,7 @@ public class TaskListActivity extends SynupMenuSearchableActivity
                                 cTasks.getString(3),
                                 cTasks.getString(4),
                                 cTasks.getString(5),
-                                cTasks.getString(6),0,0));
+                                cTasks.getString(6), cTasks.getInt(7), cTasks.getInt(8)));
                     }while(cTasks.moveToNext());
                 }
 

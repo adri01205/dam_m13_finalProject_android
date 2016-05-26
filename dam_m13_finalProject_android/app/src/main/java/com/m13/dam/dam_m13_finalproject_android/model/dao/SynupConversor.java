@@ -13,7 +13,7 @@ import com.m13.dam.dam_m13_finalproject_android.model.pojo.TaskHistory;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Team;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.TeamHistory;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -45,7 +45,7 @@ import java.text.SimpleDateFormat;
 
 /* ORM Lite */
 public class SynupConversor {
-    public static final String BD_NAME = "SYNUP_BD51";
+    public static final String BD_NAME = "SYNUP_BD53";
     public static final int BD_VERSION = 1;
     private SynupSqliteHelper helper;
     public static SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -125,8 +125,8 @@ public class SynupConversor {
 
         try {
             return new TaskHistory(c.getInt(0),c.getString(1),c.getString(2),
-                    new java.sql.Date(dataFormat.parse(c.getString(3)).getTime()),
-                    c.getString(4) != null ? new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()) : null,
+                    new Date(dataFormat.parse(c.getString(3)).getTime()),
+                    c.getString(4) != null ? new Date(dataFormat.parse(c.getString(4)).getTime()) : null,
                     c.getString(5), c.getInt(6));
 
         } catch (ParseException e) {
@@ -158,8 +158,8 @@ public class SynupConversor {
                     c.getInt(0),
                     c.getString(1),
                     c.getString(2),
-                    new java.sql.Date(dataFormat.parse(c.getString(3)).getTime()),
-                    c.getString(4) != null ? new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()) : null,
+                    new Date(dataFormat.parse(c.getString(3)).getTime()),
+                    c.getString(4) != null ? new Date(dataFormat.parse(c.getString(4)).getTime()) : null,
                     c.getString(5) != null ? c.getString(5) : "" ,
                     c.getInt(6));
 
@@ -240,8 +240,9 @@ public class SynupConversor {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         String sql = "SELECT t.id_team, t.code, t.priorityDate, t.description, t.localization, t.project, t.name, t.priority, t.state " +
-                "FROM Task t INNER JOIN TaskHistory th ON th.id_employee=t.code " +
-                "WHERE th.finishDate is null and t.code = ? ORDER BY t.name";
+                "FROM Task t " +
+                "INNER JOIN TaskHistory th ON th.id_task=t.code " +
+                "WHERE th.finishDate is null and th.id_employee = ? ORDER BY t.name";
 
         Cursor c = db.rawQuery(sql, new String[]{code});
 
@@ -249,9 +250,8 @@ public class SynupConversor {
             return null;
         }
         c.moveToFirst();
-
         try {
-            return new Task(c.getString(0),c.getString(1), new java.sql.Date(dataFormat.parse(c.getString(2)).getTime()),
+            return new Task(c.getString(0),c.getString(1), new Date(dataFormat.parse(c.getString(2)).getTime()),
                     c.getString(3),c.getString(4),c.getString(5),c.getString(6), c.getInt(7), c.getInt(8));
         } catch (ParseException e) {
             e.printStackTrace();
@@ -280,7 +280,7 @@ public class SynupConversor {
         c.moveToFirst();
 
         try {
-            return new Task(c.getString(0),c.getString(1), new java.sql.Date(dataFormat.parse(c.getString(2)).getTime()),
+            return new Task(c.getString(0),c.getString(1), new Date(dataFormat.parse(c.getString(2)).getTime()),
                     c.getString(3),c.getString(4),c.getString(5),c.getString(6),c.getInt(7),c.getInt(8));
         } catch (ParseException e) {
             e.printStackTrace();
@@ -584,8 +584,8 @@ public class SynupConversor {
 
         try{
             return new TeamHistory(c.getInt(0),c.getString(1),c.getString(2),
-                    new java.sql.Date(dataFormat.parse(c.getString(3)).getTime()),
-                    new java.sql.Date(dataFormat.parse(c.getString(4)).getTime()));
+                    new Date(dataFormat.parse(c.getString(3)).getTime()),
+                    new Date(dataFormat.parse(c.getString(4)).getTime()));
         } catch (ParseException e) {
             e.printStackTrace();
             return null;

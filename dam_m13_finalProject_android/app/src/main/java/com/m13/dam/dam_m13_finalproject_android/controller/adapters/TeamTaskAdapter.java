@@ -1,6 +1,7 @@
 package com.m13.dam.dam_m13_finalproject_android.controller.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +63,21 @@ public class TeamTaskAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.lblListItem);
 
         txtListChild.setText(childText.getName());
+
+        switch (childText.getState()){
+            case Task.UNSELECTED:
+            case Task.ABANDONED:
+                txtListChild.setBackgroundColor(Color.RED);
+                break;
+            case Task.CANCELED:
+            case Task.FINISHED:
+                txtListChild.setBackgroundColor(Color.GREEN);
+                break;
+            case Task.ONGOING:
+                txtListChild.setBackgroundColor(context.getResources().getColor((R.color.colorPrimary)));
+                break;
+        }
+
         return convertView;
     }
 

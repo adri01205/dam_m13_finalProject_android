@@ -50,7 +50,7 @@ public class UpdateServerAsync  extends AsyncTask<String , Void, Void> {
 
     }
 
-    protected void onpreexecute() {
+    protected void onPreExecute() {
         // NOTE: You can call UI Element here.
 
         //Start Progress Dialog (Message)

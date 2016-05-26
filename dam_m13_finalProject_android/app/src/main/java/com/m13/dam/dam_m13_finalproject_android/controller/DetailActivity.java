@@ -40,6 +40,7 @@ import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateLocalAsync;
 import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateServerAsync;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class DetailActivity extends SynupMenuActivity implements AsyncTaskCompleteListener<ReturnObject> {
@@ -105,11 +106,12 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
 
                     mMap.addMarker(new MarkerOptions()
                             .position(positon)
-                            .snippet(task.getLocalization())
+                            .title(task.getLocalization())
+//                            .snippet(task.getLocalization())
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
                     mMap.animateCamera(
-                            CameraUpdateFactory.newLatLngZoom(positon, 15),
+                            CameraUpdateFactory.newLatLngZoom(positon, 30),
                             2000, null);
                 }catch (Exception e){}
             }
@@ -224,7 +226,8 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
 
     private void abandone() {
         task.setState(Task.ABANDONED);
-        java.sql.Date ourJavaDateObject = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+
+        Date ourJavaDateObject = new Date();
 
         SynupConversor conversor = new SynupConversor(this);
         conversor.updateTaskHistory(taskHistory.getId(), ourJavaDateObject, 0);
@@ -235,9 +238,10 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
 
     private void finishTask() {
         task.setState(Task.FINISHED);
-        java.sql.Date ourJavaDateObject = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        Date ourJavaDateObject = new Date();
         SynupConversor conversor = new SynupConversor(this);
         conversor.updateTaskHistory(taskHistory.getId(), ourJavaDateObject, 1);
+        conversor.updateTask(task);
         dialogMessage = getResources().getString(R.string.TASK_FINISHED);
         new UpdateServerAsync(this,this).execute(SynupSharedPreferences.getUserLoged(this));
     }

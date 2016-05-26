@@ -24,6 +24,14 @@ import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+/**
+ * Class used to send a TaskHistory to the server
+ * Execute these class with the next sentence:
+ * new AddTaskHistoryServerAsync(Context context, AsyncTaskCompleteListener<ReturnObject> listener)
+ *      .execute("employee_code", "task_code");
+ * When the Async task will finish, it will send a callback to the method onTaskComplete(ReturnObject result),
+ * obligated to implement on the AsyncTaskCompleteListener
+ */
 public class AddTaskHistoryServerAsync extends AsyncTask<String, Void, Void> {
 
     private String Content;
