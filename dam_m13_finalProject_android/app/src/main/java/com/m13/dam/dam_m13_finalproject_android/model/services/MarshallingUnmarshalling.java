@@ -45,7 +45,7 @@ public abstract class MarshallingUnmarshalling {
         JavaType type = mapper.getTypeFactory().
                 constructCollectionType(Collection.class, clas);
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-//        return mapper.readValue(inputStream, new TypeReference<Collection<Employee>>() { });
+        mapper.setDateFormat(SynupConversor.dataFormat);
         return mapper.readValue(inputStream, type);
     }
 

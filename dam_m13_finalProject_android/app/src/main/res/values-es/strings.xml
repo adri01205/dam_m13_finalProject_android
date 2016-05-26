@@ -12,12 +12,12 @@
     <string name="PLACEHOLDER_PASSWORD">Contraseña</string>
     <string name="title_activity_menu">SYNUP</string>
     <string name="LOG_OUT">Desconectarse</string>
-    <string name="EXIT">exit</string>
+    <string name="EXIT">salir</string>
     <string name="not_data_updated">No tiene conexión con el servidor, puede ser que sus datos no esten actualizados y si ha actualizado alguna tarea, los cambios no seran visibles para el resto.</string>
     <string name="ERROR_NO_CONNECTION_LOGIN">Para registrarse con un nuevo usuario necesita connexion a internet, por favor intentelo de nuevo.</string>
-    <string name="VIEW_ACCTIVE_TASK">Ver tasca acctiva</string>
-    <string name="VIEW_TASKS">Ver las tascas de tu equipo</string>
-    <string name="title_activity_detail">Detalles de la tasca</string>
+    <string name="VIEW_ACCTIVE_TASK">Ver tarea activa</string>
+    <string name="VIEW_TASKS">Ver las tareas de tu equipo</string>
+    <string name="title_activity_detail">Detalles de la tarea</string>
     <string name="NEW">Nueva</string>
     <string name="IN_PROGRESS">En progreso</string>
     <string name="ABANDONED">Abandonada</string>
@@ -36,11 +36,11 @@
     <string name="IS_FINISHED">Acabada:</string>
     <string name="DESCRIPTION">Descripción:</string>
     <string name="LOCATION">Localización:</string>
-    <string name="TASK_NOT_EXISTS">Tasca no existe</string>
+    <string name="TASK_NOT_EXISTS">Tarea no existe</string>
     <string name="MAIN_MENU">Menú Principal</string>
     <string name="ABANDONE">Abandonar</string>
     <string name="TAKE">Coger</string>
-    <string name="TASK_TOOK">Tasca cogida</string>
+    <string name="TASK_TOOK">Tarea cogida</string>
     <string name="ERROR_NO_CONNECTION_TAKE_TASK">Necesita conexión a internet para asignarse una tasca.</string>
     <string name="SEARCH">Buscar</string>
     <string name="OPEN">Abrir</string>
@@ -49,8 +49,8 @@
     <string name="CANCELED">Cancelada</string>
     <string name="ERROR_NO_CONNECTION">Sin conexión</string>
     <string name="NAVIGATION">Navegación</string>
-    <string name="ERROR_NO_TASK_TOOK">Sin tascas disponibles</string>
-    <string name="title_activity_list">Lista de tascas</string>
+    <string name="ERROR_NO_TASK_TOOK">Sin tareas disponibles</string>
+    <string name="title_activity_list">Lista de tareas</string>
     <string name="FINISH">Acabar</string>
     <string name="SYNUP">SynUp</string>
     <string name="SEARCH_TASK">Seleccionar Tasca</string>
@@ -59,6 +59,6 @@
     <string name="TASK_ABANDONED">Tasca abandonada</string>
     <string name="TASK_FINISHED">Tasca finalitzada</string>
     <string name="CONNECTING">Conectando al servidor</string>
-    <string name="SUCCES">Accion realizada con éxito</string>
-    <string name="PRIORITY">_Priority</string>
+    <string name="SUCCES">Acción realizada con éxito</string>
+    <string name="PRIORITY">Prioridad</string>
 </resources>
