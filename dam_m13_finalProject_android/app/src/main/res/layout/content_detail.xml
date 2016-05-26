@@ -96,7 +96,43 @@
                 android:layout_weight="1"
                 android:layout_margin="0dp" />
         </LinearLayout>
-        <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:text="@string/PRIORITY"
+                    android:id="@+id/textView19"
+                    android:textAlignment="textEnd"
+                    android:paddingRight="10dp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_column="0"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_rowWeight="1"
+                    android:layout_marginBottom="10dp"
+                    android:layout_columnWeight="1"
+                    android:layout_weight="1"
+                    android:layout_margin="0dp"
+                    android:gravity="end"
+                    android:layout_marginRight="50dp" />
+
+                <TextView
+                    android:id="@+id/activity_detail_tv_priority"
+                    android:paddingLeft="10dp"
+                    android:layout_column="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="test"
+                    android:layout_columnWeight="1"
+                    android:layout_weight="1"
+                    android:layout_margin="0dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
