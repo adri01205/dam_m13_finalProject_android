@@ -1,8 +1,13 @@
 package com.m13.dam.dam_m13_finalproject_android.model.services;
 
+import android.app.Application;
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import com.m13.dam.dam_m13_finalproject_android.R;
 
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
@@ -12,18 +17,40 @@ import java.net.URL;
  * Created by adri on 10/05/2016.
  */
 public abstract class Connection {
-    public static String host = "192.168.1.113" ;
-//    public static String port = "1567";
-//    public static String enlace = "/Synup/api/";
-//    public static String enlaceConnection = "/Synup/";
-   // public static String host = "172.16.10.57" ;
-    public static String port = "1289";
-    public static String enlace = "/api/";
-    public static String enlaceConnection = "/";
 
+    //IP of the server
+    public static String host;
+
+    //PORT of the server
+    public static String port;
+
+    //Shared resource for all webservice methods
+    public static String enlace;
+
+    //Minim resurce for test connection
+    public static String enlaceConnection;
+
+    static{
+        host = Resources.getSystem().getString(R.string.host);
+        port =  Resources.getSystem().getString(R.string.port);
+        enlace =  Resources.getSystem().getString(R.string.enlace);
+        enlaceConnection =  Resources.getSystem().getString(R.string.enlaceConnection);
+    }
+
+    /**
+     * Get the domain with the shared resource of the webservice
+     * @return String domain
+     */
     public static String getDomain(){
+
         return host+":"+port + enlace;
     }
+
+
+    /**
+     * Test the connection between the movile and the webservice
+     * @return Boolean if is connected return true, false either
+     */
     public static boolean isConnected() {
         try {
             URL url = new URL("http://" + host+":"+port + enlaceConnection);
