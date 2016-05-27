@@ -1,5 +1,6 @@
 package com.m13.dam.dam_m13_finalproject_android.controller;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Address;
@@ -10,10 +11,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -200,6 +203,8 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
 
     private void setTexts(){
 
+        final Activity act = this;
+
         if(task.getState() == Task.FINISHED && taskHistory != null && taskHistory.getFinishDate() != null && taskHistory.getIsFinished() == 1){
             ((TextView) findViewById(R.id.activity_detail_tv_finish_date)).setText(sc.dataFormat.format(taskHistory.getFinishDate()));
         } else if(task.getState() == Task.UNSELECTED){
@@ -208,17 +213,105 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
             ((TextView) findViewById(R.id.activity_detail_tv_finish_date)).setText(getResources().getString(R.string.NOT_FINISHED));
         }
 
+        findViewById(R.id.activity_detail_tv_finish_date).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(act, act.getResources().getString(R.string.FINISH_DATE_HELP), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
         ((TextView) findViewById(R.id.activity_detail_tv_name)).setText(task.getName());
+        ((TextView) findViewById(R.id.activity_detail_tv_name)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(act, act.getResources().getString(R.string.NAME_HELP), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
         ((TextView) findViewById(R.id.activity_detail_tv_code)).setText(task.getCode());
+        ((TextView) findViewById(R.id.activity_detail_tv_code)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(act, act.getResources().getString(R.string.CODE_HELP), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
         ((TextView) findViewById(R.id.activity_detail_tv_description)).setText(task.getDescription());
+        ((TextView) findViewById(R.id.activity_detail_tv_description)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(act, act.getResources().getString(R.string.DESCRIPTION_HELP), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
         ((TextView) findViewById(R.id.activity_detail_tv_employee)).setText(taskHistory != null ? employee.getName() : getResources().getString(R.string.NOT_ASSIGNED));
+        ((TextView) findViewById(R.id.activity_detail_tv_employee)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(act, act.getResources().getString(R.string.EMPLOYEE_HELP), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
         ((TextView) findViewById(R.id.activity_detail_tv_priority_date)).setText(sc.dataFormat.format(task.getPriorityDate()));
+        ((TextView) findViewById(R.id.activity_detail_tv_priority_date)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(act, act.getResources().getString(R.string.PRIORITY_DATE_HELP), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
         ((TextView) findViewById(R.id.activity_detail_tv_project)).setText(task.getProject());
+        ((TextView) findViewById(R.id.activity_detail_tv_project)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(act, act.getResources().getString(R.string.PROJECT_HELP), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
         ((TextView) findViewById(R.id.activity_detail_tv_start_date)).setText(taskHistory != null ? sc.dataFormat.format(taskHistory.getStartDate()) : getResources().getString(R.string.NOT_STARTED));
+        ((TextView) findViewById(R.id.activity_detail_tv_start_date)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(act, act.getResources().getString(R.string.START_DATE_HELP), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
         ((TextView) findViewById(R.id.activity_detail_tv_status)).setText(status);
+        ((TextView) findViewById(R.id.activity_detail_tv_status)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(act, act.getResources().getString(R.string.STATUS_HELP), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
         ((CheckBox) findViewById(R.id.activity_detail_cb_finished)).setChecked(taskHistory != null && taskHistory.getFinishDate() != null && taskHistory.getIsFinished() == 1);
+
+
         ((TextView) findViewById(R.id.activity_detail_tv_team)).setText(team != null ? team.getName() : "");
-        ((TextView) findViewById(R.id.activity_detail_tv_priority)).setText(String.valueOf(task.getPriority()));
+        ((TextView) findViewById(R.id.activity_detail_tv_team)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(act, act.getResources().getString(R.string.TEAM_HELP), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+        ((TextView) findViewById(R.id.activity_detail_tv_priority)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(act, act.getResources().getString(R.string.PRIORITY_HELP), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 
 
 

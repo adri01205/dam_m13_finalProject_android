@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="host">172.16.10.57</string>
+    <string name="port">1289</string>
+    <string name="enlace">/api/</string>
+    <string name="enlaceConnection">/</string>
+
+    <!--    <string name="host">192.168.1.113</string>
+        <string name="port">1567</string>
+        <string name="enlace">/Synup/api/</string>
+        <string name="enlaceConnection">/Synup/</string>-->
+
+</resources>
