@@ -64,6 +64,7 @@ public class AddTaskHistoryServerAsync extends AsyncTask<String, Void, Void> {
             ret.setMessage(context.getResources().getString(R.string.ERROR_NO_CONNECTION));
             return null;
         }
+
         HttpURLConnection conn = null;
         int status = 500;
         try {

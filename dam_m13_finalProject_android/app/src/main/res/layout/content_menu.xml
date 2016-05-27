@@ -51,7 +51,8 @@
         android:layout_height="wrap_content"
         android:text="@string/VIEW_ACCTIVE_TASK"
         android:id="@+id/activity_menu_bt_my_task"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="#494949"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -64,7 +65,8 @@
         android:layout_height="wrap_content"
         android:text="@string/VIEW_TASKS"
         android:id="@+id/activity_menu_bt_tasks"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="#494949"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -77,5 +79,6 @@
         android:layout_height="wrap_content"
         android:text="@string/LOG_OUT"
         android:id="@+id/activity_menu_bt_log_out"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="#494949"/>
 </LinearLayout>

@@ -3,10 +3,13 @@ package com.m13.dam.dam_m13_finalproject_android.controller.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.m13.dam.dam_m13_finalproject_android.R;
@@ -14,6 +17,7 @@ import com.m13.dam.dam_m13_finalproject_android.controller.TaskListActivity;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Team;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -51,7 +55,8 @@ public class TeamTaskAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final Task childText = (Task) getChild(groupPosition, childPosition);
+        final Task le_task = (Task) getChild(groupPosition, childPosition);
+        final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
@@ -59,26 +64,76 @@ public class TeamTaskAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.list_child, null);
         }
 
-        TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.lblListItem);
+        LinearLayout linearLayout = (LinearLayout) convertView.findViewById(R.id.mainLinearLayout);
+        TextView txtListChild = (TextView) convertView.findViewById(R.id.lblListItem);
+        ImageView imgViewChild = (ImageView) convertView.findViewById(R.id.iconStatus);
 
-        txtListChild.setText(childText.getName());
+        TextView txtDateChild = (TextView) convertView.findViewById(R.id.lblListItemDate);
+        txtDateChild.setText(context.getResources().getString(R.string.PRIORITY_DATE) + " " +
+                formatter.format(le_task.getPriorityDate()));
 
-        switch (childText.getState()){
-            case Task.UNSELECTED:
-            case Task.ABANDONED:
-                txtListChild.setBackgroundColor(Color.RED);
-                break;
+        txtListChild.setText(le_task.getName());
+
+        linearLayout.setBackgroundColor(getColorByPriority((le_task.getPriority())));
+        txtListChild.setTextColor(getTextColorByPriority(le_task.getPriority()));
+        txtDateChild.setTextColor(getTextColorByPriority(le_task.getPriority()));
+
+        switch (le_task.getState()){
+
             case Task.CANCELED:
             case Task.FINISHED:
-                txtListChild.setBackgroundColor(Color.GREEN);
+                imgViewChild.setImageResource(R.drawable.icon_tick);
                 break;
             case Task.ONGOING:
-                txtListChild.setBackgroundColor(context.getResources().getColor((R.color.colorPrimary)));
+                imgViewChild.setImageResource(R.drawable.icon_time);
+                break;
+            default:
+                imgViewChild.setVisibility(View.GONE);
                 break;
         }
 
         return convertView;
+    }
+
+    /**
+     * Return color depending on task's priority
+     * @param priority priority range between 1 and 5
+     * @return a well taste color in integer value
+     */
+    public static int getColorByPriority(int priority){
+        int color = 1;
+
+        switch(priority){
+            case 1:
+                color = Color.rgb(189,232,139);
+                break;
+            case 2:
+                color = Color.rgb(255,255,133);
+                break;
+            case 3:
+                color = Color.rgb(241,192,122);
+                break;
+            case 4:
+                color = Color.rgb(222,146,131);
+                break;
+            case 5:
+                color = Color.rgb(199, 146, 217);
+                break;
+        }
+
+        return color;
+    }
+
+    public static int getTextColorByPriority(int priority){
+        int color;
+        if (priority == 2)
+        {
+            color = Color.rgb(190,180,220);
+        }
+        else{
+            color = Color.rgb(255,255,255);
+        }
+        return color;
     }
 
     @Override

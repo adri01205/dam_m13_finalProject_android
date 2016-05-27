@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.m13.dam.dam_m13_finalproject_android.R;
+import com.m13.dam.dam_m13_finalproject_android.controller.adapters.UserTaskAdapter;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupConversor;
 import com.m13.dam.dam_m13_finalproject_android.model.dao.SynupSharedPreferences;
 import com.m13.dam.dam_m13_finalproject_android.model.pojo.Task;
@@ -53,8 +54,7 @@ public class UserListActivity extends SynupMenuSearchableActivity implements Lis
 
         chargeData();
 
-        ArrayAdapter adapter = new ArrayAdapter(context,
-                android.R.layout.simple_list_item_1, tasksName);
+        UserTaskAdapter adapter = new UserTaskAdapter(context, tasks);
 
         lv = (ListView) findViewById(R.id.lstLlistaUserTask);
         lv.setAdapter(adapter);

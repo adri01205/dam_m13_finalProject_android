@@ -300,7 +300,7 @@ public class SynupConversor {
                 new String[]{code, "%" + taskName + "%"},
                 null,
                 null,
-                "priority",
+                "priority DESC",
                 null);
 
         return c;
@@ -313,7 +313,8 @@ public class SynupConversor {
 
         String sql = "SELECT t.id_team, t.code, t.priorityDate, t.description, t.localization, t.project, t.name, t.priority, t.state " +
                 "FROM Task t INNER JOIN TaskHistory th ON th.id_task=t.code " +
-                "WHERE th.finishDate is null and th.id_employee = ? and t.name LIKE ?";
+                "WHERE th.finishDate is null and th.id_employee = ? and t.name LIKE ? " +
+                "ORDER BY t.priority DESC";
 
         Cursor c = db.rawQuery(sql, new String[]{nif, "%" + taskName + "%"});
 
