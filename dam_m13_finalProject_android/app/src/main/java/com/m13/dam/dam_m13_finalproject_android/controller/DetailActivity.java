@@ -290,7 +290,7 @@ public class DetailActivity extends SynupMenuActivity implements AsyncTaskComple
 
             } else {
                 Log.e("SYNUP_ERROR", result.getMessage());
-//                Dialogs.getErrorDialog(this, result).show();
+                Dialogs.getErrorDialog(this,getResources().getString(R.string.ERROR_INESPERADO)).show();
             }
         }
     }

@@ -19,9 +19,11 @@ import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Adri on 06/05/2016.
@@ -45,7 +47,7 @@ public abstract class MarshallingUnmarshalling {
         JavaType type = mapper.getTypeFactory().
                 constructCollectionType(Collection.class, clas);
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-//        return mapper.readValue(inputStream, new TypeReference<Collection<Employee>>() { });
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"));
         return mapper.readValue(inputStream, type);
     }
 
