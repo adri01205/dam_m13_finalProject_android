@@ -117,13 +117,19 @@ public class TaskListActivity extends SynupMenuSearchableActivity
 
                 if (cTasks.moveToFirst()){
                     do{
-                        teamTasks.add(new Task(cTasks.getString(0),
-                                cTasks.getString(1),
-                                new Date(cTasks.getLong(2)),
-                                cTasks.getString(3),
-                                cTasks.getString(4),
-                                cTasks.getString(5),
-                                cTasks.getString(6), cTasks.getInt(7), cTasks.getInt(8)));
+                        try {
+
+                            teamTasks.add(new Task(cTasks.getString(0),
+                                    cTasks.getString(1),
+                                    new Date(SynupConversor.dataFormat.parse(cTasks.getString(2)).getTime()),
+                                    cTasks.getString(3),
+                                    cTasks.getString(4),
+                                    cTasks.getString(5),
+                                    cTasks.getString(6), cTasks.getInt(7), cTasks.getInt(8)));
+
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
                     }while(cTasks.moveToNext());
                 }
 
