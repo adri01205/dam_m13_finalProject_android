@@ -67,7 +67,6 @@ public class TeamTaskAdapter extends BaseExpandableListAdapter {
         LinearLayout linearLayout = (LinearLayout) convertView.findViewById(R.id.mainLinearLayout);
         TextView txtListChild = (TextView) convertView.findViewById(R.id.lblListItem);
         ImageView imgViewChild = (ImageView) convertView.findViewById(R.id.iconStatus);
-        int imgWidth = 40;/*imgViewChild.getWidth() + imgViewChild.getPaddingLeft() + imgViewChild.getPaddingRight();*/
 
         TextView txtDateChild = (TextView) convertView.findViewById(R.id.lblListItemDate);
         txtDateChild.setText(context.getResources().getString(R.string.PRIORITY_DATE) + " " +
@@ -89,8 +88,7 @@ public class TeamTaskAdapter extends BaseExpandableListAdapter {
                 imgViewChild.setImageResource(R.drawable.icon_time);
                 break;
             default:
-                imgViewChild.setVisibility(View.GONE);
-                txtDateChild.setPaddingRelative(0,0,imgWidth + txtDateChild.getPaddingRight(),0);
+                imgViewChild.setImageResource(R.drawable.empty_icon);
                 break;
         }
 
