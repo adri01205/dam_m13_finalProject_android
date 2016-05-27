@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.m13.dam.dam_m13_finalproject_android.R;
+import com.m13.dam.dam_m13_finalproject_android.controller.LoginActivity;
 import com.m13.dam.dam_m13_finalproject_android.controller.MenuActivity;
 
 import java.net.HttpURLConnection;
@@ -20,16 +21,16 @@ import java.net.URL;
 public abstract class Connection {
 
     //IP of the server
-    public static String host = MenuActivity.context.getResources().getString(R.string.host);
+    public static String host = LoginActivity.context.getResources().getString(R.string.host);
 
     //PORT of the server
-    public static String port = MenuActivity.context.getResources().getString(R.string.port);
+    public static String port = LoginActivity.context.getResources().getString(R.string.port);
 
     //Shared resource for all webservice methods
-    public static String enlace = MenuActivity.context.getResources().getString(R.string.enlace);
+    public static String enlace = LoginActivity.context.getResources().getString(R.string.enlace);
 
     //Minim resurce for test connection
-    public static String enlaceConnection = MenuActivity.context.getResources().getString(R.string.enlaceConnection);
+    public static String enlaceConnection = LoginActivity.context.getResources().getString(R.string.enlaceConnection);
 
 
     /**
