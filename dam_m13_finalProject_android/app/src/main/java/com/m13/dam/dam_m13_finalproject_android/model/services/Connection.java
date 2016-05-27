@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.m13.dam.dam_m13_finalproject_android.R;
+import com.m13.dam.dam_m13_finalproject_android.controller.MenuActivity;
 
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
@@ -19,23 +20,17 @@ import java.net.URL;
 public abstract class Connection {
 
     //IP of the server
-    public static String host;
+    public static String host = MenuActivity.context.getResources().getString(R.string.host);
 
     //PORT of the server
-    public static String port;
+    public static String port = MenuActivity.context.getResources().getString(R.string.port);
 
     //Shared resource for all webservice methods
-    public static String enlace;
+    public static String enlace = MenuActivity.context.getResources().getString(R.string.enlace);
 
     //Minim resurce for test connection
-    public static String enlaceConnection;
+    public static String enlaceConnection = MenuActivity.context.getResources().getString(R.string.enlaceConnection);
 
-    static{
-        host = Resources.getSystem().getString(R.string.host);
-        port =  Resources.getSystem().getString(R.string.port);
-        enlace =  Resources.getSystem().getString(R.string.enlace);
-        enlaceConnection =  Resources.getSystem().getString(R.string.enlaceConnection);
-    }
 
     /**
      * Get the domain with the shared resource of the webservice
@@ -52,6 +47,7 @@ public abstract class Connection {
      * @return Boolean if is connected return true, false either
      */
     public static boolean isConnected() {
+
         try {
             URL url = new URL("http://" + host+":"+port + enlaceConnection);
             HttpURLConnection urlc = (HttpURLConnection) url

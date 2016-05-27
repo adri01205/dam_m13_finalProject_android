@@ -66,15 +66,15 @@
     <string name="SUCCES">Action success</string>
     <string name="PRIORITY">Priority</string>
     <string name="ERROR_INESPERADO">UNEXPECTED ERROR, CONTACT WITH THE ADMINISTRATOR</string>
-    <string name="FINISH_DATE_HELP">_Finish date of the task</string>
-    <string name="NAME_HELP">_Name of the task</string>
-    <string name="CODE_HELP">_Code of the task</string>
-    <string name="DESCRIPTION_HELP">_Description of the task</string>
-    <string name="EMPLOYEE_HELP">_Employee doing the task</string>
-    <string name="PRIORITY_DATE_HELP">_Priority date of the task</string>
-    <string name="PROJECT_HELP">_Project name of the task</string>
-    <string name="START_DATE_HELP">_Start date of the task</string>
-    <string name="STATUS_HELP">_Status of the task</string>
-    <string name="TEAM_HELP">_Team assigned to the task</string>
-    <string name="PRIORITY_HELP">_Priority of the task (0 - 5)</string>
+    <string name="FINISH_DATE_HELP">Finish date of the task</string>
+    <string name="NAME_HELP">Name of the task</string>
+    <string name="CODE_HELP">Code of the task</string>
+    <string name="DESCRIPTION_HELP">Description of the task</string>
+    <string name="EMPLOYEE_HELP">Employee doing the task</string>
+    <string name="PRIORITY_DATE_HELP">Priority date of the task</string>
+    <string name="PROJECT_HELP">Project name of the task</string>
+    <string name="START_DATE_HELP">Start date of the task</string>
+    <string name="STATUS_HELP">Status of the task</string>
+    <string name="TEAM_HELP">Team assigned to the task</string>
+    <string name="PRIORITY_HELP">Priority of the task (0 - 5)</string>
 </resources>
