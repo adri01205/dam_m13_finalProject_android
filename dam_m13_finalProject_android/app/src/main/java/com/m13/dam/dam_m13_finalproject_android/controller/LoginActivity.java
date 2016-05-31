@@ -1,6 +1,5 @@
 package com.m13.dam.dam_m13_finalproject_android.controller;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,14 +23,11 @@ import java.security.NoSuchAlgorithmException;
 
 public class LoginActivity extends AppCompatActivity implements AsyncTaskCompleteListener<ReturnObject> {
 
-    public static Activity context;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        context = this;
 
         findViewById(R.id.activity_login_bt_signup).setOnClickListener(new View.OnClickListener() {
             @Override
