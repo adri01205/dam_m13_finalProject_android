@@ -23,7 +23,7 @@ import com.m13.dam.dam_m13_finalproject_android.model.services.UpdateLocalAsync;
 
 public class MenuActivity extends SynupMainMenuActivity  {
 
-    public static Activity context;
+    Activity context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
